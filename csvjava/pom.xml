@@ -5,7 +5,7 @@
 
     <groupId>com.csv</groupId>
     <artifactId>java</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <name>java</name>
@@ -26,6 +26,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
@@ -33,6 +37,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!--Closing org.springframework.web.context.support.GenericWebApplicationContext-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -49,6 +64,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--&lt;!&ndash; 访问前台页面html &ndash;&gt;
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        https://blog.csdn.net/yu514950381/article/details/78264667
+        -->
     </dependencies>
 
     <build>
@@ -56,6 +79,35 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>cmd</executable> <!-- or bash -->
+                    <workingDirectory>${basedir}/src/main/angular</workingDirectory>
+                    <arguments>
+                        <argument>/c</argument>
+                        <argument>"npm run release"</argument>
+                    </arguments>
+                   <!-- <executable>npm</executable>
+                    <workingDirectory>${basedir}/src/main/angular
+                    </workingDirectory>-->
+                   <!-- <arguments>
+                        <argument>run</argument>
+                        <argument>release</argument>
+                    </arguments>-->
+                </configuration>
             </plugin>
         </plugins>
     </build>

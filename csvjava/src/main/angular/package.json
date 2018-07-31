@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "develop":"ng build --output-path=../resources/static/dist",
+    "release":"ng build --output-path=../resources/static/dist --prod --aot"
   },
   "private": true,
   "dependencies": {
