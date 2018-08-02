@@ -65,13 +65,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!--&lt;!&ndash; 访问前台页面html &ndash;&gt;
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        https://blog.csdn.net/yu514950381/article/details/78264667
-        -->
     </dependencies>
 
     <build>
