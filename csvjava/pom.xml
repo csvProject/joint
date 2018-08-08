@@ -68,6 +68,21 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>application.properties</include>
+                    <!-- myBatis Mapper文件 注:缺少dao层扫描会报错-->
+                    <include>mapping/*.xml</include>
+                    <include>static/*</include>
+                    <include>templates/*</include>
+                </includes>
+                <!-- 启动文件过滤 -->
+                <filtering>true</filtering>
+            </resource>
+
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -103,6 +118,7 @@
                 </configuration>
             </plugin>
         </plugins>
+
     </build>
 
 
