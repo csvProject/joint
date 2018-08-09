@@ -7,16 +7,10 @@ import { FirstComponent } from './root/first/first.component';
 import { SecondComponent } from './root/second/second.component';
 import { ErrorComponent } from './root/error/error.component';
 import { CurrencyUtil } from './util/currencyUtil';
-import {PublicComponent} from "./root/public/public.component";
-import {HeaderComponent} from "./root/public/header/header.component";
-import {MenuComponent} from "./root/public/menu/menu.component";
 
 const customComponentList = [
   FirstComponent,
   SecondComponent,
-  PublicComponent,
-  HeaderComponent,
-  MenuComponent,
 ];
 
 @NgModule({

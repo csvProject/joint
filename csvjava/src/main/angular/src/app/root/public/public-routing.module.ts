@@ -1,19 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import {PublicComponent} from "./public.component";
 
 const routes: Routes = [
   {
+    path: '',
+    component: PublicComponent
+  },
+  {
     path:'csvexport',
-    loadChildren: 'app/root/csvexport/csvexport.module#CsvexportModule'
+    loadChildren: '../csvexport/csvexport.module#CsvexportModule'
   },
   {
     path:'setting',
-    loadChildren: 'app/root/setting/setting.module#SettingModule'
+    loadChildren: '../setting/setting.module#SettingModule'
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{ useHash: true })],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class PublicRoutingModule { }
