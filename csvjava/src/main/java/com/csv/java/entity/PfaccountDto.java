@@ -2,23 +2,23 @@ package com.csv.java.entity;
 
 import java.sql.Timestamp;
 //平台账号indto
-public class PfaccountInDto extends BaseDto{
+public class PfaccountDto extends BaseDto{
     //平台账号ID
-    private Long pfaccountId;
+    private int pfaccountId;
     //账号名
     private String pfaccountNm;
     //平台ID
-    private Long platformId;
+    private int platformId;
     //备注
     private String memo;
     //更新人
-    private Long updtBy;
+    private int updtBy;
 
-    public Long getPfaccountId() {
+    public int getPfaccountId() {
         return pfaccountId;
     }
 
-    public void setPfaccountId(Long pfaccountId) {
+    public void setPfaccountId(int pfaccountId) {
         this.pfaccountId = pfaccountId;
     }
 
@@ -30,11 +30,11 @@ public class PfaccountInDto extends BaseDto{
         this.pfaccountNm = pfaccountNm;
     }
 
-    public Long getPlatformId() {
+    public int getPlatformId() {
         return platformId;
     }
 
-    public void setPlatformId(Long platformId) {
+    public void setPlatformId(int platformId) {
         this.platformId = platformId;
     }
 
@@ -46,11 +46,11 @@ public class PfaccountInDto extends BaseDto{
         this.memo = memo;
     }
 
-    public Long getUpdtBy() {
+    public int getUpdtBy() {
         return updtBy;
     }
 
-    public void setUpdtBy(Long updtBy) {
+    public void setUpdtBy(int updtBy) {
         this.updtBy = updtBy;
     }
 }

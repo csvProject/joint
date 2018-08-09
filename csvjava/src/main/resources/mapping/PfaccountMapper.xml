@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csv.java.dao.PfaccountDao" >
+    <select id="findPfaccountByPfid" parameterType="java.lang.Integer"  resultType="PfaccountDto">
+        SELECT
+            PFACCOUNT_ID pfaccountId,
+            PFACCOUNT_NM pfaccountNm,
+            PLATFORM_ID platformId,
+            MEMO memo,
+            UPDT_BY updtBy
+        FROM T_PF_ACCOUNT
+        WHERE  PLATFORM_ID = #{pfid,jdbcType=INTEGER}
+    </select>
+
+    <select id="findPfaccountByPfacctid" parameterType="java.lang.Integer"  resultType="PfaccountDto">
+        SELECT
+        PFACCOUNT_ID pfaccountId,
+        PFACCOUNT_NM pfaccountNm,
+        PLATFORM_ID platformId,
+        MEMO memo,
+        UPDT_BY updtBy
+        FROM T_PF_ACCOUNT
+        WHERE  PFACCOUNT_ID = #{pfacctid,jdbcType=INTEGER}
+    </select>
+
+    <insert id="saveRole" parameterType="PfaccountDto">
+
+        insert into T_PF_ACCOUNT
+            (
+            PFACCOUNT_NM,
+            PLATFORM_ID,
+            MEMO,
+            UPDT_BY,
+            UPDT_TS)
+        VALUES(
+
+            #{pfaccountNm,jdbcType=VARCHAR},
+            #{platformId,jdbcType=INTEGER},
+            #{memo,jdbcType=VARCHAR},
+            #{logId,jdbcType=INTEGER},
+            CURRENT_TIMESTAMP())
+
+    </insert>
+
+    <delete id="delPfaccountByPfacctid" parameterType="java.lang.Integer">
+        delete from
+        T_PF_ACCOUNT where PFACCOUNT_ID=#{pfacctid,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updPfaccountByPfacctid" parameterType="PfaccountDto">
+        update T_PF_ACCOUNT
+        set PFACCOUNT_NM =  #{pfaccountNm,jdbcType=VARCHAR},
+            MEMO =  #{memo,jdbcType=VARCHAR},
+            UPDT_BY #{logId,jdbcType=INTEGER},
+            UPDT_TS =SYSTIMESTAMP
+        where PFACCOUNT_ID = #{pfacctid,jdbcType=DECIMAL}
+    </update>
+</mapper>
