@@ -40,6 +40,7 @@ public class CustomControllerAdvice {
      @ResponseBody
      @ExceptionHandler(value = Exception.class)
      public Result errorHandler(Exception ex) {
+         ex.printStackTrace();
          if (ex instanceof CustomException) {
              CustomException customException = (CustomException) ex;
              if(ex instanceof DataNullException){
