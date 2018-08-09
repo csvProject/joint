@@ -1,0 +1,93 @@
+drop table if exists T_CSVTEMPLATE_DETAIL;
+
+drop table if exists T_CSVTEMPLATE_INFO;
+
+drop table if exists T_PF_ACCOUNT;
+
+drop table if exists T_PF_PATH;
+
+drop table if exists T_PLATFORM_INFO;
+
+/*==============================================================*/
+/* Table: T_CSVTEMPLATE_DETAIL                                  */
+/*==============================================================*/
+create table T_CSVTEMPLATE_DETAIL
+(
+   CSVFIELD_ID          numeric(8,0) not null,
+   CSVTEMP_ID           numeric(11,0) not null,
+   FIELD_KEY            varchar(40) not null,
+   FIELD_NM             varchar(40),
+   FIELD_VALUE          text,
+   FIELD_TYPE           int comment '1,固定；2,表字段',
+   FIELD_SORT           numeric(11,0),
+   UPDT_BY              numeric(11,0),
+   UPDT_TS              timestamp,
+   primary key (CSVFIELD_ID)
+);
+
+/*==============================================================*/
+/* Table: T_CSVTEMPLATE_INFO                                    */
+/*==============================================================*/
+create table T_CSVTEMPLATE_INFO
+(
+   CSVTEMP_ID           numeric(8,0) not null,
+   PLATFORM_ID          numeric(11,0) not null,
+   PFACCOUNT_ID         numeric(11,0) not null,
+   PTYPEID              numeric(11,0) not null,
+   SID                  numeric(11,0) not null,
+   CSVTEMP_NM           varchar(40),
+   LOW_EXPR             varchar(200),
+   GD_EXPR              varchar(200),
+   ORIGI_EXPR           varchar(200),
+   JOIN_DATE            datetime,
+   MEMO                 varchar(600),
+   UPDT_BY              numeric(11,0),
+   UPDT_TS              timestamp,
+   primary key (CSVTEMP_ID)
+);
+
+/*==============================================================*/
+/* Table: T_PF_ACCOUNT                                          */
+/*==============================================================*/
+create table T_PF_ACCOUNT
+(
+   PFACCOUNT_ID         numeric(8,0) not null,
+   PFACCOUNT_NM         varchar(40) not null,
+   PLATFORM_ID          numeric(8,0) not null,
+   MEMO                 varchar(600),
+   UPDT_BY              numeric(11,0),
+   UPDT_TS              timestamp,
+   primary key (PFACCOUNT_ID)
+);
+
+/*==============================================================*/
+/* Table: T_PF_PATH                                             */
+/*==============================================================*/
+create table T_PF_PATH
+(
+   PFPATH_ID            numeric(8,0) not null,
+   PLATFORM_ID          numeric(8,0) not null,
+   PFACCOUNT_ID         char(10) not null,
+   NODE_ID              varchar(10),
+   PARENTNODE_ID        varchar(10),
+   PFPATH_VALUE         varchar(60),
+   MEMO                 varchar(600),
+   UPDT_BY              numeric(11,0),
+   UPDT_TS              timestamp,
+   primary key (PFPATH_ID)
+);
+
+/*==============================================================*/
+/* Table: T_PLATFORM_INFO                                       */
+/*==============================================================*/
+create table T_PLATFORM_INFO
+(
+   PLATFORM_ID          numeric(8,0) not null,
+   PLATFORM_NM          varchar(20) not null,
+   PLATFORM_TYPE        varchar(20) comment '英文：1，日文：2，中文：3',
+   MEMO                 varchar(600),
+   UPDT_BY              numeric(11,0),
+   UPDT_TS              timestamp,
+   primary key (PLATFORM_ID)
+);
+
