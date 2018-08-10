@@ -7,6 +7,7 @@ import { FirstComponent } from './root/first/first.component';
 import { SecondComponent } from './root/second/second.component';
 import { ErrorComponent } from './root/error/error.component';
 import { CurrencyUtil } from './util/currencyUtil';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const customComponentList = [
   FirstComponent,
@@ -20,7 +21,8 @@ const customComponentList = [
     ErrorComponent
   ],
   imports: [
-    BrowserModule,
+    // BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule
   ],
   providers: [

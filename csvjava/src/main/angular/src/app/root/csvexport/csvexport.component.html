@@ -1,3 +1,47 @@
-<p>
-  csvexport works!
-</p>
+<div style="margin-bottom: 16px;">
+  <button nz-button [disabled]="disabledButton"
+          [nzType]="'primary'" [nzLoading]="operating"
+          (click)="operateData(tpl)">
+    Reload
+  </button>
+  <span style="margin-left: 8px;" *ngIf="checkedNumber">已选择 {{checkedNumber}} 件商品</span>
+</div>
+<nz-table
+  #rowSelectionTable
+  [nzData]="dataSet"
+  (nzCurrentPageDataChange)="currentPageDataChange($event)"
+  (nzPageIndexChange)="refreshStatus()"
+  (nzPageSizeChange)="refreshStatus()">
+  <thead>
+  <tr>
+    <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Address</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of rowSelectionTable.data">
+    <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus($event)"></td>
+    <td>{{data.name}}</td>
+    <td>{{data.age}}</td>
+    <td>{{data.address}}</td>
+  </tr>
+  </tbody>
+</nz-table>
+
+
+<ng-template #tpl>
+  <div class="ant-notification-notice-content">
+    <div class="ant-notification-notice-with-icon">
+      <span class="ant-notification-notice-icon"><i class="anticon anticon-smile-circle" style="color: rgb(16, 142, 233);"></i></span>
+      <div class="ant-notification-notice-message">已选中商品</div>
+      <div class="ant-notification-notice-description">
+        <div nz-row>
+          <div nz-col class="u-leaveOut" nzSpan="12" *ngFor="let info of checkedData;let i =index">{{info.name}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
