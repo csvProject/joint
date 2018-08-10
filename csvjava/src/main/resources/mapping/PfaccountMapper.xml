@@ -6,24 +6,22 @@
             PFACCOUNT_ID pfaccountId,
             PFACCOUNT_NM pfaccountNm,
             PLATFORM_ID platformId,
-            MEMO memo,
-            UPDT_BY updtBy
+            MEMO memo
         FROM T_PF_ACCOUNT
         WHERE  PLATFORM_ID = #{pfid,jdbcType=INTEGER}
     </select>
 
-    <select id="findPfaccountByPfacctid" parameterType="java.lang.Integer"  resultType="PfaccountDto">
+    <select id="findPfaccountByPfacid" parameterType="java.lang.Integer"  resultType="PfaccountDto">
         SELECT
         PFACCOUNT_ID pfaccountId,
         PFACCOUNT_NM pfaccountNm,
         PLATFORM_ID platformId,
-        MEMO memo,
-        UPDT_BY updtBy
+        MEMO memo
         FROM T_PF_ACCOUNT
-        WHERE  PFACCOUNT_ID = #{pfacctid,jdbcType=INTEGER}
+        WHERE  PFACCOUNT_ID = #{pfacid,jdbcType=INTEGER}
     </select>
 
-    <insert id="saveRole" parameterType="PfaccountDto">
+    <insert id="insertPfaccount" parameterType="PfaccountDto">
 
         insert into T_PF_ACCOUNT
             (
@@ -42,17 +40,32 @@
 
     </insert>
 
-    <delete id="delPfaccountByPfacctid" parameterType="java.lang.Integer">
+    <delete id="delPfaccountByPfacid" parameterType="java.lang.Integer">
         delete from
-        T_PF_ACCOUNT where PFACCOUNT_ID=#{pfacctid,jdbcType=INTEGER}
+        T_PF_ACCOUNT where PFACCOUNT_ID=#{pfacid,jdbcType=INTEGER}
     </delete>
 
-    <update id="updPfaccountByPfacctid" parameterType="PfaccountDto">
+    <update id="updPfaccountByPfacid" parameterType="PfaccountDto">
         update T_PF_ACCOUNT
         set PFACCOUNT_NM =  #{pfaccountNm,jdbcType=VARCHAR},
             MEMO =  #{memo,jdbcType=VARCHAR},
-            UPDT_BY #{logId,jdbcType=INTEGER},
-            UPDT_TS =SYSTIMESTAMP
-        where PFACCOUNT_ID = #{pfacctid,jdbcType=DECIMAL}
+            UPDT_BY = #{logId,jdbcType=INTEGER},
+            UPDT_TS =CURRENT_TIMESTAMP()
+        where PFACCOUNT_ID = #{pfaccountId,jdbcType=INTEGER}
     </update>
+
+    <select id="findPfaccountByPfacnm" parameterType="java.lang.String"  resultType="PfaccountDto">
+        SELECT
+        PFACCOUNT_ID pfaccountId,
+        PFACCOUNT_NM pfaccountNm,
+        PLATFORM_ID platformId,
+        MEMO memo
+        FROM T_PF_ACCOUNT
+        WHERE  PFACCOUNT_NM like  CONCAT('%', #{pfacnm,jdbcType=VARCHAR}, '%')
+    </select>
+
+    <delete id="delPfaccountByPfid" parameterType="java.lang.Integer">
+        delete from
+        T_PF_ACCOUNT where PLATFORM_ID=#{pfid,jdbcType=INTEGER}
+    </delete>
 </mapper>

@@ -18,19 +18,27 @@ public class PfaccountServiceImpl implements PfaccountService {
         return pfaccountDao.findPfaccountByPfid(pfid);
     }
 
-    public PfaccountDto findPfaccountByPfacctid(int pfacctid){
-        return pfaccountDao.findPfaccountByPfacctid(pfacctid);
+    public PfaccountDto findPfaccountByPfacid(int pfacid){
+        return pfaccountDao.findPfaccountByPfacid(pfacid);
     }
 
-    public void delPfaccountByPfacctid(int pfacctid){
-        pfaccountDao.delPfaccountByPfacctid(pfacctid);
+    public List<PfaccountDto> findPfaccountByPfacnm(String pfacnm){
+        return pfaccountDao.findPfaccountByPfacnm(pfacnm);
     }
 
-    public void updPfaccountByPfacctid(PfaccountDto indto){
-        pfaccountDao.updPfaccountByPfacctid(indto);
+    public void delPfaccountByPfacid(int pfacid){
+        pfaccountDao.delPfaccountByPfacid(pfacid);
+    }
+
+    public void updPfaccountByPfacid(PfaccountDto indto){
+        pfaccountDao.updPfaccountByPfacid(indto);
     }
 
     public void insertPfaccount(PfaccountDto indto){
         pfaccountDao.insertPfaccount(indto);
+    }
+
+    public void delPfaccountByPfid(int pfid){
+        pfaccountDao.delPfaccountByPfid(pfid);
     }
 }

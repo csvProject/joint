@@ -9,11 +9,15 @@ import java.util.Map;
 public interface PfaccountDao {
     List<PfaccountDto> findPfaccountByPfid(int pfid);
 
-    PfaccountDto findPfaccountByPfacctid(int pfacctid);
+    PfaccountDto findPfaccountByPfacid(int pfacid);
 
-    public void updPfaccountByPfacctid( PfaccountDto indto);
+    public void updPfaccountByPfacid( PfaccountDto indto);
 
     public void insertPfaccount(PfaccountDto indto);
 
-    public void delPfaccountByPfacctid(int pfacctid);
+    public void delPfaccountByPfacid(int pfacid);
+
+    List<PfaccountDto> findPfaccountByPfacnm(String Pfacnm);
+
+    public void delPfaccountByPfid(int pfid);
 }
