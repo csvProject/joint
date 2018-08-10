@@ -11,8 +11,6 @@ public class PfaccountDto extends BaseDto{
     private int platformId;
     //备注
     private String memo;
-    //更新人
-    private int updtBy;
 
     public int getPfaccountId() {
         return pfaccountId;
@@ -46,11 +44,4 @@ public class PfaccountDto extends BaseDto{
         this.memo = memo;
     }
 
-    public int getUpdtBy() {
-        return updtBy;
-    }
-
-    public void setUpdtBy(int updtBy) {
-        this.updtBy = updtBy;
-    }
 }

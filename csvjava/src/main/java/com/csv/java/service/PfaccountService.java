@@ -8,13 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 public interface PfaccountService {
+    List<PfaccountDto> findPfaccountByPfacnm(String pfacnm);
+
     List<PfaccountDto> findPfaccountByPfid(int pfid);
 
-    PfaccountDto findPfaccountByPfacctid(int pfacctid);
+    PfaccountDto findPfaccountByPfacid(int pfacid);
 
-    public void updPfaccountByPfacctid( PfaccountDto indto);
+    public void updPfaccountByPfacid( PfaccountDto indto);
 
     public void insertPfaccount(PfaccountDto indto);
 
-    public void delPfaccountByPfacctid(int pfacctid);
+    public void delPfaccountByPfacid(int pfacid);
+
+    public void delPfaccountByPfid(int pfid);
 }
