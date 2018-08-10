@@ -36,7 +36,8 @@ public class PfaccountController {
 
     /**
      * 插入账号
-     * REST Client post Content-Type:application/json;charset=UTF-8  Text : {"pfaccountNm":"yahoo账号3","platformId":1,"memo":"","logId":1}
+     * REST Client post Content-Type:application/json;charset=UTF-8
+     * Text : {"pfaccountNm":"yahoo账号3","platformId":1,"memo":"","logId":1}
      * @author wkm
      * @since 2018/8/9
      */
