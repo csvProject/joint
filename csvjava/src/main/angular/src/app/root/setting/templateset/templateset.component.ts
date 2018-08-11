@@ -55,4 +55,32 @@ export class TemplatesetComponent implements OnInit {
     }
   }
 
+  titleList=['新增模板','编辑模板'];
+  modalType;
+  isVisible = false;
+  isConfirmLoading = false;
+
+  delete(type,data){
+    type==1?{
+
+    }:{
+
+    };
+  }
+  showModal(i,type): void {
+    this.isVisible = true;
+    this.modalType = type;
+  }
+
+  handleOk(modalType): void {
+    this.isConfirmLoading = true;
+    setTimeout(() => {
+      this.isVisible = false;
+      this.isConfirmLoading = false;
+    }, 3000);
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
 }
