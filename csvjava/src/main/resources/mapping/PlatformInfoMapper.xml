@@ -8,7 +8,7 @@
             PLATFORM_TYPE platformType,
             MEMO memo
         FROM T_PLATFORM_INFO
-        WHERE  PLATFORM_ID = #{pfid,jdbcType=INTEGER}
+        WHERE  PLATFORM_ID = #{pfId,jdbcType=INTEGER}
     </select>
 
     <insert id="insertPlatformInfo" parameterType="PlatformInfoDto">
@@ -32,7 +32,7 @@
 
     <delete id="delPlatformInfoByPfid" parameterType="java.lang.Integer">
         delete from
-        T_PLATFORM_INFO where PLATFORM_ID=#{pfid,jdbcType=INTEGER}
+        T_PLATFORM_INFO where PLATFORM_ID=#{pfId,jdbcType=INTEGER}
     </delete>
 
     <update id="updPlatformInfoByPfid" parameterType="PlatformInfoDto">
@@ -51,7 +51,7 @@
             PLATFORM_TYPE platformType,
             MEMO memo
         FROM T_PLATFORM_INFO
-        WHERE  PLATFORM_NM like  CONCAT('%', #{pfnm,jdbcType=VARCHAR}, '%')
+        WHERE  PLATFORM_NM like  CONCAT('%', #{pfNm,jdbcType=VARCHAR}, '%')
     </select>
 
 

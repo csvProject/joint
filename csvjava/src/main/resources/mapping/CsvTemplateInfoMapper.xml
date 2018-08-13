@@ -34,7 +34,7 @@
             JOIN_DATE joinDate,
             MEMO memo
         FROM T_CSVTEMPLATE_INFO
-        WHERE  CSVTEMP_ID = #{csvtempid,jdbcType=INTEGER}
+        WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
     </select>
 
     <select id="findCsvTempInfoByCondi" parameterType="CsvTemplateInfoDto"  resultType="CsvTemplateInfoDto">
@@ -97,7 +97,7 @@
 
     <delete id="delCsvTempInfoById" parameterType="java.lang.Integer">
         delete from
-        T_CSVTEMPLATE_INFO  WHERE  CSVTEMP_ID = #{csvtempid,jdbcType=INTEGER}
+        T_CSVTEMPLATE_INFO  WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
     </delete>
 
     <update id="updCsvTempInfoById" parameterType="CsvTemplateInfoDto">

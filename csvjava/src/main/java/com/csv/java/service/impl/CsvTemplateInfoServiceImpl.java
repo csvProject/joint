@@ -3,6 +3,7 @@ package com.csv.java.service.impl;
 
 
 
+import com.csv.java.dao.CsvTemplateDetailDao;
 import com.csv.java.dao.CsvTemplateInfoDao;
 import com.csv.java.entity.CsvTemplateInfoDto;
 import com.csv.java.service.CsvTemplateInfoService;
@@ -17,17 +18,20 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
     @Autowired
     private CsvTemplateInfoDao csvTemplateInfoDao;
 
-    public CsvTemplateInfoDto findCsvTempInfoById(int csvtempid){
-        return csvTemplateInfoDao.findCsvTempInfoById(csvtempid);
+    @Autowired
+    private CsvTemplateDetailDao csvTemplateDetailDao;
+
+    public CsvTemplateInfoDto findCsvTempInfoById(int csvtempId){
+        return csvTemplateInfoDao.findCsvTempInfoById(csvtempId);
     }
 
     public List<CsvTemplateInfoDto> findCsvTempInfoByCondi(CsvTemplateInfoDto indto){
         return csvTemplateInfoDao.findCsvTempInfoByCondi(indto);
     }
 
-    public void delCsvTempInfoById(int csvtempid){
-        csvTemplateInfoDao.delCsvTempInfoById(csvtempid);
-        //.......????
+    public void delCsvTempInfoById(int csvtempId){
+        csvTemplateInfoDao.delCsvTempInfoById(csvtempId);
+        csvTemplateDetailDao.delCsvTempDetailBycsvtempId(csvtempId);
     }
 
     public void updCsvTempInfoById(CsvTemplateInfoDto indto){

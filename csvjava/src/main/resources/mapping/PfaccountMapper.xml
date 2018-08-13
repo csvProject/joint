@@ -8,7 +8,7 @@
             PLATFORM_ID platformId,
             MEMO memo
         FROM T_PF_ACCOUNT
-        WHERE  PLATFORM_ID = #{pfid,jdbcType=INTEGER}
+        WHERE  PLATFORM_ID = #{pfId,jdbcType=INTEGER}
     </select>
 
     <select id="findPfaccountByPfacid" parameterType="java.lang.Integer"  resultType="PfaccountDto">
@@ -18,7 +18,7 @@
         PLATFORM_ID platformId,
         MEMO memo
         FROM T_PF_ACCOUNT
-        WHERE  PFACCOUNT_ID = #{pfacid,jdbcType=INTEGER}
+        WHERE  PFACCOUNT_ID = #{pfacId,jdbcType=INTEGER}
     </select>
 
     <insert id="insertPfaccount" parameterType="PfaccountDto">
@@ -42,7 +42,7 @@
 
     <delete id="delPfaccountByPfacid" parameterType="java.lang.Integer">
         delete from
-        T_PF_ACCOUNT where PFACCOUNT_ID=#{pfacid,jdbcType=INTEGER}
+        T_PF_ACCOUNT where PFACCOUNT_ID=#{pfacId,jdbcType=INTEGER}
     </delete>
 
     <update id="updPfaccountByPfacid" parameterType="PfaccountDto">
@@ -61,11 +61,11 @@
         PLATFORM_ID platformId,
         MEMO memo
         FROM T_PF_ACCOUNT
-        WHERE  PFACCOUNT_NM like  CONCAT('%', #{pfacnm,jdbcType=VARCHAR}, '%')
+        WHERE  PFACCOUNT_NM like  CONCAT('%', #{pfacNm,jdbcType=VARCHAR}, '%')
     </select>
 
     <delete id="delPfaccountByPfid" parameterType="java.lang.Integer">
         delete from
-        T_PF_ACCOUNT where PLATFORM_ID=#{pfid,jdbcType=INTEGER}
+        T_PF_ACCOUNT where PLATFORM_ID=#{pfId,jdbcType=INTEGER}
     </delete>
 </mapper>

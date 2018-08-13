@@ -12,11 +12,11 @@ import java.util.List;
 public interface CsvTemplateInfoService {
     List<CsvTemplateInfoDto> findCsvTempInfoByCondi(CsvTemplateInfoDto indto);
 
-    CsvTemplateInfoDto findCsvTempInfoById(int csvtempid);
+    CsvTemplateInfoDto findCsvTempInfoById(int csvtempId);
 
     public void updCsvTempInfoById(CsvTemplateInfoDto indto);
 
     public void insertCsvTempInfo(CsvTemplateInfoDto indto);
 
-    public void delCsvTempInfoById(int csvtempid);
+    public void delCsvTempInfoById(int csvtempId);
 }

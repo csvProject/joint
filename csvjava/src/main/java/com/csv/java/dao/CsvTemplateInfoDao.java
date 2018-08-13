@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CsvTemplateInfoDao {
     //根据模板ID查询
-    CsvTemplateInfoDto findCsvTempInfoById(int csvtempid);
+    CsvTemplateInfoDto findCsvTempInfoById(int csvtempId);
 
     //多条件查询
     List<CsvTemplateInfoDto> findCsvTempInfoByCondi(CsvTemplateInfoDto indto);
@@ -22,7 +22,7 @@ public interface CsvTemplateInfoDao {
     public void insertCsvTempInfo(CsvTemplateInfoDto indto);
 
     //删除模板
-    public void delCsvTempInfoById(int csvtempid);
+    public void delCsvTempInfoById(int csvtempId);
 
 
 }

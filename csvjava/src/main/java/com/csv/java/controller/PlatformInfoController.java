@@ -15,16 +15,16 @@ public class PlatformInfoController {
 
     //根据平台ID查询
     @RequestMapping(value = "/findbypfid", method = RequestMethod.GET)
-    public Result findPlatformInfoByPfid(@RequestParam(value = "pfid", required = true) int pfid) {
+    public Result findPlatformInfoByPfid(@RequestParam(value = "pfid", required = true) int pfId) {
         System.out.println("开始查询...");
-        return ResultUtil.success(platformInforService.findPlatformInfoByPfid(pfid));
+        return ResultUtil.success(platformInforService.findPlatformInfoByPfid(pfId));
     }
 
     //根据平台名称查询
     @RequestMapping(value = "/findbypfnm", method = RequestMethod.GET)
-    public Result findPlatformInfoByPfnm(@RequestParam(value = "pfnm", required = true) String pfnm) {
+    public Result findPlatformInfoByPfnm(@RequestParam(value = "pfnm", required = true) String pfNm) {
         System.out.println("开始查询...");
-        return ResultUtil.success(platformInforService.findPlatformInfoByPfnm(pfnm)) ;
+        return ResultUtil.success(platformInforService.findPlatformInfoByPfnm(pfNm)) ;
     }
 
     /**
@@ -43,9 +43,9 @@ public class PlatformInfoController {
 
     //根据平台ID删除平台及账号
     @RequestMapping(value = "/delbypfid", method = RequestMethod.GET)
-    public Result delPlatformInfoByPfid(@RequestParam(value = "pfid", required = true) int pfid) {
+    public Result delPlatformInfoByPfid(@RequestParam(value = "pfid", required = true) int pfId) {
         System.out.println("开始删除...");
-        platformInforService.delPlatformInfoByPfid(pfid); ;
+        platformInforService.delPlatformInfoByPfid(pfId); ;
         return ResultUtil.success(null) ;
     }
 

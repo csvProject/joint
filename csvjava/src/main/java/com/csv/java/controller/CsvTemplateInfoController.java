@@ -15,9 +15,9 @@ public class CsvTemplateInfoController {
 
     //根据模板ID查询单件
     @RequestMapping(value = "/findbyid", method = RequestMethod.GET)
-    public Result findCsvTempInfoById(@RequestParam(value = "csvtempid", required = true) int csvtempid) {
+    public Result findCsvTempInfoById(@RequestParam(value = "csvtempid", required = true) int csvtempId) {
         System.out.println("开始查询...");
-        return ResultUtil.success(csvTemplateInfoService.findCsvTempInfoById(csvtempid));
+        return ResultUtil.success(csvTemplateInfoService.findCsvTempInfoById(csvtempId));
     }
 
     //根据条件查询
@@ -43,9 +43,9 @@ public class CsvTemplateInfoController {
 
     //根据ID删除
     @RequestMapping(value = "/delbyid", method = RequestMethod.GET)
-    public Result delPlatformInfoByPfid(@RequestParam(value = "csvtempid", required = true) int csvtempid) {
+    public Result delPlatformInfoByPfid(@RequestParam(value = "csvtempid", required = true) int csvtempId) {
         System.out.println("开始删除...");
-        csvTemplateInfoService.delCsvTempInfoById(csvtempid); ;
+        csvTemplateInfoService.delCsvTempInfoById(csvtempId); ;
         return ResultUtil.success(null) ;
     }
 

@@ -19,17 +19,17 @@ public class PlatformInfoServiceImpl implements PlatformInforService {
     @Autowired
     private PfaccountDao pfaccountDao;
 
-    public PlatformInfoDto findPlatformInfoByPfid(int pfid){
-        return platformInfoDao.findPlatformInfoByPfid(pfid);
+    public PlatformInfoDto findPlatformInfoByPfid(int pfId){
+        return platformInfoDao.findPlatformInfoByPfid(pfId);
     }
 
-    public List<PlatformInfoDto> findPlatformInfoByPfnm(String pfnm){
-        return platformInfoDao.findPlatformInfoByPfnm(pfnm);
+    public List<PlatformInfoDto> findPlatformInfoByPfnm(String pfNm){
+        return platformInfoDao.findPlatformInfoByPfnm(pfNm);
     }
 
-    public void delPlatformInfoByPfid(int pfid){
-        platformInfoDao.delPlatformInfoByPfid(pfid);
-        pfaccountDao.delPfaccountByPfid(pfid);
+    public void delPlatformInfoByPfid(int pfId){
+        platformInfoDao.delPlatformInfoByPfid(pfId);
+        pfaccountDao.delPfaccountByPfid(pfId);
     }
 
     public void updPlatformInfoByPfid(PlatformInfoDto indto){
