@@ -1,6 +1,3 @@
-<p>
-  platformacctset works!
-</p>
 <div nz-row style="text-align: center;">
   <div nz-col nzSpan="12"
        style="
@@ -83,7 +80,7 @@
     </div>
     <div nz-row
          style="min-height: 522px;
-    background-color: #fae81417;
+    background-color: #14e5fa17;
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;">
 
@@ -106,7 +103,7 @@
 </div>
 
 
-<nz-demo-mention-preview></nz-demo-mention-preview>
+<!--<nz-demo-mention-preview></nz-demo-mention-preview>-->
 
 <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
           (nzOnCancel)="handleCancel()">
@@ -115,11 +112,18 @@
   </ng-template>
 
   <ng-template #modalContent>
-    <p>Modal Content</p>
-    <p>Modal Content</p>
-    <p>Modal Content</p>
-    <p>Modal Content</p>
-    <p>Modal Content</p>
+    <div *ngIf="modalType == 0">
+      {{titleList[modalType]}}
+    </div>
+    <div *ngIf="modalType == 1">
+      {{titleList[modalType]}}
+    </div>
+    <div *ngIf="modalType == 2">
+      {{titleList[modalType]}}
+    </div>
+    <div *ngIf="modalType == 3">
+      {{titleList[modalType]}}
+    </div>
   </ng-template>
 
   <ng-template #modalFooter>
