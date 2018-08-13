@@ -21,6 +21,6 @@ public interface PlatformInfoDao {
     public void delPlatformInfoByPfid(int pfid);
 
     //根据平台名称查询
-    List<PlatformInfoDto> findPlatformInfoByPfnm(String Pfnm);
+    List<PlatformInfoDto> findPlatformInfoByPfnm(String pfnm);
 
 }
