@@ -7,15 +7,17 @@ import { PlatformacctsetComponent } from './platformacctset/platformacctset.comp
 const routes: Routes = [
   {
     path:'',
-    component:SettingComponent
-  },
-  {
-    path:'templateset',
-    component:TemplatesetComponent
-  },
-  {
-    path:'platformacctset',
-    component:PlatformacctsetComponent
+    component:SettingComponent,
+    children:[
+      {
+        path:'templateset',
+        component:TemplatesetComponent
+      },
+      {
+        path:'platformacctset',
+        component:PlatformacctsetComponent
+      }
+    ]
   }
 ];
 

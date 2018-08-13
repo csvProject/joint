@@ -1,3 +1,15 @@
-<p>
-  menu works!
-</p>
+<ul nz-menu [nzMode]="'inline'" style="height:100%" [nzTheme]="'dark'">
+  <li nz-menu-item [routerLink]="['csvexport']" [nzSelected]="selected == 0">
+    <span title>
+      <i class="anticon anticon-mail"></i>
+      <span>商品一览</span>
+    </span>
+  </li>
+  <li nz-submenu [nzOpen]="selected == 1 || selected == 2">
+    <span title><i class="anticon anticon-laptop"></i>设置</span>
+    <ul>
+      <li nz-menu-item [routerLink]="['setting/templateset']" [nzSelected]="selected == 1">模板设置</li>
+      <li nz-menu-item [routerLink]="['setting/platformacctset']" [nzSelected]="selected == 2">平台设置</li>
+    </ul>
+  </li>
+</ul>

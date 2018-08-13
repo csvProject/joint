@@ -5,15 +5,17 @@ import {PublicComponent} from "./public.component";
 const routes: Routes = [
   {
     path: '',
-    component: PublicComponent
-  },
-  {
-    path:'csvexport',
-    loadChildren: '../csvexport/csvexport.module#CsvexportModule'
-  },
-  {
-    path:'setting',
-    loadChildren: '../setting/setting.module#SettingModule'
+    component: PublicComponent,
+    children:[
+      {
+        path:'csvexport',
+        loadChildren: '../csvexport/csvexport.module#CsvexportModule'
+      },
+      {
+        path:'setting',
+        loadChildren: '../setting/setting.module#SettingModule'
+      }
+    ]
   }
 ];
 

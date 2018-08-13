@@ -1,0 +1,41 @@
+.plat-div{
+  line-height: 45px;
+  padding: 6px 5px;
+  border-bottom: 1px solid #ccc;
+  /*border-right: 1px solid #ccc;*/
+}
+.plat-div:nth-last-child(1){
+  line-height: 45px;
+  padding: 6px 5px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: -1px;
+}
+.plat>.active{
+  background-color: #fae81417;
+  border-right: 0;
+  border-right: 1px solid #fae81417;
+  margin-right: -1px;
+}
+
+.plat-div:hover{
+  background-color: rgba(57, 250, 23, 0.12);
+  border-right: 0;
+  border-right: 1px solid rgba(57, 250, 23, 0.12);
+  margin-right: -1px;
+}
+
+.account-div{
+  line-height: 45px;
+  padding: 6px 5px;
+  border-bottom: 1px solid #cccccc61;
+  border-right: 1px solid #cccccc61;
+}
+.account-div:nth-last-child(1){
+  line-height: 45px;
+  padding: 6px 5px;
+  border-bottom: 0;
+  border-right: 1px solid #cccccc61;
+}
+.account-div>div{
+
+}
