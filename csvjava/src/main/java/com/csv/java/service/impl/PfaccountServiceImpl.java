@@ -14,20 +14,20 @@ public class PfaccountServiceImpl implements PfaccountService {
     @Autowired
     private PfaccountDao pfaccountDao;
 
-    public List<PfaccountDto> findPfaccountByPfid(int pfid){
-        return pfaccountDao.findPfaccountByPfid(pfid);
+    public List<PfaccountDto> findPfaccountByPfid(int pfId){
+        return pfaccountDao.findPfaccountByPfid(pfId);
     }
 
-    public PfaccountDto findPfaccountByPfacid(int pfacid){
-        return pfaccountDao.findPfaccountByPfacid(pfacid);
+    public PfaccountDto findPfaccountByPfacid(int pfacId){
+        return pfaccountDao.findPfaccountByPfacid(pfacId);
     }
 
-    public List<PfaccountDto> findPfaccountByPfacnm(String pfacnm){
-        return pfaccountDao.findPfaccountByPfacnm(pfacnm);
+    public List<PfaccountDto> findPfaccountByPfacnm(String pfacNm){
+        return pfaccountDao.findPfaccountByPfacnm(pfacNm);
     }
 
-    public void delPfaccountByPfacid(int pfacid){
-        pfaccountDao.delPfaccountByPfacid(pfacid);
+    public void delPfaccountByPfacid(int pfacId){
+        pfaccountDao.delPfaccountByPfacid(pfacId);
     }
 
     public void updPfaccountByPfacid(PfaccountDto indto){
@@ -38,7 +38,4 @@ public class PfaccountServiceImpl implements PfaccountService {
         pfaccountDao.insertPfaccount(indto);
     }
 
-    public void delPfaccountByPfid(int pfid){
-        pfaccountDao.delPfaccountByPfid(pfid);
-    }
 }

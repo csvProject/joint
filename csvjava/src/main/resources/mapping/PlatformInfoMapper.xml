@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csv.java.dao.PlatformInfoDao" >
+    <select id="findPlatformInfoByPfid" parameterType="java.lang.Integer"  resultType="PlatformInfoDto">
+        SELECT
+            PLATFORM_ID platformId,
+            PLATFORM_NM platformNm,
+            PLATFORM_TYPE platformType,
+            MEMO memo
+        FROM T_PLATFORM_INFO
+        WHERE  PLATFORM_ID = #{pfId,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insertPlatformInfo" parameterType="PlatformInfoDto">
+
+        insert into T_PLATFORM_INFO
+            (
+            PLATFORM_NM,
+            PLATFORM_TYPE,
+            MEMO,
+            UPDT_BY,
+            UPDT_TS)
+        VALUES(
+
+            #{platformNm,jdbcType=VARCHAR},
+            #{platformType,jdbcType=INTEGER},
+            #{memo,jdbcType=VARCHAR},
+            #{logId,jdbcType=INTEGER},
+            CURRENT_TIMESTAMP())
+
+    </insert>
+
+    <delete id="delPlatformInfoByPfid" parameterType="java.lang.Integer">
+        delete from
+        T_PLATFORM_INFO where PLATFORM_ID=#{pfId,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updPlatformInfoByPfid" parameterType="PlatformInfoDto">
+        update T_PLATFORM_INFO
+        set PLATFORM_NM =  #{platformNm,jdbcType=VARCHAR},
+            MEMO =  #{memo,jdbcType=VARCHAR},
+            UPDT_BY = #{logId,jdbcType=INTEGER},
+            UPDT_TS =CURRENT_TIMESTAMP()
+        where PLATFORM_ID = #{platformId,jdbcType=INTEGER}
+    </update>
+
+    <select id="findPlatformInfoByPfnm" parameterType="java.lang.String"  resultType="PlatformInfoDto">
+         SELECT
+            PLATFORM_ID platformId,
+            PLATFORM_NM platformNm,
+            PLATFORM_TYPE platformType,
+            MEMO memo
+        FROM T_PLATFORM_INFO
+        WHERE  PLATFORM_NM like  CONCAT('%', #{pfNm,jdbcType=VARCHAR}, '%')
+    </select>
+
+
+</mapper>

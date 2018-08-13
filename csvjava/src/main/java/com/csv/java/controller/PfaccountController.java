@@ -15,28 +15,29 @@ public class PfaccountController {
 
     //根据账号ID查询账号信息
     @RequestMapping(value = "/findbypfacid", method = RequestMethod.GET)
-    public Result findPfaccountByPfacid(@RequestParam(value = "pfacid", required = true) int pfacid) {
+    public Result findPfaccountByPfacid(@RequestParam(value = "pfacid", required = true) int pfacId) {
         System.out.println("开始查询...");
-        return ResultUtil.success(pfaccountService.findPfaccountByPfacid(pfacid)) ;
+        return ResultUtil.success(pfaccountService.findPfaccountByPfacid(pfacId)) ;
     }
 
     //根据平台ID查询平台下所有账号
     @RequestMapping(value = "/findbypfid", method = RequestMethod.GET)
-    public Result findPfaccountByPfid(@RequestParam(value = "pfid", required = true) int pfid) {
+    public Result findPfaccountByPfid(@RequestParam(value = "pfid", required = true) int pfId) {
         System.out.println("开始查询...");
-        return ResultUtil.success(pfaccountService.findPfaccountByPfid(pfid)) ;
+        return ResultUtil.success(pfaccountService.findPfaccountByPfid(pfId)) ;
     }
 
     //根据账号名称查账号
     @RequestMapping(value = "/findbypfacnm", method = RequestMethod.GET)
-    public Result findPfaccountByPfacnm(@RequestParam(value = "pfacnm", required = true) String pfacnm) {
+    public Result findPfaccountByPfacnm(@RequestParam(value = "pfacnm", required = true) String pfacNm) {
         System.out.println("开始查询...");
-        return ResultUtil.success(pfaccountService.findPfaccountByPfacnm(pfacnm)) ;
+        return ResultUtil.success(pfaccountService.findPfaccountByPfacnm(pfacNm)) ;
     }
 
     /**
      * 插入账号
-     * REST Client post Content-Type:application/json;charset=UTF-8  Text : {"pfaccountNm":"yahoo账号3","platformId":1,"memo":"","logId":1}
+     * REST Client post Content-Type:application/json;charset=UTF-8
+     * Text : {"pfaccountNm":"yahoo账号3","platformId":1,"memo":"","logId":1}
      * @author wkm
      * @since 2018/8/9
      */
@@ -49,9 +50,9 @@ public class PfaccountController {
 
     //根据账号ID删除账号
     @RequestMapping(value = "/delbypfacid", method = RequestMethod.GET)
-    public Result delPfaccountByPfacid(@RequestParam(value = "pfacid", required = true) int pfacid) {
+    public Result delPfaccountByPfacid(@RequestParam(value = "pfacid", required = true) int pfacId) {
         System.out.println("开始删除...");
-        pfaccountService.delPfaccountByPfacid(pfacid) ;
+        pfaccountService.delPfaccountByPfacid(pfacId) ;
         return ResultUtil.success(null) ;
     }
 
@@ -63,11 +64,5 @@ public class PfaccountController {
         return ResultUtil.success(null) ;
     }
 
-    //根据平台ID删除所属账号
-    @RequestMapping(value = "/delbypfid", method = RequestMethod.GET)
-    public Result delPfaccountByPfid(@RequestParam(value = "pfid", required = true) int pfid) {
-        System.out.println("开始删除...");
-        pfaccountService.delPfaccountByPfid(pfid) ;
-        return ResultUtil.success(null) ;
-    }
+
 }

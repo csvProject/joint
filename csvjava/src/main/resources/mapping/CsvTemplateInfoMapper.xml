@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csv.java.dao.CsvTemplateInfoDao" >
+    <!-- 查询条件 -->
+    <sql id="forcondi">
+        <if test="platformId !=null and platformId !=0">
+            AND t.PLATFORM_ID = #{platformId,jdbcType=INTEGER}
+        </if>
+        <if test="pfaccountId !=null and pfaccountId !=0">
+            AND t.PFACCOUNT_ID = #{pfaccountId,jdbcType=INTEGER}
+        </if>
+        <if test="ptypeId !=null and ptypeId !=0">
+            AND t.PTYPEID = #{ptypeId,jdbcType=INTEGER}
+        </if>
+        <if test="sId !=null and sId !=0">
+            AND t.SID = #{sId,jdbcType=INTEGER}
+        </if>
+        <if test="csvtempNm !=null and csvtempNm !=''">
+            AND   CSVTEMP_NM like  CONCAT('%', #{csvtempNm,jdbcType=VARCHAR}, '%')
+        </if>
+    </sql>
+
+    <select id="findCsvTempInfoById" parameterType="java.lang.Integer"  resultType="CsvTemplateInfoDto">
+        SELECT
+            CSVTEMP_ID csvtempId,
+            PLATFORM_ID platformId,
+            PFACCOUNT_ID pfaccountId,
+            PTYPEID ptypeId,
+            SID sId,
+            CSVTEMP_NM csvtempNm,
+            LOW_EXPR lowExpr,
+            GD_EXPR gdExpr,
+            ORIGI_EXPR origiExpr,
+            JOIN_DATE joinDate,
+            MEMO memo
+        FROM T_CSVTEMPLATE_INFO
+        WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+    </select>
+
+    <select id="findCsvTempInfoByCondi" parameterType="CsvTemplateInfoDto"  resultType="CsvTemplateInfoDto">
+        SELECT
+            t.CSVTEMP_ID csvtempId,
+            t.PLATFORM_ID platformId,
+            t.PFACCOUNT_ID pfaccountId,
+            t.PTYPEID ptypeId,
+            t.SID sId,
+            t.CSVTEMP_NM csvtempNm,
+            t.LOW_EXPR lowExpr,
+            t.GD_EXPR gdExpr,
+            t.ORIGI_EXPR origiExpr,
+            t.JOIN_DATE joinDate,
+            t.MEMO memo,
+            pf.PLATFORM_NM platformNm,
+            pfac.PFACCOUNT_NM pfaccountNm,
+            pt.typename ptypeNm,
+            s.suppliertitle sNm
+        FROM T_CSVTEMPLATE_INFO t
+        left join T_PLATFORM_INFO pf on t.PLATFORM_ID = pf.PLATFORM_ID
+        left join T_PF_ACCOUNT pfac on t.PFACCOUNT_ID = pfac.PFACCOUNT_ID
+        left join t_supplier s on t.SID= s.ID
+        left join t_ptype pt on t.PTYPEID = pt.ID
+        WHERE 1=1
+        <include refid="forcondi"></include>
+    </select>
+
+    <insert id="insertCsvTempInfo" parameterType="CsvTemplateInfoDto">
+
+        insert into T_CSVTEMPLATE_INFO
+            (
+            PLATFORM_ID ,
+            PFACCOUNT_ID ,
+            PTYPEID ,
+            SID ,
+            CSVTEMP_NM ,
+            LOW_EXPR ,
+            GD_EXPR ,
+            ORIGI_EXPR ,
+            JOIN_DATE ,
+            MEMO ,
+            UPDT_BY,
+            UPDT_TS)
+        VALUES(
+            #{platformId,jdbcType=INTEGER},
+            #{pfaccountId,jdbcType=INTEGER},
+            #{ptypeId,jdbcType=INTEGER},
+            #{sId,jdbcType=INTEGER},
+            #{csvtempNm,jdbcType=VARCHAR},
+            #{lowExpr,jdbcType=VARCHAR},
+            #{gdExpr,jdbcType=VARCHAR},
+            #{origiExpr,jdbcType=VARCHAR},
+            now(),
+            #{memo,jdbcType=VARCHAR},
+            #{logId,jdbcType=INTEGER},
+            CURRENT_TIMESTAMP())
+
+    </insert>
+
+    <delete id="delCsvTempInfoById" parameterType="java.lang.Integer">
+        delete from
+        T_CSVTEMPLATE_INFO  WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updCsvTempInfoById" parameterType="CsvTemplateInfoDto">
+        update T_CSVTEMPLATE_INFO
+        set
+            PLATFORM_ID =#{platformId,jdbcType=INTEGER},
+            PFACCOUNT_ID =#{pfaccountId,jdbcType=INTEGER},
+            PTYPEID =#{ptypeId,jdbcType=INTEGER},
+            SID =#{sId,jdbcType=INTEGER},
+            CSVTEMP_NM =#{csvtempNm,jdbcType=VARCHAR} ,
+            LOW_EXPR =#{lowExpr,jdbcType=VARCHAR},
+            GD_EXPR =#{gdExpr,jdbcType=VARCHAR},
+            ORIGI_EXPR =#{origiExpr,jdbcType=VARCHAR} ,
+            MEMO =  #{memo,jdbcType=VARCHAR},
+            UPDT_BY = #{logId,jdbcType=INTEGER},
+            UPDT_TS =CURRENT_TIMESTAMP()
+        WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+    </update>
+
+</mapper>
