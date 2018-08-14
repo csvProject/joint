@@ -30,7 +30,7 @@ public class CsvTemplateInfoController {
     /**
      * 添加模板
      * REST Client post Content-Type:application/json;charset=UTF-8  Text :
-     *{"platformId":1,"pfaccountId":3,"ptypeId":1,"sId":1,"csvtempNm":"测试模板1","lowExpr":"lowExpr1","gdExpr":"gdExpr1","origiExpr":"origiExpr1","memo":"112","logId":1}
+     *{"platformId":1,"pfaccountId":3,"ptypeId":1,"sId":1,"csvtempNm":"测试模板1","lowExpr":"lowExpr1","gdExpr":"gdExpr1","origiExpr":"origiExpr1","isUse":0,"joinBy":1,"memo":"112","logId":1}
      * @author wkm
      * @since 2018/8/9
      */

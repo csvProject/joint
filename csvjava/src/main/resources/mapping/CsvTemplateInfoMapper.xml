@@ -31,6 +31,8 @@
             LOW_EXPR lowExpr,
             GD_EXPR gdExpr,
             ORIGI_EXPR origiExpr,
+            IS_USE isUse,
+            JOIN_BY joinBy,
             JOIN_DATE joinDate,
             MEMO memo
         FROM T_CSVTEMPLATE_INFO
@@ -48,6 +50,8 @@
             t.LOW_EXPR lowExpr,
             t.GD_EXPR gdExpr,
             t.ORIGI_EXPR origiExpr,
+            t.IS_USE isUse,
+            t.JOIN_BY joinBy,
             t.JOIN_DATE joinDate,
             t.MEMO memo,
             pf.PLATFORM_NM platformNm,
@@ -75,6 +79,8 @@
             LOW_EXPR ,
             GD_EXPR ,
             ORIGI_EXPR ,
+            IS_USE ,
+            JOIN_BY ,
             JOIN_DATE ,
             MEMO ,
             UPDT_BY,
@@ -88,6 +94,8 @@
             #{lowExpr,jdbcType=VARCHAR},
             #{gdExpr,jdbcType=VARCHAR},
             #{origiExpr,jdbcType=VARCHAR},
+            #{isUse,jdbcType=INTEGER},
+            #{logId,jdbcType=INTEGER},
             now(),
             #{memo,jdbcType=VARCHAR},
             #{logId,jdbcType=INTEGER},
@@ -111,6 +119,7 @@
             LOW_EXPR =#{lowExpr,jdbcType=VARCHAR},
             GD_EXPR =#{gdExpr,jdbcType=VARCHAR},
             ORIGI_EXPR =#{origiExpr,jdbcType=VARCHAR} ,
+            IS_USE =#{isUse,jdbcType=INTEGER},
             MEMO =  #{memo,jdbcType=VARCHAR},
             UPDT_BY = #{logId,jdbcType=INTEGER},
             UPDT_TS =CURRENT_TIMESTAMP()

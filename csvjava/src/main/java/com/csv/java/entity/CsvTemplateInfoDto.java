@@ -34,6 +34,12 @@ public class CsvTemplateInfoDto extends BaseDto{
     //创建日期
     private Date joinDate;
 
+    //创建人
+    private int joinBy;
+
+    //使用标志
+    private int isUse;
+
     //备注
     private String memo;
 
@@ -131,6 +137,22 @@ public class CsvTemplateInfoDto extends BaseDto{
 
     public String getMemo() {
         return memo;
+    }
+
+    public int getJoinBy() {
+        return joinBy;
+    }
+
+    public void setJoinBy(int joinBy) {
+        this.joinBy = joinBy;
+    }
+
+    public int getIsUse() {
+        return isUse;
+    }
+
+    public void setIsUse(int isUse) {
+        this.isUse = isUse;
     }
 
     public void setMemo(String memo) {
