@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csv.java.dao.ProductDao" >
+    <!-- 查询条件 -->
+    <sql id="forcondi">
+        <if test="productId !=null and productId !=0">
+            AND t.id = #{productId,jdbcType=INTEGER}
+        </if>
+        <if test="sId !=null and sId !=0">
+            AND t.sid = #{sId,jdbcType=INTEGER}
+        </if>
+        <if test="ptypeId !=null and ptypeId !=0">
+            AND t.ptypeid = #{ptypeId,jdbcType=INTEGER}
+        </if>
+        <if test="sku !=null and sku !=''">
+            AND  t.sku =  #{sku,jdbcType=VARCHAR}
+        </if>
+        <if test="isXj !=null and isXj !=0">
+            AND  t.is_xj =  #{isXj,jdbcType=INTEGER}
+        </if>
+        <if test="pmCn !=null and pmCn !=''">
+            AND   pm_cn like  CONCAT('%', #{pmCn,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="skuName !=null and skuName !=''">
+            AND  (sku like  CONCAT('%', #{skuName,jdbcType=VARCHAR}, '%')
+            or pm_cn like  CONCAT('%', #{skuName,jdbcType=VARCHAR}, '%'))
+        </if>
+        <if test="sjStartDt !=null and sjStartDt !=''">
+            AND DATE_FORMAT(t.sj_datetime,'%Y-%m-%d') &gt;=DATE_FORMAT(#{sjStartDt,jdbcType=VARCHAR},'%Y-%m-%d')
+        </if>
+        <if test="sjEndDt !=null and sjEndDt !=''">
+            AND DATE_FORMAT(t.sj_datetime,'%Y-%m-%d') &lt;=DATE_FORMAT(#{sjStartDt,jdbcType=VARCHAR},'%Y-%m-%d')
+        </if>
+    </sql>
+
+    <select id="findProductByCondi" parameterType="ProductDto"  resultType="ProductDto">
+        SELECT
+            t.id productId,
+            t.sku sku,
+            t.isset isSet,
+            t.ptypeid ptypeId,
+            t.sid sId,
+            t.ptypemark ptypeMark,
+            t.cglink cgLink,
+            t.skus skus,
+            t.csbh csbh,
+            t.baseprice basePrice,
+            t.weight weight,
+            t.pm_cn pmCn,
+            t.memo memo,
+            t.cnlowsalesprice cnlowSalesPrice,
+            t.set_cn setCn,
+            t.att_cn_1 attCn1,
+            t.att_cn_2 attCn2,
+            t.att_cn_3 attCn3,
+            t.att_cn_4 attCn4,
+            t.pm_jp pmJp,
+            t.rblowsalesprice rblowSalesPrice,
+            t.set_jp setJp,
+            t.att_jp_1 attJp1,
+            t.att_jp_2 attJp2,
+            t.att_jp_3 attJp3,
+            t.att_jp_4 attJp4,
+            t.url_jp urlJp,
+            t.url_key_jp urlKeyJp,
+            t.pm_om pmOm,
+            t.omlowsalesprice omlowSalesPrice,
+            t.set_om setOm,
+            t.att_om_1 attOm1,
+            t.att_om_2 attOm2,
+            t.att_om_3 attOm3,
+            t.att_om_4 attOm4,
+            t.url_om urlOm,
+            t.url_key_om urlKeyOm,
+            t.pic_url picUrl,
+            t.is_xj isXj,
+            t.sj_datetime sjDatetime,
+            pt.typename ptypeNm,
+            s.suppliertitle sNm
+        FROM t_product t
+        left join t_supplier s on t.SID= s.ID
+        left join t_ptype pt on t.PTYPEID = pt.ID
+        WHERE 1=1
+        <include refid="forcondi"></include>
+    </select>
+
+    <select id="findProductById" parameterType="java.lang.Integer"  resultType="ProductDto">
+        SELECT
+        t.id productId,
+        t.sku sku,
+        t.isset isSet,
+        t.ptypeid ptypeId,
+        t.sid sId,
+        t.ptypemark ptypeMark,
+        t.cglink cgLink,
+        t.skus skus,
+        t.csbh csbh,
+        t.baseprice basePrice,
+        t.weight weight,
+        t.pm_cn pmCn,
+        t.memo memo,
+        t.cnlowsalesprice cnlowSalesPrice,
+        t.set_cn setCn,
+        t.att_cn_1 attCn1,
+        t.att_cn_2 attCn2,
+        t.att_cn_3 attCn3,
+        t.att_cn_4 attCn4,
+        t.pm_jp pmJp,
+        t.rblowsalesprice rblowSalesPrice,
+        t.set_jp setJp,
+        t.att_jp_1 attJp1,
+        t.att_jp_2 attJp2,
+        t.att_jp_3 attJp3,
+        t.att_jp_4 attJp4,
+        t.url_jp urlJp,
+        t.url_key_jp urlKeyJp,
+        t.pm_om pmOm,
+        t.omlowsalesprice omlowSalesPrice,
+        t.set_om setOm,
+        t.att_om_1 attOm1,
+        t.att_om_2 attOm2,
+        t.att_om_3 attOm3,
+        t.att_om_4 attOm4,
+        t.url_om urlOm,
+        t.url_key_om urlKeyOm,
+        t.pic_url picUrl,
+        t.is_xj isXj,
+        t.sj_datetime sjDatetime,
+        pt.typename ptypeNm,
+        s.suppliertitle sNm
+        FROM t_product t
+        left join t_supplier s on t.SID= s.ID
+        left join t_ptype pt on t.PTYPEID = pt.ID
+        WHERE t.id = #{productId,jdbcType=INTEGER}
+    </select>
+</mapper>
