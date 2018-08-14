@@ -2,7 +2,7 @@ package com.csv.java.entity;
 
 import java.util.Date;
 
-//平台dto
+//模板信息dto
 public class CsvTemplateInfoDto extends BaseDto{
     //CSV模板ID
     private int csvtempId;

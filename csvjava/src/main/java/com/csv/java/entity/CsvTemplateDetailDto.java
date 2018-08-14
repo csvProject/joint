@@ -1,6 +1,6 @@
 package com.csv.java.entity;
 
-//dto
+//模板字段dto
 public class CsvTemplateDetailDto extends BaseDto{
     //CSV模板字段ID
     private int csvFieldId;
