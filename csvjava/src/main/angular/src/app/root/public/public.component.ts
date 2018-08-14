@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PublicService} from "../../http/public.service";
 
 @Component({
   selector: 'app-public',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PublicComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service:PublicService) { }
 
   ngOnInit() {
   }

@@ -3,8 +3,11 @@ package com.csv.java.webappconfigure;
 import com.csv.java.webappconfigure.interceptor.CommonInterceptor;
 import com.csv.java.webappconfigure.interceptor.UserInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import static com.csv.java.config.ConstantConfig.*;
 
 /**
  * wkm
@@ -19,5 +22,13 @@ public class CustomWebAppConfigures implements WebMvcConfigurer {
         // addPathPatterns 添加拦截规则
         registry.addInterceptor(new CommonInterceptor()).addPathPatterns("/**");
         registry.addInterceptor(new UserInterceptor()).addPathPatterns("/user/**");
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins(Origins)
+                .allowedMethods("*")
+                .allowCredentials(false).maxAge(3600);
     }
 }

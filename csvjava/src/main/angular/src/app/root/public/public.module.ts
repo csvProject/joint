@@ -9,10 +9,12 @@ import { PublicComponent } from './public.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
 import { NotificationComponent } from './notification/notification.component';
+import { PublicService } from '../../http/public.service';
 
 /** 配置 angular i18n **/
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
+import { httpInterceptorProviders } from '../../http';
 registerLocaleData(zh);
 
 @NgModule({
@@ -26,7 +28,7 @@ registerLocaleData(zh);
   ],
   declarations: [PublicComponent, HeaderComponent, MenuComponent,NotificationComponent],
   /** 配置 ng-zorro-antd 国际化 **/
-  providers   : [ { provide: NZ_I18N, useValue: zh_CN } ],
+  providers   : [ httpInterceptorProviders,{ provide: NZ_I18N, useValue: zh_CN },PublicService ],
   exports:[
     // NgZorroAntdModule
   ]

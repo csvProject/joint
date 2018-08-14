@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TemplatesetService} from "../../../http/templateset.service";
 
 @Component({
   selector: 'app-templateset',
@@ -6,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./templateset.component.css']
 })
 export class TemplatesetComponent implements OnInit {
+  pfnm:string='';
 
-  constructor() { }
+  constructor(private service:TemplatesetService) { }
 
   allChecked = false;
-  disabledButton = true; 
+  disabledButton = true;
   checkedNumber = 0;
   displayData: Array<{ name: string; age: number; address: string; checked: boolean }> = [];
   operating = false;
@@ -45,6 +47,7 @@ export class TemplatesetComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getTemplateInfo(this.pfnm);
     for (let i = 0; i < 46; i++) {
       this.dataSet.push({
         name   : `Edward King ${i}`,
@@ -53,6 +56,12 @@ export class TemplatesetComponent implements OnInit {
         checked: false
       });
     }
+  }
+
+  getTemplateInfo(pfnm){
+    this.service.getTemplateInfo(pfnm).subscribe(data=>{
+      console.log(data);
+    })
   }
 
   titleList=['新增模板','编辑模板'];
