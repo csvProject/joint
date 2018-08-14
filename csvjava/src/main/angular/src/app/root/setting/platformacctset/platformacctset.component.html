@@ -18,13 +18,12 @@
       border-bottom: 1px solid #ccc;
       border-right: 1px solid #ccc;"
     >
-      <div nz-col nzSpan="4">序号</div>
-      <div nz-col nzSpan="14">平台</div>
-      <div nz-col nzSpan="6">
-        <div nz-col nzSpan="12">
-          新增：
-        </div>
-        <div nz-col nzSpan="12">
+      <div nz-col nzSpan="2">序号</div>
+      <div nz-col nzSpan="8">平台</div>
+      <div nz-col nzSpan="4">平台类型</div>
+      <div nz-col nzSpan="6">备注</div>
+      <div nz-col nzSpan="4">
+        <div nz-col nzSpan="24">
           <button nz-button nzType="primary" (click)="pushElement(0)"><i class="anticon anticon-plus"></i></button>
         </div>
       </div>
@@ -37,9 +36,11 @@
     border-right: 1px solid #ccc;">
       <div *ngFor="let plat of platList;let i = index" class="plat-div" nz-row
            (click)="clickPlat(i,plat,platList)" [ngClass]="{'active':(selectPlatId == plat.id)}">
-        <div nz-col nzSpan="4">{{i+1}}</div>
-        <div nz-col nzSpan="14">{{plat.name}}</div>
-        <div nz-col nzSpan="6">
+        <div nz-col nzSpan="2">{{i+1}}</div>
+        <div nz-col nzSpan="8">{{plat.name}}</div>
+        <div nz-col nzSpan="4">{{plat.name}}</div>
+        <div nz-col nzSpan="6">{{plat.name}}</div>
+        <div nz-col nzSpan="4">
           <div nz-col nzSpan="12">
             <button nz-button nzType="primary" (click)="showModal(i,plat)"><i class="anticon anticon-edit"></i></button>
           </div>
@@ -67,13 +68,11 @@
           font-size: 18px;
     font-weight: 600;
       background-color: #93d0d0;">
-      <div nz-col nzSpan="4">序号</div>
-      <div nz-col nzSpan="14">用户</div>
-      <div nz-col nzSpan="6">
-        <div nz-col nzSpan="12">
-          新增：
-        </div>
-        <div nz-col nzSpan="12">
+      <div nz-col nzSpan="2">序号</div>
+      <div nz-col nzSpan="10">用户名称</div>
+      <div nz-col nzSpan="8">备注</div>
+      <div nz-col nzSpan="4">
+        <div nz-col nzSpan="24">
           <button nz-button nzType="primary" (click)="pushElement(2)"><i class="anticon anticon-plus"></i></button>
         </div>
       </div>
@@ -85,9 +84,10 @@
     border-right: 1px solid #ccc;">
 
       <div *ngFor="let account of accountList ;let i = index" class="account-div" nz-row>
-        <div nz-col nzSpan="4">{{i+1}}</div>
-        <div nz-col nzSpan="14">{{account.name}}</div>
-        <div nz-col nzSpan="6">
+        <div nz-col nzSpan="2">{{i+1}}</div>
+        <div nz-col nzSpan="10">{{account.name}}</div>
+        <div nz-col nzSpan="8">{{account.name}}</div>
+        <div nz-col nzSpan="4">
           <div nz-col nzSpan="12">
             <button nz-button nzType="primary" (click)="showModal(i,account)"><i class="anticon anticon-edit"></i>
             </button>
