@@ -8,6 +8,7 @@ import { TemplatesetComponent } from './templateset/templateset.component';
 import { NzMentionPreviewDemoComponent } from './platformacctset/nz-mention-preview/nz-mention-preview-demo.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
+import { TemplatesetService } from '../../http/templateset.service';
 
 @NgModule({
   imports: [
@@ -17,6 +18,9 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     NgZorroAntdModule
   ],
-  declarations: [SettingComponent, PlatformacctsetComponent, TemplatesetComponent,NzMentionPreviewDemoComponent]
+  declarations: [SettingComponent, PlatformacctsetComponent, TemplatesetComponent,NzMentionPreviewDemoComponent],
+  providers:[
+    TemplatesetService
+  ]
 })
 export class SettingModule { }
