@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csv.java.dao.CsvTemplateDetailDao" >
+
+    <select id="findCsvTempDetailById" parameterType="java.lang.Integer"  resultType="CsvTemplateDetailDto">
+        SELECT
+            CSVFIELD_ID csvFieldId,
+            CSVTEMP_ID csvtempId,
+            FIELD_KEY fieldKey,
+            FIELD_NM fieldNm,
+            FIELD_VALUE fieldValue,
+            FIELD_TYPE fieldType,
+            FIELD_SORT fieldSort
+        FROM T_CSVTEMPLATE_DETAIL
+        WHERE  CSVFIELD_ID = #{csvFieldId,jdbcType=INTEGER}
+    </select>
+
+    <select id="findCsvTempDetailByKey" parameterType="java.lang.String"  resultType="CsvTemplateDetailDto">
+        SELECT
+            CSVFIELD_ID csvFieldId,
+            CSVTEMP_ID csvtempId,
+            FIELD_KEY fieldKey,
+            FIELD_NM fieldNm,
+            FIELD_VALUE fieldValue,
+            FIELD_TYPE fieldType,
+            FIELD_SORT fieldSort
+        FROM T_CSVTEMPLATE_DETAIL
+        WHERE FIELD_KEY like  CONCAT('%', #{fieldKey,jdbcType=VARCHAR}, '%')
+    </select>
+
+    <insert id="insertCsvTempDetail" parameterType="CsvTemplateDetailDto">
+
+        insert into T_CSVTEMPLATE_DETAIL
+            (
+            CSVTEMP_ID ,
+            FIELD_KEY ,
+            FIELD_NM ,
+            FIELD_VALUE ,
+            FIELD_TYPE ,
+            FIELD_SORT,
+            UPDT_BY,
+            UPDT_TS)
+        VALUES(
+            #{csvtempId,jdbcType=INTEGER},
+            #{fieldKey,jdbcType=VARCHAR},
+            #{fieldNm,jdbcType=VARCHAR},
+            #{fieldValue,jdbcType=VARCHAR},
+            #{fieldType,jdbcType=INTEGER},
+            #{fieldSort,jdbcType=INTEGER},
+            #{logId,jdbcType=INTEGER},
+            CURRENT_TIMESTAMP())
+
+    </insert>
+
+    <delete id="delCsvTempDetailById" parameterType="java.lang.Integer">
+        delete from
+        T_CSVTEMPLATE_DETAIL  WHERE  CSVFIELD_ID = #{csvFieldId,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="delCsvTempDetailBycsvtempId" parameterType="java.lang.Integer">
+        delete from
+        T_CSVTEMPLATE_DETAIL  WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updCsvTempDetailById" parameterType="CsvTemplateDetailDto">
+        update T_CSVTEMPLATE_DETAIL
+        set
+            CSVTEMP_ID =#{csvtempId,jdbcType=INTEGER},
+            FIELD_KEY =#{fieldKey,jdbcType=VARCHAR},
+            FIELD_NM =#{fieldNm,jdbcType=VARCHAR},
+            FIELD_VALUE =#{fieldValue,jdbcType=VARCHAR},
+            FIELD_TYPE =#{fieldType,jdbcType=INTEGER} ,
+            FIELD_SORT =#{fieldSort,jdbcType=INTEGER},
+            UPDT_BY = #{logId,jdbcType=INTEGER},
+            UPDT_TS =CURRENT_TIMESTAMP()
+        WHERE  CSVFIELD_ID = #{csvFieldId,jdbcType=INTEGER}
+    </update>
+
+</mapper>
