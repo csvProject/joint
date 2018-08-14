@@ -6,29 +6,54 @@
   </button>
   <span style="margin-left: 8px;" *ngIf="checkedNumber">已选择 {{checkedNumber}} 件商品</span>
 </div>
-<nz-table
-  #rowSelectionTable
-  [nzData]="dataSet"
-  (nzCurrentPageDataChange)="currentPageDataChange($event)"
-  (nzPageIndexChange)="refreshStatus()"
-  (nzPageSizeChange)="refreshStatus()">
-  <thead>
-  <tr>
-    <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
-    <th>Name</th>
-    <th>Age</th>
-    <th>Address</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let data of rowSelectionTable.data">
-    <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus($event)"></td>
-    <td>{{data.name}}</td>
-    <td>{{data.age}}</td>
-    <td>{{data.address}}</td>
-  </tr>
-  </tbody>
-</nz-table>
+<div >
+  <nz-table
+    #rowSelectionTable
+    nzBordered
+    [nzData]="dataSet"
+    [nzScroll]="{x:'1778px'}"
+    [nzTitle]="'商品列表'"
+    (nzCurrentPageDataChange)="currentPageDataChange($event)"
+    (nzPageIndexChange)="refreshStatus()"
+    (nzPageSizeChange)="refreshStatus()">
+    <thead>
+    <tr>
+      <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+      <th>图片</th>
+      <th>sku</th>
+      <th>供应商</th>
+      <th>采购链接</th>
+      <th>厂商编号</th>
+      <th>单品&组合</th>
+      <th>产品类别</th>
+      <th>成本价格</th>
+      <th>重量</th>
+      <th>中文品名</th>
+      <th>中文套组</th>
+      <th>启用日期</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of rowSelectionTable.data">
+      <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus($event)"></td>
+      <td>{{data.name}}</td>
+      <td>{{data.age}}</td>
+      <td>{{data.address}}</td>
+      <td>{{data.name}}</td>
+      <td>{{data.age}}</td>
+      <td>{{data.address}}</td>
+      <td>{{data.name}}</td>
+      <td>{{data.age}}</td>
+      <td>{{data.address}}</td>
+      <td>{{data.name}}</td>
+      <td>{{data.age}}</td>
+      <td>{{data.address}}</td>
+      <td>{{data.address}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
 
 
 <ng-template #tpl>
