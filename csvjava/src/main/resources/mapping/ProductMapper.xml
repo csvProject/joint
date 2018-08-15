@@ -74,7 +74,7 @@
             t.url_key_om urlKeyOm,
             t.pic_url picUrl,
             t.is_xj isXj,
-            t.sj_datetime sjDatetime,
+            DATE_FORMAT(t.sj_datetime,'%Y-%m-%d') sjDatetime,
             pt.typename ptypeNm,
             s.suppliertitle sNm
         FROM t_product t
