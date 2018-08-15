@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csv.java.dao.CsvTemplateRuleDao" >
+
+    <select id="findCsvTempRuleById" parameterType="java.lang.Integer"  resultType="CsvTemplateRuleDto">
+        SELECT
+            CSVTEMP_RULE_ID csvtempRuleId,
+            CSVTEMP_ID csvtempId,
+            CSV_SQL csvSql
+        FROM T_CSVTEMPLATE_RULE
+        WHERE  CSVTEMP_RULE_ID = #{csvtempRuleId,jdbcType=INTEGER}
+    </select>
+
+    <select id="findCsvTempRuleByRule" parameterType="java.lang.Integer"  resultType="CsvTemplateRuleDto">
+        SELECT
+            CSVTEMP_RULE_ID csvtempRuleId,
+            CSVTEMP_ID csvtempId,
+            CSV_SQL csvSql
+        FROM T_CSVTEMPLATE_RULE
+        WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insertCsvTempRule" parameterType="CsvTemplateRuleDto">
+
+        insert into T_CSVTEMPLATE_RULE
+            (
+            CSVTEMP_ID ,
+            CSV_SQL )
+        VALUES(
+            #{csvtempId,jdbcType=INTEGER},
+            #{csvSql,jdbcType=VARCHAR})
+
+    </insert>
+
+    <delete id="delCsvTempRuleById" parameterType="java.lang.Integer">
+        delete from
+        T_CSVTEMPLATE_RULE  WHERE  CSVTEMP_RULE_ID = #{csvtempRuleId,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="delCsvTempRuleBycsvtempId" parameterType="java.lang.Integer">
+        delete from
+        T_CSVTEMPLATE_RULE  WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updCsvTempRuleById" parameterType="CsvTemplateRuleDto">
+        update T_CSVTEMPLATE_RULE
+        set
+            CSV_SQL =#{csvSql,jdbcType=VARCHAR}
+        WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+    </update>
+
+</mapper>
