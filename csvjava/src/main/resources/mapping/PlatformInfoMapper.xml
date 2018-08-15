@@ -11,7 +11,7 @@
         WHERE  PLATFORM_ID = #{pfId,jdbcType=INTEGER}
     </select>
 
-    <insert id="insertPlatformInfo" parameterType="PlatformInfoDto">
+    <insert id="insertPlatformInfo" useGeneratedKeys="true" keyProperty="platformId" parameterType="PlatformInfoDto">
 
         insert into T_PLATFORM_INFO
             (

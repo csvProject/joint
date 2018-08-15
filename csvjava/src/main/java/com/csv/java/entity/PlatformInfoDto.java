@@ -42,4 +42,14 @@ public class PlatformInfoDto extends BaseDto{
     public void setMemo(String memo) {
         this.memo = memo;
     }
+
+    @Override
+    public String toString() {
+        return "PlatformInfoDto{" +
+                "platformId=" + platformId +
+                ", platformNm='" + platformNm + '\'' +
+                ", platformType='" + platformType + '\'' +
+                ", memo='" + memo + '\'' +
+                '}';
+    }
 }
