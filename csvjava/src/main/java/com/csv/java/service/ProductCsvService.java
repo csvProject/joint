@@ -1,15 +1,16 @@
-package com.csv.java.dao;
+package com.csv.java.service;
+
+
+
+
 
 
 import com.csv.java.entity.ProductCsvDto;
 
 import java.util.List;
 
-public interface ProductDao {
-    //多条件查询
+public interface ProductCsvService {
     List<ProductCsvDto> findProductByCondi(ProductCsvDto indto);
 
-    //主Key查询
     ProductCsvDto findProductById(int productId);
-
 }

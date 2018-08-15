@@ -67,7 +67,17 @@
         <include refid="forcondi"></include>
     </select>
 
-    <insert id="insertCsvTempInfo" parameterType="CsvTemplateInfoDto">
+    <select id="checkCsvTempInfoOnly" parameterType="CsvTemplateInfoDto"  resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM T_CSVTEMPLATE_INFO
+        WHERE
+         t.PLATFORM_ID = #{platformId,jdbcType=INTEGER}
+        AND t.PFACCOUNT_ID = #{pfaccountId,jdbcType=INTEGER}
+        AND t.PTYPEID = #{ptypeId,jdbcType=INTEGER}
+        AND t.SID = #{sId,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insertCsvTempInfo" parameterType="CsvTemplateInfoDto" useGeneratedKeys="true" keyProperty="csvtempId">
 
         insert into T_CSVTEMPLATE_INFO
             (

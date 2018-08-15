@@ -3,7 +3,7 @@ package com.csv.java.entity;
 import java.util.Date;
 
 //商品dto
-public class ProductDto extends BaseDto{
+public class ProductCsvDto extends BaseDto{
     //商品ID
     private int productId;
     //商品sku

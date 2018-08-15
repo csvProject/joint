@@ -4,6 +4,7 @@ import com.csv.java.common.result.Result;
 import com.csv.java.common.result.ResultUtil;
 import com.csv.java.entity.CsvTemplateDetailDto;
 import com.csv.java.service.CsvTemplateDetailService;
+import com.csv.java.service.CsvTemplateRuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,8 @@ public class CsvTemplateDetailController {
     @Autowired
     private CsvTemplateDetailService csvTemplateDetailService;
 
+    @Autowired
+    private CsvTemplateRuleService csvTemplateRuleService;
     //根据ID查询单件
     @RequestMapping(value = "/findbyid", method = RequestMethod.GET)
     public Result findCsvTempDetailById(@RequestParam(value = "csvfieldid", required = true) int csvFieldId) {
@@ -54,6 +57,7 @@ public class CsvTemplateDetailController {
     public Result updCsvTempDetailById(@RequestBody CsvTemplateDetailDto indto) {
         System.out.println("开始更新..."+indto.toString());
         csvTemplateDetailService.updCsvTempDetailById(indto);
+
         return ResultUtil.success(null) ;
     }
 
