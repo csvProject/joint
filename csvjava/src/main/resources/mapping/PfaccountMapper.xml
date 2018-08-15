@@ -61,8 +61,8 @@
         PLATFORM_ID platformId,
         MEMO memo
         FROM T_PF_ACCOUNT
-        WHERE  PFACCOUNT_NM like  CONCAT('%', #{pfacNm,jdbcType=VARCHAR}, '%')
-        and PLATFORM_ID=#{pfId,jdbcType=INTEGER}
+        WHERE  PFACCOUNT_NM like  CONCAT('%', #{pfaccountNm,jdbcType=VARCHAR}, '%')
+        and PLATFORM_ID=#{platformId,jdbcType=INTEGER}
     </select>
 
     <delete id="delPfaccountByPfid" parameterType="java.lang.Integer">
