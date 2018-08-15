@@ -24,7 +24,7 @@
       <div nz-col nzSpan="6">备注</div>
       <div nz-col nzSpan="4">
         <div nz-col nzSpan="24">
-          <button nz-button nzType="primary" (click)="pushElement(0)"><i class="anticon anticon-plus"></i></button>
+          <button nz-button nzType="primary" (click)="showModal(0,0)"><i class="anticon anticon-plus"></i></button>
         </div>
       </div>
     </div>
@@ -35,17 +35,17 @@
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;">
       <div *ngFor="let plat of platList;let i = index" class="plat-div" nz-row
-           (click)="clickPlat(i,plat,platList)" [ngClass]="{'active':(selectPlatId == plat.id)}">
+           (click)="clickPlat(i,plat)" [ngClass]="{'active':(selectPlatIndex == i)}">
         <div nz-col nzSpan="2">{{i+1}}</div>
-        <div nz-col nzSpan="8">{{plat.name}}</div>
-        <div nz-col nzSpan="4">{{plat.name}}</div>
-        <div nz-col nzSpan="6">{{plat.name}}</div>
+        <div nz-col nzSpan="8">{{plat.platformNm}}</div>
+        <div nz-col nzSpan="4">{{plat.platformType}}</div>
+        <div nz-col nzSpan="6">{{plat.memo}}</div>
         <div nz-col nzSpan="4">
           <div nz-col nzSpan="12">
-            <button nz-button nzType="primary" (click)="showModal(i,plat)"><i class="anticon anticon-edit"></i></button>
+            <button nz-button nzType="primary" (click)="showModal(i,1,plat)"><i class="anticon anticon-edit"></i></button>
           </div>
           <div nz-col nzSpan="12">
-            <button nz-button nzType="primary" (click)="delete(0,plat.id)"><i class="anticon anticon-delete"></i>
+            <button nz-button nzType="primary" (click)="delete(0,plat.platformId)"><i class="anticon anticon-delete"></i>
             </button>
           </div>
         </div>
@@ -73,7 +73,8 @@
       <div nz-col nzSpan="8">备注</div>
       <div nz-col nzSpan="4">
         <div nz-col nzSpan="24">
-          <button nz-button nzType="primary" (click)="pushElement(2)"><i class="anticon anticon-plus"></i></button>
+          <button nz-button nzType="primary" [disabled]="platList[selectPlatIndex]==null"
+                  (click)="showModal(0,2)"><i class="anticon anticon-plus"></i></button>
         </div>
       </div>
     </div>
@@ -85,15 +86,15 @@
 
       <div *ngFor="let account of accountList ;let i = index" class="account-div" nz-row>
         <div nz-col nzSpan="2">{{i+1}}</div>
-        <div nz-col nzSpan="10">{{account.name}}</div>
-        <div nz-col nzSpan="8">{{account.name}}</div>
+        <div nz-col nzSpan="10">{{account.pfaccountNm}}</div>
+        <div nz-col nzSpan="8">{{account.memo}}</div>
         <div nz-col nzSpan="4">
           <div nz-col nzSpan="12">
-            <button nz-button nzType="primary" (click)="showModal(i,account)"><i class="anticon anticon-edit"></i>
+            <button nz-button nzType="primary" (click)="showModal(i,3,account)"><i class="anticon anticon-edit"></i>
             </button>
           </div>
           <div nz-col nzSpan="12">
-            <button nz-button nzType="primary" (click)="delete(1,account.id)"><i class="anticon anticon-delete"></i>
+            <button nz-button nzType="primary" (click)="delete(1,account.pfaccountId)"><i class="anticon anticon-delete"></i>
             </button>
           </div>
         </div>
@@ -112,17 +113,30 @@
   </ng-template>
 
   <ng-template #modalContent>
-    <div *ngIf="modalType == 0">
-      {{titleList[modalType]}}
+    <div *ngIf="modalType == 1 || modalType == 0">
+      <div>
+        <h3>平台名称:</h3>
+        <textarea nz-input  [(ngModel)]="platInfo.platformNm" placeholder="平台名称" nzAutosize></textarea>
+        <div style="margin:24px 0;"></div>
+        <h3>平台类型:</h3>
+        <nz-select style="width: 120px;" [(ngModel)]="platInfo.platformType" nzAllowClear nzPlaceHolder="Choose">
+          <nz-option nzValue="1" nzLabel="Jack"></nz-option>
+          <nz-option nzValue="2" nzLabel="Lucy"></nz-option>
+          <nz-option nzValue="3" nzLabel="Disabled"></nz-option>
+        </nz-select>
+        <div style="margin:24px 0;"></div>
+        <h3>备注:</h3>
+        <textarea nz-input [(ngModel)]="platInfo.memo" placeholder="备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+      </div>
     </div>
-    <div *ngIf="modalType == 1">
-      {{titleList[modalType]}}
-    </div>
-    <div *ngIf="modalType == 2">
-      {{titleList[modalType]}}
-    </div>
-    <div *ngIf="modalType == 3">
-      {{titleList[modalType]}}
+    <div *ngIf="modalType == 2 || modalType == 3">
+      <div>
+        <h3>账号:</h3>
+        <textarea nz-input  [(ngModel)]="accountInfo.pfaccountNm" placeholder="账号" nzAutosize></textarea>
+        <div style="margin:24px 0;"></div>
+        <h3>备注:</h3>
+        <textarea nz-input [(ngModel)]="accountInfo.memo" placeholder="备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+      </div>
     </div>
   </ng-template>
 

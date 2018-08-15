@@ -7,8 +7,6 @@ import {TemplatesetService} from "../../../http/templateset.service";
   styleUrls: ['./templateset.component.css']
 })
 export class TemplatesetComponent implements OnInit {
-  pfnm:string='';
-
   constructor(private service:TemplatesetService) { }
 
   allChecked = false;
@@ -47,20 +45,17 @@ export class TemplatesetComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getTemplateInfo(this.pfnm);
-    for (let i = 0; i < 46; i++) {
-      this.dataSet.push({
-        name   : `Edward King ${i}`,
-        age    : 32,
-        address: `London, Park Lane no. ${i}`,
-        checked: false
-      });
-    }
+    // this.getTemplateInfo(this.pfnm);
   }
 
   getTemplateInfo(pfnm){
-    this.service.getTemplateInfo(pfnm).subscribe(data=>{
-      console.log(data);
+    this.service.getTemplateInfo(pfnm).subscribe(result=>{
+      if(result.code == 0){
+        this.dataSet = result.data == null?[]:result.data;
+        this.dataSet.forEach(value => value.checked = false);
+      }else if(result.code == 1){
+
+      }
     })
   }
 

@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { url } from './index';
+import { BaseApiResponseModel, url} from './index';
+import { Observable } from "rxjs/index";
 
 @Injectable()
 export class TemplatesetService {
   constructor(private http: HttpClient) { }
 
-
-
-  getTemplateInfo(pfnm:string) {
-    return this.http.get(url.findbypfnm,{
-      params:{pfnm}
+  getTemplateInfo(pfnm?:string): Observable<BaseApiResponseModel> {
+    return this.http.get<BaseApiResponseModel>(url.findbypfnm,{
+      params:{
+        pfnm
+      }
     });
   }
 }

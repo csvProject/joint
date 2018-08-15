@@ -5,9 +5,12 @@ import com.csv.java.common.exception.CustomException;
 import com.csv.java.common.exception.DataNullException;
 import com.csv.java.common.result.Result;
 import com.csv.java.common.result.ResultUtil;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
   * CustomControllerAdvice Controller自定义处理
@@ -38,8 +41,10 @@ public class CustomControllerAdvice {
       * @return
       */
      @ResponseBody
+//     @ResponseStatus(HttpStatus.CONFLICT)
+     @ResponseStatus(code=HttpStatus.CONTINUE,reason="未知错误")
      @ExceptionHandler(value = Exception.class)
-     public Result errorHandler(Exception ex) {
+     public Result errorHandler(Exception ex, HttpServletResponse response) {
          ex.printStackTrace();
          if (ex instanceof CustomException) {
              CustomException customException = (CustomException) ex;
@@ -49,7 +54,7 @@ public class CustomControllerAdvice {
                  return ResultUtil.error(customException.getCode(), customException.getMessage());
              }
          }else {
-             return ResultUtil.error(-999, "未知错误");
+             return ResultUtil.error(-100, "未知错误",response);
          }
      }
 }

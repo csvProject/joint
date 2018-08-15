@@ -1,6 +1,11 @@
 package com.csv.java.common.result;
 
- /**
+import com.sun.deploy.net.HttpResponse;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
   * ResultUtil
   * @author wkm
   * @since 2018/7/30
@@ -32,4 +37,17 @@ public class ResultUtil {
         result.setMsg(msg);
         return result;
     }
+
+     public static Result error(Integer code, String msg, HttpServletResponse response) {
+         Result result = new Result();
+         result.setCode(code);
+         result.setMsg(msg);
+         try {
+             response.setStatus(code);
+             response.getWriter().append("server error");
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+         return null;
+     }
 }

@@ -9,6 +9,7 @@ import { NzMentionPreviewDemoComponent } from './platformacctset/nz-mention-prev
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
 import { TemplatesetService } from '../../http/templateset.service';
+import { PlatformacctService } from '../../http/platformacct.service';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { TemplatesetService } from '../../http/templateset.service';
   ],
   declarations: [SettingComponent, PlatformacctsetComponent, TemplatesetComponent,NzMentionPreviewDemoComponent],
   providers:[
-    TemplatesetService
+    TemplatesetService,
+    PlatformacctService
   ]
 })
 export class SettingModule { }
