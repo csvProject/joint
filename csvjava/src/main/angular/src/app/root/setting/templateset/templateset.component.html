@@ -16,31 +16,41 @@
   <tr>
     <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
     <th>模板名称</th>
-    <th>SKU分类</th>
-    <th>类型</th>
+    <th>平台名称</th>
+    <th>平台账号</th>
+    <th>产品分类名称</th>
+    <th>供应商名称</th>
     <th>加入时间</th>
-    <th>加入人</th>
-    <th>状态</th>
-    <th><div nz-row style="text-align: center">操作</div></th>
+    <th>备注</th>
+    <th>
+      <div nz-row style="text-align: center">
+      <button nz-button nzType="primary" (click)="showModal(0,0)">
+        <i class="anticon anticon-plus"></i></button>
+      </div>
+    </th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let data of rowSelectionTable.data ;let i = index">
     <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus($event)"></td>
-    <td>{{data.name}}</td>
-    <td>{{data.age}}</td>
-    <td>{{data.address}}</td>
-    <td>{{data.name}}</td>
-    <td>{{data.age}}</td>
-    <td>{{data.address}}</td>
+    <td>{{data.csvtempNm}}</td>
+    <td>{{data.platformNm}}</td>
+    <td>{{data.pfaccountNm}}</td>
+    <td>{{data.ptypeNm}}</td>
+    <td>{{data.sNm}}</td>
+    <td>{{data.joinDate}}</td>
+    <td>{{data.memo}}</td>
     <td>
       <div nz-row style="text-align: center">
         <div nz-col nzSpan="8">
-          <button nz-button nzType="primary" (click)="showModal(i,1)"><i class="anticon anticon-edit"></i>
+          <button nz-button nzType="primary" nz-popconfirm
+                  nzTitle="确认编辑" nzOkText="字段编辑" nzCancelText="模板编辑"
+                  (nzOnConfirm)="confirm(data)" (nzOnCancel)="cancel(data)">
+            <i class="anticon anticon-edit" ></i>
           </button>
         </div>
         <div nz-col nzSpan="8">
-          <button nz-button nzType="primary" (click)="showModal(i,1)"><i class="anticon anticon-copy"></i>
+          <button nz-button nzType="primary" (click)="showModal(i,0,data)"><i class="anticon anticon-copy"></i>
           </button>
         </div>
         <div nz-col nzSpan="8">
@@ -61,11 +71,9 @@
   </ng-template>
 
   <ng-template #modalContent>
-    <p>Modal Content</p>
-    <p>Modal Content</p>
-    <p>Modal Content</p>
-    <p>Modal Content</p>
-    <p>Modal Content</p>
+    <div nz-row>
+
+    </div>
   </ng-template>
 
   <ng-template #modalFooter>

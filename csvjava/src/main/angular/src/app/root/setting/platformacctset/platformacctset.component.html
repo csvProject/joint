@@ -1,3 +1,13 @@
+<div nz-row style="margin-bottom:20px">
+  <div nz-col nzSpan="6" >
+    <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
+      <input type="text" nz-input placeholder="平台名称" [(ngModel)]="pfnm">
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzType="primary" nzSearch (click)="selectPlat(pfnm)"><i class="anticon anticon-search"></i></button>
+    </ng-template>
+  </div>
+</div>
 <div nz-row style="text-align: center;">
   <div nz-col nzSpan="12"
        style="

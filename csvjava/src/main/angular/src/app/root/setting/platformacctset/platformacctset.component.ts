@@ -35,6 +35,10 @@ export class PlatformacctsetComponent implements OnInit {
     type==0?this.deletePlatInfoById(id):this.deletePfaccountInfoById(id);
   }
 
+  selectPlat(pfnm){
+    this.getPlatInfos(pfnm,0);
+  }
+
   private deletePlatInfoById(platformId){
     this.selectPlatIndex = 0 ;
     this.service.delPlatInfoByPfid(platformId).subscribe(result =>{
