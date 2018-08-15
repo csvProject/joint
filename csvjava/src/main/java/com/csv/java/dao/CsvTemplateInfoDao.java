@@ -24,5 +24,6 @@ public interface CsvTemplateInfoDao {
     //删除模板
     public void delCsvTempInfoById(int csvtempId);
 
-
+    //判断同一平台，账号，商品类型，供应商下是否存在模板,结果大于0则表示存在
+    public int checkCsvTempInfoOnly(CsvTemplateInfoDto indto);
 }

@@ -15,7 +15,7 @@ public interface CsvTemplateDetailDao {
     CsvTemplateDetailDto findCsvTempDetailById(int csvFieldId);
 
     //根据字段名称查询
-    List<CsvTemplateDetailDto> findCsvTempDetailByKey(String fieldKey);
+    List<CsvTemplateDetailDto> findCsvTempDetailByKey(CsvTemplateDetailDto indto);
 
     //字段更新
     public void updCsvTempDetailById(CsvTemplateDetailDto indto);

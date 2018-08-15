@@ -22,8 +22,8 @@ public class PfaccountServiceImpl implements PfaccountService {
         return pfaccountDao.findPfaccountByPfacid(pfacId);
     }
 
-    public List<PfaccountDto> findPfaccountByPfacnm(String pfacNm){
-        return pfaccountDao.findPfaccountByPfacnm(pfacNm);
+    public List<PfaccountDto> findPfaccountByPfacnm(PfaccountDto indto){
+        return pfaccountDao.findPfaccountByPfacnm(indto);
     }
 
     public void delPfaccountByPfacid(int pfacId){

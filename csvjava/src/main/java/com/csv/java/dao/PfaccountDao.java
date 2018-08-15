@@ -24,7 +24,7 @@ public interface PfaccountDao {
     public void delPfaccountByPfacid(int pfacId);
 
     //根据账号名称查询
-    List<PfaccountDto> findPfaccountByPfacnm(String PfacNm);
+    List<PfaccountDto> findPfaccountByPfacnm(PfaccountDto into);
 
     //根据平台ID删除所有账号
     public void delPfaccountByPfid(int pfId);

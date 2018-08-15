@@ -10,7 +10,7 @@ import com.csv.java.entity.CsvTemplateDetailDto;
 import java.util.List;
 
 public interface CsvTemplateDetailService {
-    List<CsvTemplateDetailDto> findCsvTempDetailByKey(String fieldKey);
+    List<CsvTemplateDetailDto> findCsvTempDetailByKey(CsvTemplateDetailDto indto);
 
     CsvTemplateDetailDto findCsvTempDetailById(int csvFieldId);
 

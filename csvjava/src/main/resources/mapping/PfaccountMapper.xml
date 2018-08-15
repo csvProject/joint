@@ -54,14 +54,15 @@
         where PFACCOUNT_ID = #{pfaccountId,jdbcType=INTEGER}
     </update>
 
-    <select id="findPfaccountByPfacnm" parameterType="java.lang.String"  resultType="PfaccountDto">
+    <select id="findPfaccountByPfacnm" parameterType="PfaccountDto"  resultType="PfaccountDto">
         SELECT
         PFACCOUNT_ID pfaccountId,
         PFACCOUNT_NM pfaccountNm,
         PLATFORM_ID platformId,
         MEMO memo
         FROM T_PF_ACCOUNT
-        WHERE  PFACCOUNT_NM like  CONCAT('%', #{pfacNm,jdbcType=VARCHAR}, '%')
+        WHERE  PFACCOUNT_NM like  CONCAT('%', #{pfaccountNm,jdbcType=VARCHAR}, '%')
+        and PLATFORM_ID=#{platformId,jdbcType=INTEGER}
     </select>
 
     <delete id="delPfaccountByPfid" parameterType="java.lang.Integer">

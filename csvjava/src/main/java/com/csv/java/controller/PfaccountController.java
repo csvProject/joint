@@ -28,10 +28,10 @@ public class PfaccountController {
     }
 
     //根据账号名称查账号
-    @RequestMapping(value = "/findbypfacnm", method = RequestMethod.GET)
-    public Result findPfaccountByPfacnm(@RequestParam(value = "pfacnm", required = true) String pfacNm) {
+    @RequestMapping(value = "/findbypfacnm", method = RequestMethod.POST)
+    public Result findPfaccountByPfacnm(@RequestBody PfaccountDto indto) {
         System.out.println("开始查询...");
-        return ResultUtil.success(pfaccountService.findPfaccountByPfacnm(pfacNm)) ;
+        return ResultUtil.success(pfaccountService.findPfaccountByPfacnm(indto)) ;
     }
 
     /**
