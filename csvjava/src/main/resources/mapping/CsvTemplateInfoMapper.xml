@@ -16,7 +16,7 @@
             AND t.SID = #{sId,jdbcType=INTEGER}
         </if>
         <if test="csvtempNm !=null and csvtempNm !=''">
-            AND   CSVTEMP_NM like  CONCAT('%', #{csvtempNm,jdbcType=VARCHAR}, '%')
+            AND   t.CSVTEMP_NM like  CONCAT('%', #{csvtempNm,jdbcType=VARCHAR}, '%')
         </if>
     </sql>
 
