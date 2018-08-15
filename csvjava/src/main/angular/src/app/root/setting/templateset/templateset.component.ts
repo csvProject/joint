@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TemplatesetService} from "../../../http/templateset.service";
+import {CsvTemplateInfo} from "../../../entity/tempData";
+import {NzMessageService} from "ng-zorro-antd";
 
 @Component({
   selector: 'app-templateset',
@@ -8,6 +10,15 @@ import {TemplatesetService} from "../../../http/templateset.service";
 })
 export class TemplatesetComponent implements OnInit {
   constructor(private service:TemplatesetService) { }
+  cancel(csvTemplateInfo): void {
+    this.showModal(0,1,csvTemplateInfo);
+  }
+
+  confirm(csvTemplateInfo): void {
+    this.showModal(0,1,csvTemplateInfo);
+  }
+
+  templateInfo = new CsvTemplateInfo();
 
   allChecked = false;
   disabledButton = true;
@@ -45,11 +56,12 @@ export class TemplatesetComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getTemplateInfo(this.pfnm);
+    let csvTemplateInfo = new CsvTemplateInfo();
+    this.getTemplateInfo(csvTemplateInfo);
   }
 
-  getTemplateInfo(pfnm){
-    this.service.getTemplateInfo(pfnm).subscribe(result=>{
+  getTemplateInfo(csvTemplateInfo:CsvTemplateInfo){
+    this.service.getTemplateInfo(csvTemplateInfo).subscribe(result=>{
       if(result.code == 0){
         this.dataSet = result.data == null?[]:result.data;
         this.dataSet.forEach(value => value.checked = false);
@@ -71,9 +83,19 @@ export class TemplatesetComponent implements OnInit {
 
     };
   }
-  showModal(i,type): void {
+  showModal(i,type,csvTemplateInfo?:CsvTemplateInfo): void {
     this.isVisible = true;
     this.modalType = type;
+    if(type == 0){
+      if(csvTemplateInfo == undefined){
+        this.templateInfo = new CsvTemplateInfo()
+      } else{
+        this.templateInfo = Object.create(csvTemplateInfo);
+        this.templateInfo.csvtempId = null;
+      }
+    }else if(type == 1){
+      this.templateInfo = csvTemplateInfo;
+    }
   }
 
   handleOk(modalType): void {

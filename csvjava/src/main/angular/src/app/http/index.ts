@@ -21,7 +21,10 @@ export const url = {
   findbypfid : 'pfaccount/findbypfid', //平台账号列表
   insertPfaccount : 'pfaccount/insert', //平台账号列表
   delbypfacid : 'pfaccount/delbypfacid', //删除帐号
-  updatebypfacid : 'pfaccount/updatebypfacid' //更新账号信息
+  updatebypfacid : 'pfaccount/updatebypfacid', //更新账号信息
+
+  /*templateset*/
+  tempfindbycondi:'csvtempinfo/findbycondi', //模板一览
 };
 
 
