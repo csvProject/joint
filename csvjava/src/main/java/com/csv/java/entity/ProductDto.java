@@ -83,7 +83,7 @@ public class ProductDto extends BaseDto{
     //0：启用；1：禁用
     private int isXj;
     //启用日期
-    private Date sjDatetime;
+    private String sjDatetime;
     //商品分类名称
     private String ptypeNm;
     //供应商名称
@@ -410,11 +410,11 @@ public class ProductDto extends BaseDto{
         this.isXj = isXj;
     }
 
-    public Date getSjDatetime() {
+    public String getSjDatetime() {
         return sjDatetime;
     }
 
-    public void setSjDatetime(Date sjDatetime) {
+    public void setSjDatetime(String sjDatetime) {
         this.sjDatetime = sjDatetime;
     }
 
