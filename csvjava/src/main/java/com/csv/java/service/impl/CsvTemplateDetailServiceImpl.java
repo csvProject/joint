@@ -21,8 +21,8 @@ public class CsvTemplateDetailServiceImpl implements CsvTemplateDetailService {
         return csvTemplateDetailDao.findCsvTempDetailById(csvFieldId);
     }
 
-    public List<CsvTemplateDetailDto> findCsvTempDetailByKey(String fieldKey){
-        return csvTemplateDetailDao.findCsvTempDetailByKey(fieldKey);
+    public List<CsvTemplateDetailDto> findCsvTempDetailByKey(CsvTemplateDetailDto indto){
+        return csvTemplateDetailDao.findCsvTempDetailByKey(indto);
     }
 
     public void delCsvTempDetailById(int csvFieldId){

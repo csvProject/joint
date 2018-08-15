@@ -21,10 +21,10 @@ public class CsvTemplateDetailController {
     }
 
     //根据key查询
-    @RequestMapping(value = "/findbykey", method = RequestMethod.GET)
-    public Result findCsvTempDetailByKey(@RequestParam(value = "fieldkey", required = true) String fieldKey) {
+    @RequestMapping(value = "/findbykey", method = RequestMethod.POST)
+    public Result findCsvTempDetailByKey(@RequestBody CsvTemplateDetailDto indto) {
         System.out.println("开始查询...");
-        return ResultUtil.success(csvTemplateDetailService.findCsvTempDetailByKey(fieldKey)) ;
+        return ResultUtil.success(csvTemplateDetailService.findCsvTempDetailByKey(indto)) ;
     }
 
     /**

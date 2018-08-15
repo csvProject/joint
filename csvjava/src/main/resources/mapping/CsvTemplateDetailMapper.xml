@@ -15,7 +15,7 @@
         WHERE  CSVFIELD_ID = #{csvFieldId,jdbcType=INTEGER}
     </select>
 
-    <select id="findCsvTempDetailByKey" parameterType="java.lang.String"  resultType="CsvTemplateDetailDto">
+    <select id="findCsvTempDetailByKey" parameterType="CsvTemplateDetailDto"  resultType="CsvTemplateDetailDto">
         SELECT
             CSVFIELD_ID csvFieldId,
             CSVTEMP_ID csvtempId,
@@ -26,6 +26,7 @@
             FIELD_SORT fieldSort
         FROM T_CSVTEMPLATE_DETAIL
         WHERE FIELD_KEY like  CONCAT('%', #{fieldKey,jdbcType=VARCHAR}, '%')
+        and CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
     </select>
 
     <insert id="insertCsvTempDetail" parameterType="CsvTemplateDetailDto">
@@ -65,7 +66,6 @@
     <update id="updCsvTempDetailById" parameterType="CsvTemplateDetailDto">
         update T_CSVTEMPLATE_DETAIL
         set
-            CSVTEMP_ID =#{csvtempId,jdbcType=INTEGER},
             FIELD_KEY =#{fieldKey,jdbcType=VARCHAR},
             FIELD_NM =#{fieldNm,jdbcType=VARCHAR},
             FIELD_VALUE =#{fieldValue,jdbcType=VARCHAR},
