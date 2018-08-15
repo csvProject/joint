@@ -14,10 +14,12 @@ public class ConstantConfig {
     /*跨域访问配置*/
     public static String[] Origins;
 
+    /*字段表*/
+    public static String FIELD_MATCHING_TABLE;
+
     @PostConstruct
     public void initialization() {
-        //sms server
         Origins = _environment.getProperty("cors.mappings.origins")==null?"*".split(","):_environment.getProperty("cors.mappings.origins").split(",");
-
+        FIELD_MATCHING_TABLE = _environment.getProperty("field.matching.table");
     }
 }

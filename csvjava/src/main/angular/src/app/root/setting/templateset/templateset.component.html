@@ -1,3 +1,42 @@
+<div nz-row>
+  <div nz-col  nzSpan="24" style="margin-bottom: 16px">
+    <span class="span_label_title">模板名称</span>
+    <input class="select_input" nz-input [(ngModel)]="csvtempNm">
+    <span class="span_label_title">平台选择</span>
+    <nz-select class="select_input"
+               [(ngModel)]="selectedPlat" (ngModelChange)="provinceAllChange(0,$event)"
+               nzAllowClear nzShowSearch
+               [nzServerSearch]="true" (nzOnSearch)="onSearchByPlat($event)">
+      <ng-container *ngFor="let o of platList">
+        <nz-option *ngIf="!platIsLoading"
+                   [nzValue]="o.platformId" [nzLabel]="o.platformNm"></nz-option>
+      </ng-container>
+      <nz-option *ngIf="platIsLoading" nzDisabled nzCustomContent>
+        <i class="anticon anticon-loading anticon-spin loading-icon"></i> Loading Data...
+      </nz-option>
+    </nz-select>
+    <span class="span_label_title">账号选择</span>
+    <nz-select class="select_input"  nzShowSearch nzAllowClear (ngModelChange)="provinceAllChange(1,$event)"
+               [nzDisabled]="selectedPlat == null || selectedPlat == ''">
+      <nz-option *ngFor="let c of accountList"
+                 [nzValue]="c.pfaccountId" [nzLabel]="c.pfaccountNm"></nz-option>
+    </nz-select>
+  </div>
+  <div nz-col  nzSpan="24" style="margin-bottom: 16px">
+    <span class="span_label_title">产品分类</span>
+    <nz-select class="select_input"  nzShowSearch nzAllowClear (ngModelChange)="provinceAllChange(2,$event)">
+      <nz-option *ngFor="let c of pTypeList"
+                 nz-tooltip nzTitle="{{c.typeName}}"
+                 [nzValue]="c.ptypeId" [nzLabel]="c.typeName"></nz-option>
+    </nz-select>
+    <span class="span_label_title">供应商</span>
+    <nz-select class="select_input"  nzShowSearch nzAllowClear (ngModelChange)="provinceAllChange(3,$event)">
+      <nz-option *ngFor="let c of supplierList"
+                 nz-tooltip nzTitle="{{c.supplierTitle}}"
+                 [nzValue]="c.sId" [nzLabel]="c.supplierTitle"></nz-option>
+    </nz-select>
+  </div>
+</div>
 <div style="margin-bottom: 16px;">
   <button nz-button [disabled]="disabledButton" [nzType]="'primary'" [nzLoading]="operating" (click)="operateData()">
     Reload
@@ -81,3 +120,6 @@
     <button nz-button nzType="primary" (click)="handleOk(modalType)" [nzLoading]="isConfirmLoading">确认</button>
   </ng-template>
 </nz-modal>
+
+
+

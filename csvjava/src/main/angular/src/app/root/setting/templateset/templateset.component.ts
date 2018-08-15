@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {TemplatesetService} from "../../../http/templateset.service";
 import {CsvTemplateInfo} from "../../../entity/tempData";
-import {NzMessageService} from "ng-zorro-antd";
+import {BehaviorSubject, Observable} from "rxjs/index";
+import {debounceTime, map, switchMap} from "rxjs/internal/operators";
 
 @Component({
   selector: 'app-templateset',
@@ -9,6 +10,12 @@ import {NzMessageService} from "ng-zorro-antd";
   styleUrls: ['./templateset.component.css']
 })
 export class TemplatesetComponent implements OnInit {
+  csvtempNm='';
+  platformId = null;
+  pfaccountId = null;
+  ptypeId = null;
+  sId = null;
+
   constructor(private service:TemplatesetService) { }
   cancel(csvTemplateInfo): void {
     this.showModal(0,1,csvTemplateInfo);
@@ -23,12 +30,93 @@ export class TemplatesetComponent implements OnInit {
   allChecked = false;
   disabledButton = true;
   checkedNumber = 0;
-  displayData: Array<{ name: string; age: number; address: string; checked: boolean }> = [];
+  displayData = [];
   operating = false;
   dataSet = [];
   indeterminate = false;
 
-  currentPageDataChange($event: Array<{ name: string; age: number; address: string; checked: boolean }>): void {
+  platSearchChange$ = new BehaviorSubject('');
+  selectedPlat = '';
+  selectedAccount = '';
+  platList = [];
+  accountList = [];
+  supplierList = [];
+  pTypeList = [];
+  platIsLoading = false;
+  onSearchByPlat(pfnm: string): void {
+    this.platIsLoading = true;
+    pfnm= pfnm==null?'':pfnm;
+    this.platSearchChange$.next(pfnm);
+  }
+
+  ngOnInit(): void {
+    let csvTemplateInfo = new CsvTemplateInfo();
+    this.getTemplateInfo(csvTemplateInfo);
+    // tslint:disable-next-line:no-any
+   this.loadingBaseSelectData();
+  }
+
+  provinceAllChange(type,id): void {
+    if(type == 0){
+      if(id == this.platformId){
+
+      }else{
+        this.selectedAccount = '';
+        this.getPfaccountInfo(id);
+      }
+      this.platformId = id;
+    }else if(type == 1){
+      this.pfaccountId = id;
+    }else if(type == 2){
+      this.ptypeId = id;
+    }else if(type == 3){
+      this.sId = id;
+    }
+  }
+
+
+  private getPfaccountInfo(pfid): void {
+    this.service.getPfaccountInfo(pfid).subscribe(result=>{
+      console.log(result);
+      if(result.code == 0){
+        this.accountList = result.data;
+      }else if(result.code == 1){
+
+      }else{
+        console.error(result.msg);
+      }
+    })
+  }
+
+  private loadingBaseSelectData(){
+    const getRandomNameList = (pfnm: string) =>
+      this.service.getPlatInfo(pfnm).pipe(map((results: any) =>
+        results
+      )).pipe(
+        map((results: any) => {
+          return results;
+        }));
+
+    const optionList$: Observable<any> =
+      this.platSearchChange$.asObservable().pipe(
+        debounceTime(500)).pipe(
+        switchMap(getRandomNameList));
+
+    optionList$.subscribe(result => {
+      this.platIsLoading = false;
+      if(result.code == 0){
+        this.platList = result.data;
+      }else if(result.code == 1){
+
+      }else{
+        console.error(result.msg);
+      }
+    });
+    this.getSupplierList();
+    this.getPtypeList();
+  }
+
+  currentPageDataChange($event): void {
     this.displayData = $event;
   }
 
@@ -55,21 +143,43 @@ export class TemplatesetComponent implements OnInit {
     }, 1000);
   }
 
-  ngOnInit(): void {
-    let csvTemplateInfo = new CsvTemplateInfo();
-    this.getTemplateInfo(csvTemplateInfo);
-  }
 
-  getTemplateInfo(csvTemplateInfo:CsvTemplateInfo){
+  private getTemplateInfo(csvTemplateInfo:CsvTemplateInfo){
     this.service.getTemplateInfo(csvTemplateInfo).subscribe(result=>{
       if(result.code == 0){
         this.dataSet = result.data == null?[]:result.data;
         this.dataSet.forEach(value => value.checked = false);
       }else if(result.code == 1){
 
+      }else{
+        console.error(result.msg);
       }
     })
   }
+
+  private getPtypeList() {
+    this.service.getPtypeList().subscribe(result=>{
+      if(result.code == 0){
+        this.pTypeList = result.data == null?[]:result.data;
+      }else if(result.code == 1){
+
+      }else{
+        console.error(result.msg);
+      }
+    })
+  }
+  private getSupplierList() {
+    this.service.getSupplierList().subscribe(result=>{
+      if(result.code == 0){
+        this.supplierList = result.data == null?[]:result.data;
+      }else if(result.code == 1){
+
+      }else{
+        console.error(result.msg);
+      }
+    })
+  }
+
 
   titleList=['新增模板','编辑模板'];
   modalType;
@@ -77,11 +187,7 @@ export class TemplatesetComponent implements OnInit {
   isConfirmLoading = false;
 
   delete(type,data){
-    type==1?{
 
-    }:{
-
-    };
   }
   showModal(i,type,csvTemplateInfo?:CsvTemplateInfo): void {
     this.isVisible = true;
