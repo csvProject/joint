@@ -10,6 +10,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
 import { TemplatesetService } from '../../http/templateset.service';
 import { PlatformacctService } from '../../http/platformacct.service';
+import { DatePipe } from '../../pipe/date.pipe';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { PlatformacctService } from '../../http/platformacct.service';
     FormsModule,
     NgZorroAntdModule
   ],
-  declarations: [SettingComponent, PlatformacctsetComponent, TemplatesetComponent,NzMentionPreviewDemoComponent],
+  declarations: [SettingComponent,DatePipe, PlatformacctsetComponent, TemplatesetComponent,NzMentionPreviewDemoComponent],
   providers:[
     TemplatesetService,
     PlatformacctService

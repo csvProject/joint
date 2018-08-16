@@ -25,6 +25,8 @@ export const url = {
 
   /*templateset*/
   tempfindbycondi:'csvtempinfo/findbycondi', //模板一览
+  ptypefindbycondi:'ptype/findbycondi', //产品分类一览
+  supplierfindbycondi:'supplier/findbycondi', //供应商一览
 };
 
 

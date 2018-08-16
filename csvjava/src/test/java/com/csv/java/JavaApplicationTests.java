@@ -1,8 +1,10 @@
 package com.csv.java;
 
+import com.csv.java.common.tool.StringFormatForSQL;
 import com.csv.java.dao.CustomDao;
 import com.csv.java.dao.PTypeDao;
 import com.csv.java.dao.PlatformInfoDao;
+import com.csv.java.entity.CsvTemplateDetailDto;
 import com.csv.java.entity.PlatformInfoDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +52,40 @@ public class JavaApplicationTests {
 
         System.out.println(platformInfoDto.toString());
 
+    }
+
+    @Test
+    public void sqlSrc(){
+        String sql = "";
+        List<CsvTemplateDetailDto> list = new ArrayList<>();
+        CsvTemplateDetailDto csv = new CsvTemplateDetailDto();
+        csv.setFieldKey("name");
+        csv.setFieldValue("wkm name：${:setCn}");
+        CsvTemplateDetailDto csv2 = new CsvTemplateDetailDto();
+        csv2.setFieldKey("age");
+        csv2.setFieldValue("wkm age：{:INFO_ID}");
+        CsvTemplateDetailDto csv3 = new CsvTemplateDetailDto();
+        csv3.setFieldKey("sex");
+        csv3.setFieldValue("${:pm_cn}");
+        list.add(csv);
+        list.add(csv2);
+        list.add(csv3);
+
+        Map<String,String> arguments = new HashMap<String, String>(){{
+            put("setCn", "set_cn");
+            put("pm_cn", "pm_cn");
+        }};
+
+        sql = StringFormatForSQL.fieldListFormat(list,arguments);
+        System.out.println(sql);
+        List<Map<String,Object>> list2 = customDao.customSelect(sql);
+        for (Map<String,Object> a: list2
+                ) {
+            for (String s : a.keySet()) {
+                System.out.print(s+":" + a.get(s).toString()+",");
+            }
+            System.out.println();
+        }
     }
 
 }
