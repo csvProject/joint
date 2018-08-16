@@ -51,6 +51,10 @@ public class CsvTemplateDetailServiceImpl implements CsvTemplateDetailService {
 
         //批量添加模板字段
         //处理代码代码---
+        for (int i=0 ;i<1;i++) {
+            CsvTemplateDetailDto dtlDto = new CsvTemplateDetailDto();
+            csvTemplateDetailDao.insertCsvTempDetail(dtlDto);
+        }
         //----
 
         //更新模板规则表中的csvsql处理----
