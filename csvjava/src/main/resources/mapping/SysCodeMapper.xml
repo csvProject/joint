@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csv.java.dao.SysCodeDao" >
+
+
+    <select id="findSysCodeByTypeCd" parameterType="java.lang.Integer"  resultType="SysCodeDto">
+        SELECT
+            SYS_TYPE_CD sysTypeCd,
+            SYS_TYPE_NM sysTypeNm,
+            SYS_CD sysCd,
+            SYS_NM sysNm,
+            SYS_DESC sysDesc
+        FROM t_sys_code
+        WHERE SYS_TYPE_CD = #{sysTypeCd,jdbcType=INTEGER}
+    </select>
+
+    <select id="findSysCodeBySysCd" parameterType="SysCodeDto"  resultType="SysCodeDto">
+        SELECT
+            SYS_TYPE_CD sysTypeCode,
+            SYS_TYPE_NM sysTypeNm,
+            SYS_CD sysCd,
+            SYS_NM sysNm,
+            SYS_DESC sysDesc
+        FROM t_sys_code
+        WHERE SYS_TYPE_CD = #{sysTypeCd,jdbcType=INTEGER}
+        and SYS_CD = #{sysCd,jdbcType=INTEGER}
+    </select>
+</mapper>
