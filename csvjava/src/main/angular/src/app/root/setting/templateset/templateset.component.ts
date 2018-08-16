@@ -17,12 +17,12 @@ export class TemplatesetComponent implements OnInit {
   sId = null;
 
   constructor(private service:TemplatesetService) { }
-  cancel(csvTemplateInfo): void {
-    this.showModal(0,1,csvTemplateInfo);
+  cancel(dataInfo): void {
+    this.showModal(0,1,dataInfo);
   }
 
-  confirm(csvTemplateInfo): void {
-    this.showModal(0,1,csvTemplateInfo);
+  confirm(dataInfo): void {
+    this.showModal(0,2,dataInfo);
   }
 
   templateInfo = new CsvTemplateInfo();
@@ -181,7 +181,7 @@ export class TemplatesetComponent implements OnInit {
   }
 
 
-  titleList=['新增模板','编辑模板'];
+  titleList=['新增模板','编辑模板','编辑字段'];
   modalType;
   isVisible = false;
   isConfirmLoading = false;
@@ -189,18 +189,20 @@ export class TemplatesetComponent implements OnInit {
   delete(type,data){
 
   }
-  showModal(i,type,csvTemplateInfo?:CsvTemplateInfo): void {
+  showModal(i,type,dataInfo?): void {
     this.isVisible = true;
     this.modalType = type;
     if(type == 0){
-      if(csvTemplateInfo == undefined){
+      if(dataInfo == undefined){
         this.templateInfo = new CsvTemplateInfo()
       } else{
-        this.templateInfo = Object.create(csvTemplateInfo);
+        this.templateInfo = Object.create(dataInfo);
         this.templateInfo.csvtempId = null;
       }
     }else if(type == 1){
-      this.templateInfo = csvTemplateInfo;
+      this.templateInfo = dataInfo;
+    }else if(type == 2){
+      // this.templateInfo = csvTemplateInfo;
     }
   }
 

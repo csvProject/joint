@@ -1,0 +1,107 @@
+<div nz-row class="temp_edit_table">
+  <div nz-col nzSpan="24">
+    <div nz-col nzSpan="4">
+      模板名称
+    </div>
+    <div nz-col nzSpan="20">
+      <input nz-input placeholder="Basic usage" [(ngModel)]="tempData.csvtempNm">
+    </div>
+  </div>
+  <div nz-col nzSpan="24">
+    <div nz-col nzSpan="4">
+      分类
+    </div>
+    <div nz-col nzSpan="20">
+      <div *ngIf="false;else selectTemp"></div>
+    </div>
+  </div>
+  <div nz-col nzSpan="24">
+    <div nz-col nzSpan="4">
+      价格可用变量
+    </div>
+    <div nz-col nzSpan="20">
+      <span>$baseprice 成本,$mll 毛利率,$ryhl 日元汇率,$myhl
+      欧美汇率,$cnlowsalesprice 淘宝售价,$rblowsalesprice
+      日本最低售价,$omlowsalesprice 欧美最低售价</span>
+    </div>
+  </div>
+  <div nz-col nzSpan="24">
+    <div nz-col nzSpan="4">
+      原价公式
+    </div>
+    <div nz-col nzSpan="20">
+      <input nz-input placeholder="Basic usage" [(ngModel)]="tempData.lowExpr">
+    </div>
+  </div>
+  <div nz-col nzSpan="24">
+    <div nz-col nzSpan="4">
+      推荐价公式
+    </div>
+    <div nz-col nzSpan="20">
+      <input nz-input placeholder="Basic usage" [(ngModel)]="tempData.gdExpr">
+    </div>
+  </div>
+  <div nz-col nzSpan="24">
+    <div nz-col nzSpan="4">
+      最低价公式
+    </div>
+    <div nz-col nzSpan="20">
+      <input nz-input placeholder="Basic usage" [(ngModel)]="tempData.origiExpr">
+    </div>
+  </div>
+  <div nz-col nzSpan="24">
+    <div nz-col nzSpan="4">
+      状态
+    </div>
+    <div nz-col nzSpan="20">
+      <nz-switch style="margin-top: 3px;margin-bottom: 3px" [(ngModel)]="switchValue" [nzControl]="true" (click)="clickSwitch(switchValue)"
+                 nzCheckedChildren="启用" nzUnCheckedChildren="禁用"></nz-switch>
+    </div>
+  </div>
+  <div nz-col nzSpan="24">
+    <div nz-col nzSpan="4">
+      备注
+    </div>
+    <div nz-col nzSpan="20">
+      <textarea nz-input placeholder="备注"
+                [(ngModel)]="tempData.memo"
+                [nzAutosize]="{ minRows: 2, maxRows: 6 }">
+      </textarea>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #selectTemp>
+  <div nz-col  nzSpan="24" style="margin-bottom: 10px">
+    <span class="span_label_title">平台选择</span>
+    <nz-select class="select_input"
+               [(ngModel)]="selectedPlat" (ngModelChange)="provinceAllChange(0,$event)"
+               nzAllowClear nzShowSearch
+               [nzServerSearch]="true">
+      <ng-container *ngFor="let o of platList">
+        <nz-option [nzValue]="o.platformId" [nzLabel]="o.platformNm"></nz-option>
+      </ng-container>
+    </nz-select>
+    <span class="span_label_title">账号选择</span>
+    <nz-select class="select_input"  nzShowSearch nzAllowClear (ngModelChange)="provinceAllChange(1,$event)"
+               [nzDisabled]="selectedPlat == null || selectedPlat == ''">
+      <nz-option *ngFor="let c of accountList"
+                 [nzValue]="c.pfaccountId" [nzLabel]="c.pfaccountNm"></nz-option>
+    </nz-select>
+  </div>
+  <div nz-col  nzSpan="24" >
+    <span class="span_label_title">产品分类</span>
+    <nz-select class="select_input"  nzShowSearch nzAllowClear (ngModelChange)="provinceAllChange(2,$event)">
+      <nz-option *ngFor="let c of pTypeList"
+                 nz-tooltip nzTitle="{{c.typeName}}"
+                 [nzValue]="c.ptypeId" [nzLabel]="c.typeName"></nz-option>
+    </nz-select>
+    <span class="span_label_title">供应商</span>
+    <nz-select class="select_input"  nzShowSearch nzAllowClear (ngModelChange)="provinceAllChange(3,$event)">
+      <nz-option *ngFor="let c of supplierList"
+                 nz-tooltip nzTitle="{{c.supplierTitle}}"
+                 [nzValue]="c.sId" [nzLabel]="c.supplierTitle"></nz-option>
+    </nz-select>
+  </div>
+</ng-template>

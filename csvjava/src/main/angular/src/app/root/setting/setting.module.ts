@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { TemplatesetService } from '../../http/templateset.service';
 import { PlatformacctService } from '../../http/platformacct.service';
 import { DatePipe } from '../../pipe/date.pipe';
+import { TempeditComponent } from './templateset/tempedit/tempedit.component';
+import { FieldeidComponent } from './templateset/fieldeid/fieldeid.component';
 
 @NgModule({
   imports: [
@@ -20,7 +22,7 @@ import { DatePipe } from '../../pipe/date.pipe';
     FormsModule,
     NgZorroAntdModule
   ],
-  declarations: [SettingComponent,DatePipe, PlatformacctsetComponent, TemplatesetComponent,NzMentionPreviewDemoComponent],
+  declarations: [SettingComponent,DatePipe, PlatformacctsetComponent, TemplatesetComponent,NzMentionPreviewDemoComponent, TempeditComponent, FieldeidComponent],
   providers:[
     TemplatesetService,
     PlatformacctService
