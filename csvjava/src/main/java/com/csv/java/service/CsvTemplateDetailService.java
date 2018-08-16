@@ -5,6 +5,7 @@ package com.csv.java.service;
 
 
 
+import com.csv.java.entity.CsvTempBatDto;
 import com.csv.java.entity.CsvTemplateDetailDto;
 
 import java.util.List;
@@ -19,5 +20,7 @@ public interface CsvTemplateDetailService {
     public void insertCsvTempDetail(CsvTemplateDetailDto indto);
 
     public void delCsvTempDetailById(int csvFieldId);
+
+    public void updCsvTempDetailBat(CsvTempBatDto indto);
 
 }

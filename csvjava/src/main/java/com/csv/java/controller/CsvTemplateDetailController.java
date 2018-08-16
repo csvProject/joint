@@ -2,6 +2,7 @@ package com.csv.java.controller;
 
 import com.csv.java.common.result.Result;
 import com.csv.java.common.result.ResultUtil;
+import com.csv.java.entity.CsvTempBatDto;
 import com.csv.java.entity.CsvTemplateDetailDto;
 import com.csv.java.service.CsvTemplateDetailService;
 import com.csv.java.service.CsvTemplateRuleService;
@@ -61,4 +62,12 @@ public class CsvTemplateDetailController {
         return ResultUtil.success(null) ;
     }
 
+    //批量更新模板字段
+    @RequestMapping(value = "/updatedetailbat", method = RequestMethod.POST)
+    public Result updCsvTempDetail(@RequestBody CsvTempBatDto indto) {
+        System.out.println("开始更新..."+indto.toString());
+        csvTemplateDetailService.updCsvTempDetailBat(indto);
+
+        return ResultUtil.success(null) ;
+    }
 }
