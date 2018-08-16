@@ -1,6 +1,7 @@
 package com.csv.java.entity;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 
 public class BaseDto implements Serializable {
     private static final long serialVersionUID = -7534367013413101701L;
@@ -25,5 +26,10 @@ public class BaseDto implements Serializable {
 
     public void setUpdtBy(int updtBy) {
         this.updtBy = updtBy;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }
