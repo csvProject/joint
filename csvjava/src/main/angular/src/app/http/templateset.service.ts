@@ -11,6 +11,9 @@ export class TemplatesetService {
   getTemplateInfo(csvTemplate?:CsvTemplateInfo): Observable<BaseApiResponseModel> {
     return this.http.post<BaseApiResponseModel>(url.tempfindbycondi,csvTemplate);
   }
+  insertTemplateInfo(csvTemplate?:CsvTemplateInfo): Observable<BaseApiResponseModel> {
+    return this.http.post<BaseApiResponseModel>(url.tempinsert,csvTemplate);
+  }
 
   getPtypeList(): Observable<BaseApiResponseModel> {
     return this.http.post<BaseApiResponseModel>(url.ptypefindbycondi,{});
@@ -23,6 +26,14 @@ export class TemplatesetService {
     return this.http.get<BaseApiResponseModel>(url.findbypfnm,{
       params:{
         pfnm
+      }
+    });
+  }
+
+  deletePlatInfo(csvtempid:string): Observable<BaseApiResponseModel> {
+    return this.http.get<BaseApiResponseModel>(url.tempdelbyid,{
+      params:{
+        csvtempid
       }
     });
   }

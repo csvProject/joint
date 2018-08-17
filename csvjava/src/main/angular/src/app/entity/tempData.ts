@@ -33,5 +33,8 @@ export class CsvTemplateInfo {
   ptypeNm:string;
   //供应商名称
   sNm:string;
+  constructor(){
+    this.isUse = 0;
+  }
 }
 

@@ -1,10 +1,10 @@
 <div nz-row>
   <div nz-col  nzSpan="24" style="margin-bottom: 16px">
     <span class="span_label_title">模板名称</span>
-    <input class="select_input" nz-input [(ngModel)]="csvtempNm">
+    <input class="select_input" nz-input [(ngModel)]="selectTemplateInfo.csvtempNm">
     <span class="span_label_title">平台选择</span>
     <nz-select class="select_input"
-               [(ngModel)]="selectedPlat" (ngModelChange)="provinceAllChange(0,$event)"
+               [(ngModel)]="selectTemplateInfo.platformNm" (ngModelChange)="provinceAllChange(0,$event)"
                nzAllowClear nzShowSearch
                [nzServerSearch]="true" (nzOnSearch)="onSearchByPlat($event)">
       <ng-container *ngFor="let o of platList">
@@ -16,21 +16,27 @@
       </nz-option>
     </nz-select>
     <span class="span_label_title">账号选择</span>
-    <nz-select class="select_input"  nzShowSearch nzAllowClear (ngModelChange)="provinceAllChange(1,$event)"
-               [nzDisabled]="selectedPlat == null || selectedPlat == ''">
+    <nz-select class="select_input"  nzShowSearch nzAllowClear
+               [(ngModel)]="selectTemplateInfo.pfaccountNm"
+               (ngModelChange)="provinceAllChange(1,$event)"
+               [nzDisabled]="selectTemplateInfo.platformNm == null || selectTemplateInfo.platformNm == ''">
       <nz-option *ngFor="let c of accountList"
                  [nzValue]="c.pfaccountId" [nzLabel]="c.pfaccountNm"></nz-option>
     </nz-select>
   </div>
   <div nz-col  nzSpan="24" style="margin-bottom: 16px">
     <span class="span_label_title">产品分类</span>
-    <nz-select class="select_input"  nzShowSearch nzAllowClear (ngModelChange)="provinceAllChange(2,$event)">
+    <nz-select class="select_input"
+               [(ngModel)]="selectTemplateInfo.ptypeNm"
+               nzShowSearch nzAllowClear (ngModelChange)="provinceAllChange(2,$event)">
       <nz-option *ngFor="let c of pTypeList"
                  nz-tooltip nzTitle="{{c.typeName}}"
                  [nzValue]="c.ptypeId" [nzLabel]="c.typeName"></nz-option>
     </nz-select>
     <span class="span_label_title">供应商</span>
-    <nz-select class="select_input"  nzShowSearch nzAllowClear (ngModelChange)="provinceAllChange(3,$event)">
+    <nz-select class="select_input"
+               [(ngModel)]="selectTemplateInfo.sNm"
+               nzShowSearch nzAllowClear (ngModelChange)="provinceAllChange(3,$event)">
       <nz-option *ngFor="let c of supplierList"
                  nz-tooltip nzTitle="{{c.supplierTitle}}"
                  [nzValue]="c.sId" [nzLabel]="c.supplierTitle"></nz-option>
@@ -38,22 +44,20 @@
   </div>
 </div>
 <div style="margin-bottom: 16px;">
-  <button nz-button [disabled]="disabledButton" [nzType]="'primary'" [nzLoading]="operating" (click)="operateData()">
-    Reload
+  <button nz-button
+          [nzType]="'primary'" [nzLoading]="operating" (click)="operateData(selectTemplateInfo)">
+    搜索
   </button>
-  <span style="margin-left: 8px;" *ngIf="checkedNumber">已选择 {{checkedNumber}} 件商品</span>
 </div>
 <nz-table
   #rowSelectionTable
   nzBordered
   [nzData]="dataSet"
   [nzTitle]="'模板列表'"
-  (nzCurrentPageDataChange)="currentPageDataChange($event)"
-  (nzPageIndexChange)="refreshStatus()"
-  (nzPageSizeChange)="refreshStatus()">
+  [nzPageSize]="5"
+  (nzCurrentPageDataChange)="currentPageDataChange($event)">
   <thead>
   <tr>
-    <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
     <th>模板名称</th>
     <th>平台名称</th>
     <th>平台账号</th>
@@ -71,7 +75,6 @@
   </thead>
   <tbody>
   <tr *ngFor="let data of rowSelectionTable.data ;let i = index">
-    <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus($event)"></td>
     <td>{{data.csvtempNm}}</td>
     <td>{{data.platformNm}}</td>
     <td>{{data.pfaccountNm}}</td>
@@ -93,7 +96,10 @@
           </button>
         </div>-->
         <div nz-col nzSpan="12">
-          <button nz-button nzType="primary" (click)="delete(0,data)"><i class="anticon anticon-delete"></i>
+          <button nz-button nzType="primary" nz-popconfirm
+                  nzTitle="确认删除" nzOkText="确认" nzCancelText="取消"
+                  (nzOnConfirm)="delete(0,data)"
+          ><i class="anticon anticon-delete"></i>
           </button>
         </div>
       </div>
@@ -111,7 +117,7 @@
   </ng-template>
   <ng-template #modalFooter>
     <button nz-button nzType="default" (click)="handleCancel()">取消</button>
-    <button nz-button nzType="primary" (click)="handleOk(modalType)" [nzLoading]="isConfirmLoading">确认</button>
+    <button nz-button nzType="primary" (click)="handleOk(modalType,templateInfo)" [nzLoading]="isConfirmLoading">确认</button>
   </ng-template>
 </nz-modal>
 

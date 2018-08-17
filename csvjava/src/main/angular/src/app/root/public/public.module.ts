@@ -15,6 +15,8 @@ import { PublicService } from '../../http/public.service';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { httpInterceptorProviders } from '../../http';
+import {InjectorService} from "../../http/injector.service";
+import {CurrencyUtil} from "../../util/currencyUtil";
 registerLocaleData(zh);
 
 @NgModule({
@@ -28,7 +30,11 @@ registerLocaleData(zh);
   ],
   declarations: [PublicComponent, HeaderComponent, MenuComponent,NotificationComponent],
   /** 配置 ng-zorro-antd 国际化 **/
-  providers   : [ httpInterceptorProviders,{ provide: NZ_I18N, useValue: zh_CN },PublicService ],
+  providers   : [
+    httpInterceptorProviders,{ provide: NZ_I18N, useValue: zh_CN },PublicService,
+    InjectorService,
+    CurrencyUtil
+  ],
   exports:[
     // NgZorroAntdModule
   ]

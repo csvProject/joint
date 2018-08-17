@@ -13,13 +13,7 @@ export class TempeditComponent implements OnInit {
   @Input() supplierList = [];
   @Input() pTypeList = [];
 
-  selectedPlat = '';
   accountList = [];
-
-  platformId = null;
-  pfaccountId = null;
-  ptypeId = null;
-  sId = null;
 
   selectedAccount = '';
 
@@ -30,20 +24,21 @@ export class TempeditComponent implements OnInit {
   }
 
   provinceAllChange(type,id): void {
+    console.log(id);
     if(type == 0){
-      if(id == this.platformId){
+      if(id == this.tempData.platformId){
 
       }else{
         this.selectedAccount = '';
         this.getPfaccountInfo(id);
       }
-      this.platformId = id;
+      this.tempData.platformId = id;
     }else if(type == 1){
-      this.pfaccountId = id;
+      this.tempData.pfaccountId = id;
     }else if(type == 2){
-      this.ptypeId = id;
+      this.tempData.ptypeId = id;
     }else if(type == 3){
-      this.sId = id;
+      this.tempData.sId = id;
     }
   }
 
@@ -60,8 +55,11 @@ export class TempeditComponent implements OnInit {
     })
   }
 
-  switchValue = false;
   clickSwitch(switchValue){
-    this.switchValue = !switchValue;
+    if(switchValue){
+      this.tempData.isUse = 0;
+    }else{
+      this.tempData.isUse = 1;
+    }
   }
 }

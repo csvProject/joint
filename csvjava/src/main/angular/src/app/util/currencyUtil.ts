@@ -1,7 +1,18 @@
 import {CsvData} from "../entity/CsvData";
+import {Injectable, Injector} from "@angular/core";
+import {NzMessageService} from "ng-zorro-antd";
+import {InjectorService} from "../http/injector.service";
 const documentSys:(any|Document) = document;
 
+@Injectable()
 export class CurrencyUtil {
+  injector:Injector;
+  constructor(private InjectorService:InjectorService){
+    this.injector = this.InjectorService.getInjector();
+  }
+  get msg(): NzMessageService {
+    return this.injector.get(NzMessageService);
+  }
 
   getCsvData(list):CsvData{
     let ret:CsvData = null;
@@ -178,5 +189,12 @@ export class CurrencyUtil {
     }
     timeSrc = y + timeSrc;
     return timeSrc;
+  }
+
+  isEmpty(s):boolean{
+    if( s == undefined || s == null||(s+'').trim() == ''|| (s+'').trim() == '{}'){
+      return false;
+    }
+    return true
   }
 }

@@ -9,6 +9,7 @@ import { ErrorComponent } from './root/error/error.component';
 import { CurrencyUtil } from './util/currencyUtil';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import {InjectorService} from "./http/injector.service";
 
 const customComponentList = [
   FirstComponent,
@@ -29,8 +30,12 @@ const customComponentList = [
     HttpClientModule,
   ],
   providers: [
+    InjectorService,
     CurrencyUtil
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports:[
+
+  ]
 })
 export class AppModule { }

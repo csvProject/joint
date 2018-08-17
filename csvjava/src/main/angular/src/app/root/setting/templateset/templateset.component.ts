@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {TemplatesetService} from "../../../http/templateset.service";
-import {CsvTemplateInfo} from "../../../entity/tempData";
-import {BehaviorSubject, Observable} from "rxjs/index";
-import {debounceTime, map, switchMap} from "rxjs/internal/operators";
+import { TemplatesetService } from "../../../http/templateset.service";
+import { CsvTemplateInfo } from "../../../entity/tempData";
+import { BehaviorSubject, Observable } from "rxjs/index";
+import { debounceTime, map, switchMap } from "rxjs/internal/operators";
+import {CurrencyUtil} from "../../../util/currencyUtil";
 
 @Component({
   selector: 'app-templateset',
@@ -11,12 +12,8 @@ import {debounceTime, map, switchMap} from "rxjs/internal/operators";
 })
 export class TemplatesetComponent implements OnInit {
   csvtempNm='';
-  platformId = null;
-  pfaccountId = null;
-  ptypeId = null;
-  sId = null;
 
-  constructor(private service:TemplatesetService) { }
+  constructor(private service:TemplatesetService,private util:CurrencyUtil) { }
   cancel(dataInfo): void {
     this.showModal(0,1,dataInfo);
   }
@@ -26,18 +23,12 @@ export class TemplatesetComponent implements OnInit {
   }
 
   templateInfo = new CsvTemplateInfo();
+  selectTemplateInfo = new CsvTemplateInfo();
 
-  allChecked = false;
-  disabledButton = true;
-  checkedNumber = 0;
-  displayData = [];
   operating = false;
   dataSet = [];
-  indeterminate = false;
 
   platSearchChange$ = new BehaviorSubject('');
-  selectedPlat = '';
-  selectedAccount = '';
   platList = [];
   accountList = [];
   supplierList = [];
@@ -50,27 +41,26 @@ export class TemplatesetComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let csvTemplateInfo = new CsvTemplateInfo();
-    this.getTemplateInfo(csvTemplateInfo);
-    // tslint:disable-next-line:no-any
+    this.getTemplateInfo(this.selectTemplateInfo);
    this.loadingBaseSelectData();
   }
 
   provinceAllChange(type,id): void {
+
     if(type == 0){
-      if(id == this.platformId){
+      if(id == this.selectTemplateInfo.platformId){
 
       }else{
-        this.selectedAccount = '';
+        this.selectTemplateInfo.pfaccountNm = '';
         this.getPfaccountInfo(id);
       }
-      this.platformId = id;
+      this.selectTemplateInfo.platformId = id;
     }else if(type == 1){
-      this.pfaccountId = id;
+      this.selectTemplateInfo.pfaccountId = id;
     }else if(type == 2){
-      this.ptypeId = id;
+      this.selectTemplateInfo.ptypeId = id;
     }else if(type == 3){
-      this.sId = id;
+      this.selectTemplateInfo.sId = id;
     }
   }
 
@@ -117,44 +107,41 @@ export class TemplatesetComponent implements OnInit {
   }
 
   currentPageDataChange($event): void {
-    this.displayData = $event;
+    console.log($event)
   }
 
-  refreshStatus(): void {
-    const allChecked = this.displayData.every(value => value.checked === true);
-    const allUnChecked = this.displayData.every(value => !value.checked);
-    this.allChecked = allChecked;
-    this.indeterminate = (!allChecked) && (!allUnChecked);
-    this.disabledButton = !this.dataSet.some(value => value.checked);
-    this.checkedNumber = this.dataSet.filter(value => value.checked).length;
-  }
 
-  checkAll(value: boolean): void {
-    this.displayData.forEach(data => data.checked = value);
-    this.refreshStatus();
-  }
 
-  operateData(): void {
+  operateData(selectTemplateInfo): void {
     this.operating = true;
-    setTimeout(_ => {
-      this.dataSet.forEach(value => value.checked = false);
-      this.refreshStatus();
-      this.operating = false;
-    }, 1000);
+    this.getTemplateInfo(selectTemplateInfo);
   }
 
 
   private getTemplateInfo(csvTemplateInfo:CsvTemplateInfo){
     this.service.getTemplateInfo(csvTemplateInfo).subscribe(result=>{
+      this.operating?this.operating = false:null;
       if(result.code == 0){
         this.dataSet = result.data == null?[]:result.data;
-        this.dataSet.forEach(value => value.checked = false);
       }else if(result.code == 1){
 
       }else{
         console.error(result.msg);
       }
     })
+  }
+
+  private insertTemplateInfo(csvTemplateInfo:CsvTemplateInfo){
+    return this.service.insertTemplateInfo(csvTemplateInfo).pipe(map(data=>{
+      this.getTemplateInfo(this.selectTemplateInfo);
+      return data
+    }));
+  }
+  private deletePlatInfo(csvtempid){
+    return this.service.deletePlatInfo(csvtempid).pipe(map(data=>{
+      this.getTemplateInfo(this.selectTemplateInfo);
+      return data
+    }));
   }
 
   private getPtypeList() {
@@ -187,7 +174,15 @@ export class TemplatesetComponent implements OnInit {
   isConfirmLoading = false;
 
   delete(type,data){
+    this.deletePlatInfo(data.csvtempId).subscribe(result=>{
+      if(result.code == 0){
 
+      }else if(result.code == 1){
+
+      }else{
+        console.error(result.msg);
+      }
+    });
   }
   showModal(i,type,dataInfo?): void {
     this.isVisible = true;
@@ -206,15 +201,51 @@ export class TemplatesetComponent implements OnInit {
     }
   }
 
-  handleOk(modalType): void {
+  handleOk(modalType,templateInfo): void {
     this.isConfirmLoading = true;
-    setTimeout(() => {
-      this.isVisible = false;
-      this.isConfirmLoading = false;
-    }, 3000);
+    if(!this.checkTemplateInfo(templateInfo)){
+      return;
+    }
+    this.insertTemplateInfo(templateInfo) .subscribe(result=>{
+      if(result.code == 0){
+        this.isVisible = false;
+        this.isConfirmLoading = false;
+      }else if(result.code == 1){
+
+      }else{
+        console.error(result.msg);
+      }
+    });
+
+  }
+  checkTemplateInfo(templateInfo:CsvTemplateInfo):boolean{
+    let num = 0;
+    if(!this.util.isEmpty(templateInfo.csvtempNm)){
+      num++;
+      this.util.msg.warning("请填写模板名称");
+    }
+    if(!this.util.isEmpty(templateInfo.platformId)){
+      num++;
+      this.util.msg.warning("请选择平台");
+    }
+    if(!this.util.isEmpty(templateInfo.pfaccountId)){
+      num++;
+      this.util.msg.warning("请选择账号");
+    }
+    if(!this.util.isEmpty(templateInfo.ptypeId)){
+      num++;
+      this.util.msg.warning("请选择产品分类");
+    }
+    if(!this.util.isEmpty(templateInfo.sId)){
+      num++;
+      this.util.msg.warning("请选择供应商");
+    }
+
+    return num == 0?true:false;
   }
 
   handleCancel(): void {
-    this.isVisible = false;
+    // this.isVisible = false;
+    this.isConfirmLoading = false;
   }
 }
