@@ -245,7 +245,7 @@ export class TemplatesetComponent implements OnInit {
   }
 
   handleCancel(): void {
-    // this.isVisible = false;
+    this.isVisible = false;
     this.isConfirmLoading = false;
   }
 }

@@ -3,25 +3,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 @Component({
   selector     : 'nz-demo-mention-preview',
   encapsulation: ViewEncapsulation.None,
-  template     : `
-  <nz-tabset>
-      <nz-tab nzTitle="Write">
-        <nz-mention
-          [nzSuggestions]="suggestions">
-           <textarea
-              nz-input
-              [nzAutosize]="{minRows: 4, maxRows: 4}"
-              [(ngModel)]="inputValue"
-              (ngModelChange)="renderPreView()"
-              nzMentionTrigger>
-            </textarea>
-        </nz-mention>
-      </nz-tab>
-      <nz-tab nzTitle="Preview">
-          <pre [innerHTML]="preview"></pre>
-      </nz-tab>
-    </nz-tabset>
-`
+  templateUrl: './demo.html',
 })
 export class NzMentionPreviewDemoComponent {
   inputValue: string = 'Switch tab view preview @NG-ZORRO ';

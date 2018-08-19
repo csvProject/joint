@@ -12,17 +12,18 @@ import { TemplatesetService } from '../../http/templateset.service';
 import { PlatformacctService } from '../../http/platformacct.service';
 import { DatePipe } from '../../pipe/date.pipe';
 import { TempeditComponent } from './templateset/tempedit/tempedit.component';
-import { FieldeidComponent } from './templateset/fieldeid/fieldeid.component';
+import { FieldEditComponent } from './templateset/fieldedit/fieldedit.component';
+import { SortableModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
     CommonModule,
     SettingRoutingModule,
-
+    SortableModule.forRoot(),
     FormsModule,
     NgZorroAntdModule
   ],
-  declarations: [SettingComponent,DatePipe, PlatformacctsetComponent, TemplatesetComponent,NzMentionPreviewDemoComponent, TempeditComponent, FieldeidComponent],
+  declarations: [SettingComponent,DatePipe, PlatformacctsetComponent, TemplatesetComponent,NzMentionPreviewDemoComponent, TempeditComponent, FieldEditComponent],
   providers:[
     TemplatesetService,
     PlatformacctService

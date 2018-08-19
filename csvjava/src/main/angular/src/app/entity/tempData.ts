@@ -38,3 +38,21 @@ export class CsvTemplateInfo {
   }
 }
 
+
+
+export class CsvTemplateDetail{
+  //CSV模板字段ID
+  csvFieldId:number;
+  //CSV模板ID
+  csvtempId:number;
+  //模板字段key
+  fieldKey:string;
+  //模板字段key描述
+  fieldNm:string;
+  //模板字段value
+  fieldValue:string;
+  //模板字段类别
+  fieldType:string;
+  //模板字段顺序
+  fieldSort:number;
+}

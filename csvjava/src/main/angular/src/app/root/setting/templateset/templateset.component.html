@@ -109,7 +109,11 @@
 </nz-table>
 
 
-<nz-modal [nzWidth]="modalType==2?600:650" [nzStyle]="{top:modalType==2?'':'35px'}"
+<nz-modal [nzMaskClosable]="false"
+  [nzWidth]="modalType==2?650:650" [nzStyle]="{top:modalType==2?'30px':'30px'}"
+          [nzBodyStyle]="modalType==2?{
+          'height':'460px',
+           'overflow-y':'auto'}:{}"
   [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalType==2?fieldeid:tempedit" [nzFooter]="modalFooter"
           (nzOnCancel)="handleCancel()">
   <ng-template #modalTitle>
@@ -127,6 +131,6 @@
   <app-tempedit [tempData]="templateInfo" [platList]="platList"
                 [pTypeList]="pTypeList" [supplierList]="supplierList"></app-tempedit>
 </ng-template>
-<ng-template #fieldeid>
-  <app-fieldeid></app-fieldeid>
+<ng-template #fieldeid style=" height: 480px;overflow-y: auto;">
+  <app-fieldedit></app-fieldedit>
 </ng-template>
