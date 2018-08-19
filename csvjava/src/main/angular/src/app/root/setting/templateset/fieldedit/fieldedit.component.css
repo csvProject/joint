@@ -38,3 +38,25 @@
   background-color: #e6e6e6;
   box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
 }
+
+
+.field_input_div{
+  border: 1px solid #ccc;
+  height: 296px;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.span_label_title{
+  padding: 5px 14px 5px 0px;
+  width: 45px;
+}
+
+.span_input{
+  width: 160px;
+}
+
+.field_div_height{
+  height: 300px;
+  overflow-y: auto;
+}
