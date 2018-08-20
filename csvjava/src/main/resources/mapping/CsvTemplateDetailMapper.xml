@@ -11,7 +11,7 @@
         FIELD_VALUE fieldValue,
         FIELD_TYPE fieldType,
         FIELD_SORT fieldSort
-        FROM T_CSVTEMPLATE_DETAIL
+        FROM T_CSVTEMPLATE_DETAIL ORDER  by FIELD_SORT
         WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
     </select>
 
