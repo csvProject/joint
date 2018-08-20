@@ -11,6 +11,9 @@ import com.csv.java.entity.CsvTemplateDetailDto;
 import java.util.List;
 
 public interface CsvTemplateDetailService {
+
+    List<CsvTemplateDetailDto> findCsvTempDetailBycsvtempId(int csvtempId);
+
     List<CsvTemplateDetailDto> findCsvTempDetailByKey(CsvTemplateDetailDto indto);
 
     CsvTemplateDetailDto findCsvTempDetailById(int csvFieldId);

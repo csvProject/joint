@@ -11,6 +11,9 @@ import com.csv.java.entity.CsvTemplateDetailDto;
 import java.util.List;
 
 public interface CsvTemplateDetailDao {
+    //根据模板ID查询
+    List<CsvTemplateDetailDto>  findCsvTempDetailBycsvtempId(int csvtempId);
+
     //根据ID查询
     CsvTemplateDetailDto findCsvTempDetailById(int csvFieldId);
 

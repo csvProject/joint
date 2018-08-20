@@ -17,6 +17,14 @@ public class CsvTemplateDetailController {
 
     @Autowired
     private CsvTemplateRuleService csvTemplateRuleService;
+
+    //根据模板ID查询所有字段
+    @RequestMapping(value = "/findbycsvtempid", method = RequestMethod.GET)
+    public Result findCsvTempDetailBycsvtempId(@RequestParam(value = "csvtempid", required = true) int csvtempId) {
+        System.out.println("开始查询...");
+        return ResultUtil.success(csvTemplateDetailService.findCsvTempDetailBycsvtempId(csvtempId));
+    }
+
     //根据ID查询单件
     @RequestMapping(value = "/findbyid", method = RequestMethod.GET)
     public Result findCsvTempDetailById(@RequestParam(value = "csvfieldid", required = true) int csvFieldId) {
