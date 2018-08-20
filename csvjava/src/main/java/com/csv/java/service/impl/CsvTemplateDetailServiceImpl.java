@@ -23,6 +23,10 @@ public class CsvTemplateDetailServiceImpl implements CsvTemplateDetailService {
     @Autowired
     private CsvTemplateRuleDao csvTemplateRuleDao;
 
+    public List<CsvTemplateDetailDto> findCsvTempDetailBycsvtempId(int csvtempId){
+        return csvTemplateDetailDao.findCsvTempDetailBycsvtempId(csvtempId);
+    }
+
     public CsvTemplateDetailDto findCsvTempDetailById(int csvFieldId){
         return csvTemplateDetailDao.findCsvTempDetailById(csvFieldId);
     }
