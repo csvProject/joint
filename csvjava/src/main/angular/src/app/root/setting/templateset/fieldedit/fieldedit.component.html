@@ -111,7 +111,7 @@
                    nzSize="small"
                    [nzRenderItem]="item">
             <ng-template #item let-item>
-              <nz-list-item (click)="clickFun()" [nzContent]="item"></nz-list-item>
+              <nz-list-item (click)="clickFun(item)" [nzContent]="item.value"></nz-list-item>
             </ng-template>
           </nz-list>
         </div>
@@ -119,7 +119,7 @@
       <div nz-col nzSpan="2"></div>
       <div nz-col nzSpan="11">
         <div class="field_div_height">
-          <div  editDiv="true" class="field_input_div "
+          <div  editDiv="true" class="field_input_div" #editDiv1
                 (keyup)="saveRange()"
                 (click)="saveRange();"
                 contenteditable="true"></div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CsvTemplateDetail} from "../../../../entity/tempData";
 import {CurrencyUtil} from "../../../../util/currencyUtil";
 
@@ -8,6 +8,7 @@ import {CurrencyUtil} from "../../../../util/currencyUtil";
   styleUrls: ['./fieldedit.component.css']
 })
 export class FieldEditComponent implements OnInit {
+  @ViewChild("editDiv1") editDiv1;
   selectFielDetail:CsvTemplateDetail = new CsvTemplateDetail();
   radioValue = 0;
   selectTrueField;
@@ -22,11 +23,26 @@ export class FieldEditComponent implements OnInit {
     },
   ];
   data = [
-    'Racing car sprays burning fuel into crowd.',
-    'Japanese princess to wed commoner.',
-    'Australian walks 100km after outback crash.',
-    'Man charged over missing wedding girl.',
-    'Los Angeles battles huge wildfires.'
+    {
+      key:1,
+      value:'商品名1'
+    },
+    {
+      key:2,
+      value:'商品名2'
+    },
+    {
+      key:3,
+      value:'商品名3'
+    },
+    {
+      key:4,
+      value:'商品名4'
+    },
+    {
+      key:5,
+      value:'商品名5'
+    }
   ];
   provinceChange(fieldType){
 
@@ -54,6 +70,13 @@ export class FieldEditComponent implements OnInit {
   }
   handleOk(): void {
 
+    let childNodes = this.editDiv1.nativeElement.childNodes;
+    for(let ele of childNodes){
+      if(ele.className == 'stop-propagation'){
+        let jsonData = JSON.parse((ele.getAttribute('jsonData')+'').replace(/'/g,'"'));
+      }
+    }
+    console.log(this.editDiv1);
   }
   showModel(csvTemplateDetail :CsvTemplateDetail){
     console.log(csvTemplateDetail);
@@ -76,10 +99,14 @@ export class FieldEditComponent implements OnInit {
   }
 
   //插入相应文案
-  clickFun(htmlSrc){
-    let test = `<span class="stop-propagation" style="color: red;" contenteditable="false" 
-    (click)="stopEvent($event)">123</span>`;
+  clickFun(item){
+    let htmlSrc = '';
+    let test = `<span class="stop-propagation" 
+    style="color: red;" contenteditable="false" 
+    jsonData = "${JSON.stringify(item).replace(/"/g,'\'')}"
+    (click)="stopEvent($event)">${item.value}</span>`;
     htmlSrc = test;
+
 
     if(this.lastRange.startContainer==undefined ){
       return ;
@@ -99,4 +126,14 @@ export class FieldEditComponent implements OnInit {
     }
   }
 
+
+  textValue(formatedStr){
+    let map = [{
+      key:123,
+      value:133
+    }]
+    for (let k of map) {
+      formatedStr = formatedStr.replaceAll("\\$\\{:"+k['key']+"\\}","%`~"+ k['value']+"^%`~");
+    }
+  }
 }
