@@ -6,6 +6,7 @@ package com.csv.java.service.impl;
 
 import com.csv.java.dao.ProductDao;
 import com.csv.java.entity.ProductCsvDto;
+import com.csv.java.entity.ProductDto;
 import com.csv.java.service.ProductCsvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class ProductCsvServiceImpl implements ProductCsvService {
     private ProductDao productDao;
 
 
-    public List<ProductCsvDto> findProductByCondi(ProductCsvDto indto){
+    public List<ProductDto> findProductByCondi(ProductCsvDto indto){
         return productDao.findProductByCondi(indto);
     }
 

@@ -33,7 +33,7 @@
         </if>
     </sql>
 
-    <select id="findProductByCondi" parameterType="ProductCsvDto"  resultType="ProductCsvDto">
+    <select id="findProductByCondi" parameterType="ProductCsvDto"  resultType="ProductDto">
         SELECT
             t.id productId,
             t.sku sku,
@@ -84,7 +84,7 @@
         <include refid="forcondi"></include>
     </select>
 
-    <select id="findProductById" parameterType="java.lang.Integer"  resultType="ProductCsvDto">
+    <select id="findProductById" parameterType="java.lang.Integer"  resultType="ProductDto">
         SELECT
         t.id productId,
         t.sku sku,
