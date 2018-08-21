@@ -5,7 +5,7 @@ package com.csv.java.service.impl;
 
 
 import com.csv.java.dao.ProductDao;
-import com.csv.java.entity.ProductCsvDto;
+import com.csv.java.entity.ProductCsvIntoDto;
 import com.csv.java.entity.ProductDto;
 import com.csv.java.service.ProductCsvService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +20,11 @@ public class ProductCsvServiceImpl implements ProductCsvService {
     private ProductDao productDao;
 
 
-    public List<ProductDto> findProductByCondi(ProductCsvDto indto){
+    public List<ProductDto> findProductByCondi(ProductCsvIntoDto indto){
         return productDao.findProductByCondi(indto);
     }
 
-    public ProductCsvDto findProductById(int productId){
+    public ProductDto findProductById(int productId){
         return productDao.findProductById(productId);
     }
 

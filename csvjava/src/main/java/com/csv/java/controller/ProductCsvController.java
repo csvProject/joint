@@ -2,7 +2,7 @@ package com.csv.java.controller;
 
 import com.csv.java.common.result.Result;
 import com.csv.java.common.result.ResultUtil;
-import com.csv.java.entity.ProductCsvDto;
+import com.csv.java.entity.ProductCsvIntoDto;
 import com.csv.java.service.ProductCsvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ public class ProductCsvController {
 
     //根据条件查询
     @RequestMapping(value = "/findListbycondi", method = RequestMethod.POST)
-    public Result findProductByCondi(@RequestBody ProductCsvDto indto) {
+    public Result findProductByCondi(@RequestBody ProductCsvIntoDto indto) {
         System.out.println("开始查询...");
         return ResultUtil.success(productCsvService.findProductByCondi(indto)) ;
     }
