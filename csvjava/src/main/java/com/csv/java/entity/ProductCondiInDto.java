@@ -2,8 +2,8 @@ package com.csv.java.entity;
 
 import java.util.Date;
 
-//商品dto
-public class ProductCsvIntoDto extends BaseDto{
+//查询商品条件dto
+public class ProductCondiInDto extends BaseDto{
     //商品ID
     private int productId;
     //商品sku

@@ -33,7 +33,7 @@
         </if>
     </sql>
 
-    <select id="findProductByCondi" parameterType="ProductCsvDto"  resultType="ProductDto">
+    <select id="findProductByCondi" parameterType="ProductCondiInDto"  resultType="ProductDto">
         SELECT
             t.id productId,
             t.sku sku,

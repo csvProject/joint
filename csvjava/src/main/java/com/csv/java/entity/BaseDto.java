@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
-public class BaseDto implements Serializable {
+public class BaseDto implements Serializable,Cloneable {
     private static final long serialVersionUID = -7534367013413101701L;
 
     //登录用户id
@@ -32,5 +32,17 @@ public class BaseDto implements Serializable {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    @Override
+    public Object clone() {
+        Object o = null;
+        try {
+            o =  super.clone();
+        } catch (CloneNotSupportedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return o;
     }
 }
