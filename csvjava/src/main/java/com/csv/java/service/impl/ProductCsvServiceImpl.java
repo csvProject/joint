@@ -100,6 +100,13 @@ public class ProductCsvServiceImpl implements ProductCsvService {
             productGroupOutDto.setCsvSql(csvTemplateRuleDto.getCsvSql());
         }
 
+        //生成csv
+        for (ProductGroupOutDto productGroupOutDto : productGroupOutDtoList) {
+            for ( ProductDto productDto:productGroupOutDto.getProductDtoList()) {
+
+            }
+        }
+
 
         return ret;
 
