@@ -5,8 +5,8 @@ import {timeInterval} from "rxjs/internal/operators";
 
 /** Http interceptor providers in outside-in order */
 export const httpInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: PublicInterceptor, multi: true },
-];
+    { provide: HTTP_INTERCEPTORS, useClass: PublicInterceptor, multi: true },
+  ];
 
 
 export const url = {
@@ -30,6 +30,8 @@ export const url = {
   tempdelbyid:'csvtempinfo/delbyid', //模板一览
   ptypefindbycondi:'ptype/findbycondi', //产品分类一览
   supplierfindbycondi:'supplier/findbycondi', //供应商一览
+
+  findfieldbycsvtempid:'csvtempdetail/findbycsvtempid', //供应商一览
 };
 
 

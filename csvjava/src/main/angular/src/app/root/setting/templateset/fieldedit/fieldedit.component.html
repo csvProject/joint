@@ -42,18 +42,20 @@
       <div nz-col  nzSpan="7">
         字段值
       </div>
-      <div nz-col  nzSpan="4" style="    padding-right: 5px;">
-        操作
+      <div nz-col  nzSpan="4" style="">
+        <div>
+          <button nz-button nzType="primary" (click)="showModel()">
+            <i class="anticon anticon-plus"></i></button>
+        </div>
       </div>
     </div>
     <div nz-col  nzSpan="24" class="field_table_body">
       <bs-sortable
         (onChange) = "onChangeSorTable($event)"
-        [(ngModel)]="itemObjectsLeft"
+        [(ngModel)]="fieldList"
         [itemTemplate]="itemTemplate"
         itemClass="sortable-item"
         itemActiveClass="sortable-item-active"
-        placeholderItem="Drag here"
         placeholderClass="placeholderStyle"
         wrapperClass="sortable-wrapper"
       ></bs-sortable>

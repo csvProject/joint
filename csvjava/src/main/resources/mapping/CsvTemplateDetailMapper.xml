@@ -11,8 +11,9 @@
         FIELD_VALUE fieldValue,
         FIELD_TYPE fieldType,
         FIELD_SORT fieldSort
-        FROM T_CSVTEMPLATE_DETAIL ORDER  by FIELD_SORT
+        FROM T_CSVTEMPLATE_DETAIL
         WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+         ORDER  by FIELD_SORT
     </select>
 
     <select id="findCsvTempDetailById" parameterType="java.lang.Integer"  resultType="CsvTemplateDetailDto">

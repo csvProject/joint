@@ -45,4 +45,12 @@ export class TemplatesetService {
       }
     });
   }
+
+  getFieldListCsvtempid(csvtempid): Observable<BaseApiResponseModel> {
+    return this.http.get<BaseApiResponseModel>(url.findfieldbycsvtempid,{
+      params:{
+        csvtempid
+      }
+    });
+  }
 }

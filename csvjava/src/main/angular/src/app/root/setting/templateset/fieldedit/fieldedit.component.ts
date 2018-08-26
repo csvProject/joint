@@ -1,6 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {CsvTemplateDetail} from "../../../../entity/tempData";
 import {CurrencyUtil} from "../../../../util/currencyUtil";
+import {TemplatesetService} from "../../../../http/templateset.service";
 
 @Component({
   selector: 'app-fieldedit',
@@ -8,6 +9,8 @@ import {CurrencyUtil} from "../../../../util/currencyUtil";
   styleUrls: ['./fieldedit.component.css']
 })
 export class FieldEditComponent implements OnInit {
+  constructor(private util:CurrencyUtil,private service:TemplatesetService){}
+  @Input() fieldList = [];
   @ViewChild("editDiv1") editDiv1;
   selectFielDetail:CsvTemplateDetail = new CsvTemplateDetail();
   radioValue = 0;
@@ -48,11 +51,6 @@ export class FieldEditComponent implements OnInit {
 
   }
 
-  itemObjectsLeft: any[] = [
-    { id: 1, name: 'Windstorm' },
-    { id: 2, name: 'Bombasto' },
-    { id: 3, name: 'Magneta' }
-  ];
 
   onChangeSorTable(ev){
     console.log(ev);
@@ -78,15 +76,19 @@ export class FieldEditComponent implements OnInit {
     }
     console.log(this.editDiv1);
   }
-  showModel(csvTemplateDetail :CsvTemplateDetail){
-    console.log(csvTemplateDetail);
+  showModel(csvTemplateDetail? :CsvTemplateDetail){
+    console.log(csvTemplateDetail.csvtempId);
+
     this.isVisible = true;
+
+
   }
+
 
 
   lastRange:(any|Range) = {};//光标停留位置
 
-  constructor(private util:CurrencyUtil){}
+
 
 
   ngOnInit() {

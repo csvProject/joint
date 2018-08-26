@@ -44,7 +44,7 @@ export class FirstComponent implements OnInit {
 
   //插入相应文案
   clickFun(htmlSrc){
-    let test = `<span class="stop-propagation" style="color: red;" contenteditable="false" 
+   /* let test = `<span class="stop-propagation" style="color: red;" contenteditable="false"
     (click)="stopEvent($event)">123</span>`;
     htmlSrc = test;
 
@@ -63,7 +63,7 @@ export class FirstComponent implements OnInit {
       span.addEventListener('click',function(e){
        e.stopPropagation();//阻止事件广播
       },false);
-    }
+    }*/
   }
 
 }

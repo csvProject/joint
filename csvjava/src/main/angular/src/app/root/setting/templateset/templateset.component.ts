@@ -197,8 +197,23 @@ export class TemplatesetComponent implements OnInit {
     }else if(type == 1){
       this.templateInfo = dataInfo;
     }else if(type == 2){
+      console.log(dataInfo);
       // this.templateInfo = csvTemplateInfo;
+      this.getFieldListCsvtempid(dataInfo.csvtempId);
     }
+  }
+
+  fieldList = [];
+  private getFieldListCsvtempid(csvtempId){
+    this.service.getFieldListCsvtempid(csvtempId).subscribe(result=>{
+      if(result.code == 0){
+        this.fieldList = result.data == null?[]:result.data;
+      }else if(result.code == 1){
+
+      }else {
+
+      }
+    })
   }
 
   handleOk(modalType,templateInfo): void {

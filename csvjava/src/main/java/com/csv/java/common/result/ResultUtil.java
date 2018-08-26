@@ -1,6 +1,5 @@
 package com.csv.java.common.result;
 
-import com.sun.deploy.net.HttpResponse;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

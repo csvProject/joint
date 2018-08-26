@@ -5,7 +5,6 @@ import { SettingRoutingModule } from './setting-routing.module';
 import { SettingComponent } from './setting.component';
 import { PlatformacctsetComponent } from './platformacctset/platformacctset.component';
 import { TemplatesetComponent } from './templateset/templateset.component';
-import { NzMentionPreviewDemoComponent } from './platformacctset/nz-mention-preview/nz-mention-preview-demo.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
 import { TemplatesetService } from '../../http/templateset.service';
@@ -23,7 +22,7 @@ import { SortableModule } from 'ngx-bootstrap';
     FormsModule,
     NgZorroAntdModule
   ],
-  declarations: [SettingComponent,DatePipe, PlatformacctsetComponent, TemplatesetComponent,NzMentionPreviewDemoComponent, TempeditComponent, FieldEditComponent],
+  declarations: [SettingComponent,DatePipe, PlatformacctsetComponent, TemplatesetComponent, TempeditComponent, FieldEditComponent],
   providers:[
     TemplatesetService,
     PlatformacctService
