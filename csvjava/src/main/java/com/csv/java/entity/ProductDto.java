@@ -1,9 +1,7 @@
 package com.csv.java.entity;
 
-import java.util.Date;
-
 //商品dto
-public class ProductCsvDto extends BaseDto{
+public class ProductDto extends BaseDto{
     //商品ID
     private int productId;
     //商品sku
@@ -88,15 +86,6 @@ public class ProductCsvDto extends BaseDto{
     private String ptypeNm;
     //供应商名称
     private String sNm;
-
-    //时间开始条件
-    private String sjStartDt;
-
-    //时间开始条件
-    private String sjEndDt;
-
-    //sku与name条件
-    private String skuName;
 
     public int getProductId() {
         return productId;
@@ -434,27 +423,4 @@ public class ProductCsvDto extends BaseDto{
         this.sNm = sNm;
     }
 
-    public String getSjStartDt() {
-        return sjStartDt;
-    }
-
-    public void setSjStartDt(String sjStartDt) {
-        this.sjStartDt = sjStartDt;
-    }
-
-    public String getSjEndDt() {
-        return sjEndDt;
-    }
-
-    public void setSjEndDt(String sjEndDt) {
-        this.sjEndDt = sjEndDt;
-    }
-
-    public String getSkuName() {
-        return skuName;
-    }
-
-    public void setSkuName(String skuName) {
-        this.skuName = skuName;
-    }
 }

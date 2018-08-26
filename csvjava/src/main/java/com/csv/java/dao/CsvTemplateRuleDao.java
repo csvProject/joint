@@ -26,4 +26,7 @@ public interface CsvTemplateRuleDao {
 
     //删除模板下所有规则
     public void delCsvTempRuleBycsvtempId(int csvtempId);
+
+    //根据4要素查询所有csvsql
+    CsvTemplateRuleDto findCsvsqlByFourKey(String fourKey);
 }
