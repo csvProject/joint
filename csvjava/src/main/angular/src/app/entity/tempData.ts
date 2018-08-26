@@ -56,3 +56,10 @@ export class CsvTemplateDetail{
   //模板字段顺序
   fieldSort:number;
 }
+
+export class CsvTempBat{
+  //CSV模板ID
+  csvtempId:number;
+  //模板字段集合
+  csvTemplateDetailDtoList:[CsvTemplateDetail];
+}

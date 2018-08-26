@@ -8,7 +8,7 @@
       {{item.fieldKey}}
     </div>
     <div nz-col  nzSpan="7">
-      {{item.fieldValue}}
+      <div class="field_value_show" [innerHtml]="item.fieldValue"></div>
     </div>
     <div nz-col  nzSpan="4">
       <div nz-col  nzSpan="12">
@@ -19,7 +19,7 @@
       <div nz-col  nzSpan="12">
         <button nz-button nzType="primary" nz-popconfirm
                 nzTitle="确认删除" nzOkText="确认" nzCancelText="取消"
-                (nzOnConfirm)="deleteField(item)"
+                (nzOnConfirm)="deleteField(item,index)"
         ><i class="anticon anticon-delete"></i>
         </button>
       </div>
@@ -72,7 +72,7 @@
           [nzContent]="modalBody" [nzFooter]="modalFooter"
           (nzOnCancel)="handleCancel()">
   <ng-template #modalTitle>
-    <h3 style="margin-bottom:0">编辑字段</h3>
+    <h3 style="margin-bottom:0">{{ selectFielDetail.csvFieldId == null?'新增':'编辑'}}字段</h3>
   </ng-template>
 
   <ng-template #modalFooter>
@@ -89,7 +89,7 @@
         <input class="span_input" nz-input  [(ngModel)]="selectFielDetail.fieldKey">
       </div>
       <div nz-col nzSpan="12">
-        <nz-radio-group [(ngModel)]="radioValue">
+        <nz-radio-group [(ngModel)]="selectFielDetail.fieldType">
           <label nz-radio nzValue="0">固定值</label>
           <label nz-radio nzValue="1">商品表字段</label>
         </nz-radio-group>
@@ -121,7 +121,7 @@
       <div nz-col nzSpan="2"></div>
       <div nz-col nzSpan="11">
         <div class="field_div_height">
-          <div  editDiv="true" class="field_input_div" #editDiv1
+          <div editDiv="true" class="field_input_div" #editDiv1
                 (keyup)="saveRange()"
                 (click)="saveRange();"
                 contenteditable="true"></div>

@@ -13,7 +13,6 @@ export class FieldEditComponent implements OnInit {
   @Input() fieldList = [];
   @ViewChild("editDiv1") editDiv1;
   selectFielDetail:CsvTemplateDetail = new CsvTemplateDetail();
-  radioValue = 0;
   selectTrueField;
   selectTrueFieldList= [
     {
@@ -56,32 +55,37 @@ export class FieldEditComponent implements OnInit {
     console.log(ev);
   }
 
-  deleteField(data){
-
+  deleteField(data,i){
+    this.fieldList.splice(i,1);
   }
 
   isConfirmLoading = false;
   isVisible = false;
   handleCancel(): void {
     this.isVisible = false;
-
   }
   handleOk(): void {
-
-    let childNodes = this.editDiv1.nativeElement.childNodes;
+    let editDiv = this.editDiv1.nativeElement;
+    let childNodes = editDiv.childNodes;
     for(let ele of childNodes){
       if(ele.className == 'stop-propagation'){
         let jsonData = JSON.parse((ele.getAttribute('jsonData')+'').replace(/'/g,'"'));
       }
     }
-    console.log(this.editDiv1);
+    this.selectFielDetail.fieldValue = editDiv.innerHTML+'';
+    let tempList = Object.create(this.fieldList);
+    tempList.push(this.selectFielDetail);
+    this.fieldList = tempList;
+    this.isVisible = false;
+    editDiv.innerHTML = '';
   }
   showModel(csvTemplateDetail? :CsvTemplateDetail){
-    console.log(csvTemplateDetail.csvtempId);
-
+    if(csvTemplateDetail == null){
+      this.selectFielDetail = new CsvTemplateDetail();
+    }else{
+      this.selectFielDetail = csvTemplateDetail;
+    }
     this.isVisible = true;
-
-
   }
 
 
@@ -103,13 +107,10 @@ export class FieldEditComponent implements OnInit {
   //插入相应文案
   clickFun(item){
     let htmlSrc = '';
-    let test = `<span class="stop-propagation" 
-    style="color: red;" contenteditable="false" 
+    let test = `<span class="stop-propagation" contenteditable="false" 
     jsonData = "${JSON.stringify(item).replace(/"/g,'\'')}"
     (click)="stopEvent($event)">${item.value}</span>`;
     htmlSrc = test;
-
-
     if(this.lastRange.startContainer==undefined ){
       return ;
     }else{

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TemplatesetService } from "../../../http/templateset.service";
-import { CsvTemplateInfo } from "../../../entity/tempData";
+import {CsvTempBat, CsvTemplateInfo} from "../../../entity/tempData";
 import { BehaviorSubject, Observable } from "rxjs/index";
 import { debounceTime, map, switchMap } from "rxjs/internal/operators";
 import {CurrencyUtil} from "../../../util/currencyUtil";
@@ -137,6 +137,11 @@ export class TemplatesetComponent implements OnInit {
       return data
     }));
   }
+  private fieldUpdate(csvTempBat:CsvTempBat){
+    return this.service.fieldUpdate(csvTempBat).pipe(map(data=>{
+      return data
+    }));
+  }
   private deletePlatInfo(csvtempid){
     return this.service.deletePlatInfo(csvtempid).pipe(map(data=>{
       this.getTemplateInfo(this.selectTemplateInfo);
@@ -198,13 +203,14 @@ export class TemplatesetComponent implements OnInit {
       this.templateInfo = dataInfo;
     }else if(type == 2){
       console.log(dataInfo);
-      // this.templateInfo = csvTemplateInfo;
+      this.templateInfo = dataInfo;
       this.getFieldListCsvtempid(dataInfo.csvtempId);
     }
   }
 
-  fieldList = [];
+  fieldList:any = [];
   private getFieldListCsvtempid(csvtempId){
+    console.log(csvtempId);
     this.service.getFieldListCsvtempid(csvtempId).subscribe(result=>{
       if(result.code == 0){
         this.fieldList = result.data == null?[]:result.data;
@@ -218,19 +224,41 @@ export class TemplatesetComponent implements OnInit {
 
   handleOk(modalType,templateInfo): void {
     this.isConfirmLoading = true;
-    if(!this.checkTemplateInfo(templateInfo)){
-      return;
-    }
-    this.insertTemplateInfo(templateInfo) .subscribe(result=>{
-      if(result.code == 0){
-        this.isVisible = false;
-        this.isConfirmLoading = false;
-      }else if(result.code == 1){
-
-      }else{
-        console.error(result.msg);
+    if(modalType == 1|| modalType == 0){
+      if(!this.checkTemplateInfo(templateInfo)){
+        return;
       }
-    });
+      this.insertTemplateInfo(templateInfo) .subscribe(result=>{
+        if(result.code == 0){
+          this.isVisible = false;
+          this.isConfirmLoading = false;
+        }else if(result.code == 1){
+
+        }else{
+          console.error(result.msg);
+        }
+      });
+    }else if(modalType == 2){
+      console.log(this.fieldList);
+      let csvTempBat = new CsvTempBat();
+      for (let i = 0;i<this.fieldList.length;i++){
+       this.fieldList[i].fieldSort = i;
+      }
+      csvTempBat.csvtempId = templateInfo.csvtempId;
+      csvTempBat.csvTemplateDetailDtoList = this.fieldList;
+        this.fieldUpdate(csvTempBat).subscribe(result=>{
+          if(result.code == 0){
+            this.isVisible = false;
+            this.isConfirmLoading = false;
+          }else if(result.code == 1){
+
+          }else{
+            console.error(result.msg);
+          }
+        });
+    }
+
+
 
   }
   checkTemplateInfo(templateInfo:CsvTemplateInfo):boolean{

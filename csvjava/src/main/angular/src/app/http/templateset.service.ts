@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseApiResponseModel, url} from './index';
 import { Observable } from 'rxjs/index';
-import { CsvTemplateInfo } from '../entity/tempData';
+import {CsvTempBat, CsvTemplateInfo} from '../entity/tempData';
 
 @Injectable()
 export class TemplatesetService {
@@ -13,6 +13,10 @@ export class TemplatesetService {
   }
   insertTemplateInfo(csvTemplate?:CsvTemplateInfo): Observable<BaseApiResponseModel> {
     return this.http.post<BaseApiResponseModel>(url.tempinsert,csvTemplate);
+  }
+
+  fieldUpdate(csvTempBat?:CsvTempBat): Observable<BaseApiResponseModel> {
+    return this.http.post<BaseApiResponseModel>(url.fieldupdatedetailbat,csvTempBat);
   }
 
   getPtypeList(): Observable<BaseApiResponseModel> {

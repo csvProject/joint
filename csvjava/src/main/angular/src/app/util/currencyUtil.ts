@@ -197,4 +197,10 @@ export class CurrencyUtil {
     }
     return true
   }
+
+  fieldBeStripped():string{
+  let ret = '';
+
+  return ret;
+  }
 }

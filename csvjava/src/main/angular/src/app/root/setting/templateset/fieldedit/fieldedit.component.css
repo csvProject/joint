@@ -66,3 +66,8 @@
   background-color: #c2f7f7b3;
   cursor: pointer;
 }
+
+.field_value_show{
+  max-height: 65px;
+  overflow-y: auto;
+}

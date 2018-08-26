@@ -27,11 +27,13 @@ export const url = {
   /*templateset*/
   tempfindbycondi:'csvtempinfo/findbycondi', //模板一览
   tempinsert:'csvtempinfo/insert', //模板一览
-  tempdelbyid:'csvtempinfo/delbyid', //模板一览
+  tempdelbyid:'csvtempinfo/delbyid', //删除摸版
+
   ptypefindbycondi:'ptype/findbycondi', //产品分类一览
   supplierfindbycondi:'supplier/findbycondi', //供应商一览
 
-  findfieldbycsvtempid:'csvtempdetail/findbycsvtempid', //供应商一览
+  findfieldbycsvtempid:'csvtempdetail/findbycsvtempid', //根据模板ID查询所有字段
+  fieldupdatedetailbat:'csvtempdetail/updatedetailbat', //根据模板ID查询所有字段
 };
 
 

@@ -6,3 +6,7 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+.stop-propagation{
+  color: red;
+}
