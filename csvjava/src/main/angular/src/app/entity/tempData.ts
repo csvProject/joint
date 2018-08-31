@@ -55,6 +55,9 @@ export class CsvTemplateDetail{
   fieldType:string;
   //模板字段顺序
   fieldSort:number;
+  constructor(){
+    this.fieldType = '0';
+  }
 }
 
 export class CsvTempBat{

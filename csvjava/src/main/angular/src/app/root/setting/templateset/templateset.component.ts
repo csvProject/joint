@@ -43,6 +43,10 @@ export class TemplatesetComponent implements OnInit {
   ngOnInit(): void {
     this.getTemplateInfo(this.selectTemplateInfo);
    this.loadingBaseSelectData();
+
+   this.service.getFieldListData().subscribe(list=>{
+     this.fieldList = list;
+   })
   }
 
   provinceAllChange(type,id): void {
@@ -240,6 +244,7 @@ export class TemplatesetComponent implements OnInit {
       });
     }else if(modalType == 2){
       console.log(this.fieldList);
+      console.log(JSON.stringify(this.fieldList));
       let csvTempBat = new CsvTempBat();
       for (let i = 0;i<this.fieldList.length;i++){
        this.fieldList[i].fieldSort = i;

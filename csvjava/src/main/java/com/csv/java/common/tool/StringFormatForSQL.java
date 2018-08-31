@@ -15,8 +15,14 @@ public class StringFormatForSQL{
             formatedStr = formatedStr.replaceAll("\\$\\{:"+key+"\\}", arguments.get(key).toString());
         }*/
         for (String k : arguments.keySet()) {
-            formatedStr = formatedStr.replaceAll("\\$\\{:"+k+"\\}","%`~"+ arguments.get(k).toString()+"^%`~");
+//            formatedStr = formatedStr.replaceAll("\\$\\{:"+k+"\\}","%`~"+ arguments.get(k).toString()+"^%`~");
+            String regex = "<span class=\"stop-propagation\" contenteditable=\"false\">"+k+"</span>";
+            formatedStr =
+                    formatedStr.replaceAll(
+                            regex,
+                            "%`~"+ arguments.get(k).toString()+"^%`~");
         }
+        formatedStr = stripHtml(formatedStr);
         String[] strings = formatedStr.split("%`~");
 
         String ret = "CONCAT(";
@@ -51,6 +57,28 @@ public class StringFormatForSQL{
         }
         ret = ret + "FROM \n  " + FIELD_MATCHING_TABLE;
         return ret;
+    }
+
+
+    //方法一
+    public static String stripHtml(String content) {
+        // <p>段落替换为换行
+        content = content.replaceAll("<p .*?>", "\r\n");
+        // <br><br/>替换为换行
+        content = content.replaceAll("<br\\s*/?>", "\r\n");
+        // 去掉其它的<>之间的东西
+        content = content.replaceAll("\\<.*?>", "");
+        // 去掉空格
+         content = content.replaceAll(" ", "");
+        return content;
+    }
+
+    //方法二
+    public static String delHtmlTag(String str){
+        String newstr = "";
+        newstr = str.replaceAll("<[.[^>]]*>","");
+        newstr = newstr.replaceAll(" ", "");
+        return newstr;
     }
 }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseApiResponseModel, url} from './index';
-import { Observable } from 'rxjs/index';
+import {Observable, Subject} from 'rxjs/index';
 import {CsvTempBat, CsvTemplateInfo} from '../entity/tempData';
 
 @Injectable()
@@ -56,5 +56,24 @@ export class TemplatesetService {
         csvtempid
       }
     });
+  }
+
+  getSysCodeList(typecd): Observable<BaseApiResponseModel> {
+    return this.http.get<BaseApiResponseModel>(url.findsyscodebytypecd,{
+      params:{
+        typecd
+      }
+    });
+  }
+
+
+
+  fieldListData = new Subject();
+
+  sendFieldListData(list){
+    this.fieldListData.next(list);
+  }
+  getFieldListData(){
+    return this.fieldListData.asObservable();
   }
 }

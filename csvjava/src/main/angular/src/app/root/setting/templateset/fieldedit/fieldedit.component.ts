@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CsvTemplateDetail} from "../../../../entity/tempData";
 import {CurrencyUtil} from "../../../../util/currencyUtil";
 import {TemplatesetService} from "../../../../http/templateset.service";
@@ -10,9 +10,12 @@ import {TemplatesetService} from "../../../../http/templateset.service";
 })
 export class FieldEditComponent implements OnInit {
   constructor(private util:CurrencyUtil,private service:TemplatesetService){}
+  getEleData = '_sysCd';
+
   @Input() fieldList = [];
   @ViewChild("editDiv1") editDiv1;
   selectFielDetail:CsvTemplateDetail = new CsvTemplateDetail();
+  selectModelType = 0;
   selectTrueField;
   selectTrueFieldList= [
     {
@@ -24,34 +27,14 @@ export class FieldEditComponent implements OnInit {
       pfaccountNm:2
     },
   ];
-  data = [
-    {
-      key:1,
-      value:'商品名1'
-    },
-    {
-      key:2,
-      value:'商品名2'
-    },
-    {
-      key:3,
-      value:'商品名3'
-    },
-    {
-      key:4,
-      value:'商品名4'
-    },
-    {
-      key:5,
-      value:'商品名5'
-    }
-  ];
+  data = [];
   provinceChange(fieldType){
 
   }
 
 
   onChangeSorTable(ev){
+    this.fieldList ;
     console.log(ev);
   }
 
@@ -63,27 +46,53 @@ export class FieldEditComponent implements OnInit {
   isVisible = false;
   handleCancel(): void {
     this.isVisible = false;
+
+    let editDiv = this.editDiv1.nativeElement;
+    editDiv.innerHTML = '';
+    this.sendFieldListData(this.fieldList);
   }
   handleOk(): void {
+    if(!this.util.isEmpty(this.selectFielDetail.fieldKey)){
+      this.util.msg.warning('表头不能为空！');
+      return
+    }
+
     let editDiv = this.editDiv1.nativeElement;
     let childNodes = editDiv.childNodes;
     for(let ele of childNodes){
       if(ele.className == 'stop-propagation'){
-        let jsonData = JSON.parse((ele.getAttribute('jsonData')+'').replace(/'/g,'"'));
+        // let jsonData = JSON.parse((ele.getAttribute(this.getEleData )+'').replace(/'/g,'"'));
       }
     }
     this.selectFielDetail.fieldValue = editDiv.innerHTML+'';
-    let tempList = Object.create(this.fieldList);
-    tempList.push(this.selectFielDetail);
-    this.fieldList = tempList;
+    if(this.selectModelType == 0){
+      let tempList = [];
+      for(let t of this.fieldList){
+        tempList.push(t);
+      };
+      tempList.push(this.selectFielDetail);
+      this.fieldList = tempList;
+    }else{
+
+    }
     this.isVisible = false;
     editDiv.innerHTML = '';
+   this.sendFieldListData(this.fieldList);
+  }
+  private sendFieldListData(list){
+    this.service.sendFieldListData(list);
   }
   showModel(csvTemplateDetail? :CsvTemplateDetail){
     if(csvTemplateDetail == null){
+      this.selectModelType = 0;
+      console.info('新增');
       this.selectFielDetail = new CsvTemplateDetail();
     }else{
       this.selectFielDetail = csvTemplateDetail;
+      console.info('编辑');
+      this.selectModelType = 1;
+      let editDiv = this.editDiv1.nativeElement;
+      editDiv.innerHTML =csvTemplateDetail.fieldValue;
     }
     this.isVisible = true;
   }
@@ -96,6 +105,7 @@ export class FieldEditComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getSysCodeList(1);
   }
 
 
@@ -107,9 +117,11 @@ export class FieldEditComponent implements OnInit {
   //插入相应文案
   clickFun(item){
     let htmlSrc = '';
-    let test = `<span class="stop-propagation" contenteditable="false" 
-    jsonData = "${JSON.stringify(item).replace(/"/g,'\'')}"
-    (click)="stopEvent($event)">${item.value}</span>`;
+    /*let test = `<span class="stop-propagation" contenteditable="false"
+    ${ this.getEleData } = "${JSON.stringify(item.sysCd).replace(/"/g,'\'')}"
+   (click)="stopEvent($event)">${item.sysNm}</span>`;  */
+
+    let test = `<span class="stop-propagation" contenteditable="false" >${item.sysNm}</span>`;
     htmlSrc = test;
     if(this.lastRange.startContainer==undefined ){
       return ;
@@ -129,12 +141,23 @@ export class FieldEditComponent implements OnInit {
     }
   }
 
+  private getSysCodeList(typecd){
+    this.service.getSysCodeList(typecd).subscribe(result=>{
+      console.log(result);
+      if(result.code == 0){
+        this.data = result.data == null?[]:result.data;
+      }else {
+
+      }
+    })
+  }
+
 
   textValue(formatedStr){
     let map = [{
       key:123,
       value:133
-    }]
+    }];
     for (let k of map) {
       formatedStr = formatedStr.replaceAll("\\$\\{:"+k['key']+"\\}","%`~"+ k['value']+"^%`~");
     }

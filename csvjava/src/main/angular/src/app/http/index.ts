@@ -33,7 +33,9 @@ export const url = {
   supplierfindbycondi:'supplier/findbycondi', //供应商一览
 
   findfieldbycsvtempid:'csvtempdetail/findbycsvtempid', //根据模板ID查询所有字段
-  fieldupdatedetailbat:'csvtempdetail/updatedetailbat', //根据模板ID查询所有字段
+  fieldupdatedetailbat:'csvtempdetail/updatedetailbat', //根据模板ID更新字段
+
+  findsyscodebytypecd:'syscode/findbytypecd', //查询匹配字段
 };
 
 
