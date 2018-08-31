@@ -54,6 +54,6 @@
         CSV_SQL t.csvSql
         FROM T_CSVTEMPLATE_RULE t
         INNER JOIN T_CSVTEMPLATE_INFO ci on t.CSVTEMP_ID = ci.CSVTEMP_ID
-        WHERE  ci.PLATFORM_ID ||  ci.PFACCOUNT_ID || ci.PTYPEID || ci.SID  = #{fourKey,jdbcType=STRING}
+        WHERE  ci.PLATFORM_ID ||  ci.PFACCOUNT_ID || ci.PTYPEID || ci.SID  = #{fourKey,jdbcType=VARCHAR}
     </select>
 </mapper>
