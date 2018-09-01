@@ -55,6 +55,9 @@ public class CsvTemplateInfoDto extends BaseDto{
     //供应商名称
     private String sNm;
 
+    //csv头部是否显示
+    private int headShow;
+
     public int getCsvtempId() {
         return csvtempId;
     }
@@ -189,5 +192,13 @@ public class CsvTemplateInfoDto extends BaseDto{
 
     public void setsNm(String sNm) {
         this.sNm = sNm;
+    }
+
+    public int getHeadShow() {
+        return headShow;
+    }
+
+    public void setHeadShow(int headShow) {
+        this.headShow = headShow;
     }
 }

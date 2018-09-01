@@ -34,7 +34,8 @@
             IS_USE isUse,
             JOIN_BY joinBy,
             JOIN_DATE joinDate,
-            MEMO memo
+            MEMO memo,
+            HEAD_SHOW headShow
         FROM T_CSVTEMPLATE_INFO
         WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
     </select>
@@ -54,6 +55,7 @@
             t.JOIN_BY joinBy,
             t.JOIN_DATE joinDate,
             t.MEMO memo,
+            t.HEAD_SHOW headShow,
             pf.PLATFORM_NM platformNm,
             pfac.PFACCOUNT_NM pfaccountNm,
             pt.typename ptypeNm,
@@ -94,6 +96,7 @@
             JOIN_BY ,
             JOIN_DATE ,
             MEMO ,
+            HEAD_SHOW,
             UPDT_BY,
             UPDT_TS)
         VALUES(
@@ -109,6 +112,7 @@
             #{logId,jdbcType=INTEGER},
             now(),
             #{memo,jdbcType=VARCHAR},
+            #{headShow,jdbcType=INTEGER},
             #{logId,jdbcType=INTEGER},
             CURRENT_TIMESTAMP())
 
@@ -132,6 +136,7 @@
             ORIGI_EXPR =#{origiExpr,jdbcType=VARCHAR} ,
             IS_USE =#{isUse,jdbcType=INTEGER},
             MEMO =  #{memo,jdbcType=VARCHAR},
+            HEAD_SHOW=#{headShow,jdbcType=INTEGER},
             UPDT_BY = #{logId,jdbcType=INTEGER},
             UPDT_TS =CURRENT_TIMESTAMP()
         WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
