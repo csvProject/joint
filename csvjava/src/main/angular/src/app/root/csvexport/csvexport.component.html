@@ -70,3 +70,40 @@
   </div>
 </ng-template>
 
+
+<nz-modal [nzMaskClosable]="false"
+          [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalBody" [nzFooter]="modalFooter"
+          (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle>
+    <h3 style="margin-bottom:0">选择条件</h3>
+  </ng-template>
+  <ng-template #modalBody>
+    <div nz-col  nzSpan="24" style="margin-bottom: 16px">
+      <span class="span_label_title">平台选择</span>
+      <nz-select class="select_input"
+                 [(ngModel)]="platformNm" (ngModelChange)="provinceAllChange(0,$event)"
+                 nzAllowClear nzShowSearch
+                 [nzServerSearch]="true" (nzOnSearch)="onSearchByPlat($event)">
+        <ng-container *ngFor="let o of platList">
+          <nz-option *ngIf="!platIsLoading"
+                     [nzValue]="o.platformId" [nzLabel]="o.platformNm"></nz-option>
+        </ng-container>
+        <nz-option *ngIf="platIsLoading" nzDisabled nzCustomContent>
+          <i class="anticon anticon-loading anticon-spin loading-icon"></i> Loading Data...
+        </nz-option>
+      </nz-select>
+      <span class="span_label_title">账号选择</span>
+      <nz-select class="select_input"  nzShowSearch nzAllowClear
+                 [(ngModel)]="pfaccountNm"
+                 (ngModelChange)="provinceAllChange(1,$event)"
+                 [nzDisabled]="platformNm == null || platformNm == ''">
+        <nz-option *ngFor="let c of accountList"
+                   [nzValue]="c.pfaccountId" [nzLabel]="c.pfaccountNm"></nz-option>
+      </nz-select>
+    </div>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+    <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">确认</button>
+  </ng-template>
+</nz-modal>

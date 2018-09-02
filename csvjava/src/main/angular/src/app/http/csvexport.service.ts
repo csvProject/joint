@@ -11,4 +11,19 @@ export class CsvexportService {
   findProductList(body): Observable<BaseApiResponseModel> {
     return this.http.post<BaseApiResponseModel>(url.findproductList,body);
   }
+
+  getPlatInfo(pfnm:string): Observable<BaseApiResponseModel> {
+    return this.http.get<BaseApiResponseModel>(url.findbypfnm,{
+      params:{
+        pfnm
+      }
+    });
+  }
+  getPfaccountInfo(pfid:string): Observable<BaseApiResponseModel> {
+    return this.http.get<BaseApiResponseModel>(url.findbypfid,{
+      params:{
+        pfid
+      }
+    });
+  }
 }
