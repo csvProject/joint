@@ -5,6 +5,7 @@ import { CsvexportRoutingModule } from './csvexport-routing.module';
 import { CsvexportComponent } from './csvexport.component';
 import { FormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { CsvexportService } from '../../http/csvexport.service';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
     FormsModule,
     NgZorroAntdModule
   ],
-  declarations: [CsvexportComponent]
+  declarations: [CsvexportComponent],
+  providers:[CsvexportService]
 })
 export class CsvexportModule { }

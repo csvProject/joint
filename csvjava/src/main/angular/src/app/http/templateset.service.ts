@@ -15,6 +15,10 @@ export class TemplatesetService {
     return this.http.post<BaseApiResponseModel>(url.tempinsert,csvTemplate);
   }
 
+  updateTemplateInfo(csvTemplate?:CsvTemplateInfo): Observable<BaseApiResponseModel> {
+    return this.http.post<BaseApiResponseModel>(url.tempupdate,csvTemplate);
+  }
+
   fieldUpdate(csvTempBat?:CsvTempBat): Observable<BaseApiResponseModel> {
     return this.http.post<BaseApiResponseModel>(url.fieldupdatedetailbat,csvTempBat);
   }

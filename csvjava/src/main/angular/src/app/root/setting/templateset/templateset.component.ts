@@ -141,6 +141,13 @@ export class TemplatesetComponent implements OnInit {
       return data
     }));
   }
+
+  private updateTemplateInfo(csvTemplateInfo:CsvTemplateInfo){
+    return this.service.updateTemplateInfo(csvTemplateInfo).pipe(map(data=>{
+      this.getTemplateInfo(this.selectTemplateInfo);
+      return data
+    }));
+  }
   private fieldUpdate(csvTempBat:CsvTempBat){
     return this.service.fieldUpdate(csvTempBat).pipe(map(data=>{
       return data
@@ -232,16 +239,29 @@ export class TemplatesetComponent implements OnInit {
       if(!this.checkTemplateInfo(templateInfo)){
         return;
       }
-      this.insertTemplateInfo(templateInfo) .subscribe(result=>{
-        if(result.code == 0){
-          this.isVisible = false;
-          this.isConfirmLoading = false;
-        }else if(result.code == 1){
+      if(modalType == 0){
+        this.insertTemplateInfo(templateInfo) .subscribe(result=>{
+          if(result.code == 0){
+            this.isVisible = false;
+            this.isConfirmLoading = false;
+          }else if(result.code == 1){
 
-        }else{
-          console.error(result.msg);
-        }
-      });
+          }else{
+            console.error(result.msg);
+          }
+        });
+      }else{
+        this.updateTemplateInfo(templateInfo) .subscribe(result=>{
+          if(result.code == 0){
+            this.isVisible = false;
+            this.isConfirmLoading = false;
+          }else if(result.code == 1){
+
+          }else{
+            console.error(result.msg);
+          }
+        });
+      }
     }else if(modalType == 2){
       console.log(this.fieldList);
       console.log(JSON.stringify(this.fieldList));

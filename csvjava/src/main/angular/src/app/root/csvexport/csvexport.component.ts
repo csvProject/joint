@@ -1,6 +1,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NzNotificationService} from "ng-zorro-antd";
 import { NzNotificationDataOptions } from "ng-zorro-antd/src/notification/nz-notification.definitions";
+import {CsvexportService} from "../../http/csvexport.service";
+import {b} from "@angular/core/src/render3";
 
 @Component({
   selector: 'app-csvexport',
@@ -9,27 +11,33 @@ import { NzNotificationDataOptions } from "ng-zorro-antd/src/notification/nz-not
 })
 export class CsvexportComponent implements OnInit {
 
-  constructor(private notification: NzNotificationService) { }
+  constructor(private notification: NzNotificationService,private service:CsvexportService) { }
   ngOnInit(): void {
-    for (let i = 0; i < 46; i++) {
-      this.dataSet.push({
-        name   : `Edward King ${i}`,
-        age    : 32,
-        address: `London, Park Lane no. ${i}`,
-        checked: false
-      });
-    }
+    this.findProductList(null);
+  }
+
+  private findProductList(body){
+    this.service.findProductList(body).subscribe(result=>{
+      if(result.code == 0){
+        this.dataSet = result.data==null?[]:result.data;
+        for (let a of this.dataSet){
+          a.checked = false
+        }
+      }else {
+
+      }
+    })
   }
   allChecked = false;
   disabledButton = true;
   checkedNumber = 0;
-  displayData: Array<{ name: string; age: number; address: string; checked: boolean }> = [];
+  displayData= [];
   operating = false;
   dataSet = [];
   indeterminate = false;
   checkedData=[];
 
-  currentPageDataChange($event: Array<{ name: string; age: number; address: string; checked: boolean }>): void {
+  currentPageDataChange($event): void {
     this.displayData = $event;
   }
 
@@ -72,4 +80,6 @@ export class CsvexportComponent implements OnInit {
     let option:NzNotificationDataOptions = { nzDuration:0, };
     this.notification.template(template,option);
   }
+
+
 }

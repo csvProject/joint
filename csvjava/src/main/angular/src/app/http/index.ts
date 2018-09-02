@@ -26,7 +26,8 @@ export const url = {
 
   /*templateset*/
   tempfindbycondi:'csvtempinfo/findbycondi', //模板一览
-  tempinsert:'csvtempinfo/insert', //模板一览
+  tempinsert:'csvtempinfo/insert', //插入模板
+  tempupdate:'csvtempinfo/updatebyid', //插入模板
   tempdelbyid:'csvtempinfo/delbyid', //删除摸版
 
   ptypefindbycondi:'ptype/findbycondi', //产品分类一览
@@ -36,6 +37,9 @@ export const url = {
   fieldupdatedetailbat:'csvtempdetail/updatedetailbat', //根据模板ID更新字段
 
   findsyscodebytypecd:'syscode/findbytypecd', //查询匹配字段
+
+
+  findproductList:'productcsv/findListbycondi', //查询匹配字段
 };
 
 
