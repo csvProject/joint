@@ -62,4 +62,12 @@ export class TempeditComponent implements OnInit {
       this.tempData.isUse = 1;
     }
   }
+
+  clickSwitch2(switchValue){
+    if(switchValue){
+      this.tempData.headShow = 0;
+    }else{
+      this.tempData.headShow = 1;
+    }
+  }
 }
