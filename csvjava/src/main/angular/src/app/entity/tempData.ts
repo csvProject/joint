@@ -23,6 +23,8 @@ export class CsvTemplateInfo {
   joinBy:number;
   //使用标志
   isUse:number;
+  //csv头部是否显示
+  headShow:number;
   //备注
   memo:string;
   //平台名称
@@ -35,6 +37,7 @@ export class CsvTemplateInfo {
   sNm:string;
   constructor(){
     this.isUse = 0;
+    this.headShow=0;
   }
 }
 
