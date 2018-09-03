@@ -21,6 +21,7 @@
       <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
       <th>图片</th>
       <th>sku</th>
+      <th>供应商</th>
       <th>产品类别</th>
       <th>成本价格</th>
       <th>重量</th>
@@ -33,6 +34,7 @@
       <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus($event)"></td>
       <td>{{data.picUrl}}</td>
       <td>{{data.sku}}</td>
+      <td>{{data.sNm}}</td>
       <td>{{data.ptypeNm }}</td>
       <td>{{data.basePrice }}</td>
       <td>{{data.weight }}</td>
