@@ -44,8 +44,13 @@ public class PfaccountController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public Result insertPfaccount(@RequestBody PfaccountDto pfaccountDto) {
         System.out.println("开始添加..."+pfaccountDto.toString());
-        pfaccountService.insertPfaccount(pfaccountDto);
-        return ResultUtil.success(null) ;
+        int ret = pfaccountService.insertPfaccount(pfaccountDto);
+        if (ret == -1){
+            return ResultUtil.success(ret,"平台账号名称已存在",null) ;
+        }else {
+            return ResultUtil.success(null);
+        }
+
     }
 
     //根据账号ID删除账号
@@ -60,8 +65,13 @@ public class PfaccountController {
     @RequestMapping(value = "/updatebypfacid", method = RequestMethod.POST)
     public Result updPfaccountByPfacid(@RequestBody PfaccountDto pfaccountDto) {
         System.out.println("开始更新..."+pfaccountDto.toString());
-        pfaccountService.updPfaccountByPfacid(pfaccountDto);
-        return ResultUtil.success(null) ;
+        int ret = pfaccountService.updPfaccountByPfacid(pfaccountDto);
+        if (ret == -1){
+            return ResultUtil.success(ret,"平台账号名称已存在",null) ;
+        }else {
+            return ResultUtil.success(null);
+        }
+
     }
 
 

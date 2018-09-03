@@ -37,8 +37,12 @@ public class PlatformInfoController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public Result insertPlatformInfo(@RequestBody PlatformInfoDto platformInfoDto) {
         System.out.println("开始添加..."+platformInfoDto.toString());
-        platformInforService.insertPlatformInfo(platformInfoDto);
-        return ResultUtil.success(null) ;
+        int ret = platformInforService.insertPlatformInfo(platformInfoDto);
+        if (ret == -1){
+            return ResultUtil.success(ret,"平台名称已存在",null) ;
+        }else {
+            return ResultUtil.success(null);
+        }
     }
 
     //根据平台ID删除平台及账号
@@ -53,8 +57,12 @@ public class PlatformInfoController {
     @RequestMapping(value = "/updatebypfid", method = RequestMethod.POST)
     public Result updPlatformInfoByPfid(@RequestBody PlatformInfoDto platformInfoDto) {
         System.out.println("开始更新..."+platformInfoDto.toString());
-        platformInforService.updPlatformInfoByPfid(platformInfoDto);
-        return ResultUtil.success(null) ;
+        int ret = platformInforService.updPlatformInfoByPfid(platformInfoDto);
+        if (ret == -1){
+            return ResultUtil.success(ret,"平台名称已存在",null) ;
+        }else {
+            return ResultUtil.success(null);
+        }
     }
 
 }

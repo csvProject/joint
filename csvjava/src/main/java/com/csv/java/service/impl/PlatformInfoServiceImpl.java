@@ -32,11 +32,35 @@ public class PlatformInfoServiceImpl implements PlatformInforService {
         pfaccountDao.delPfaccountByPfid(pfId);
     }
 
-    public void updPlatformInfoByPfid(PlatformInfoDto indto){
-        platformInfoDao.updPlatformInfoByPfid(indto);
+    public int updPlatformInfoByPfid(PlatformInfoDto indto){
+        int ret =0;
+        ret = check(indto);
+
+        if (ret != -1){
+            platformInfoDao.updPlatformInfoByPfid(indto);
+        }
+        return ret;
+
     }
 
-    public void insertPlatformInfo(PlatformInfoDto indto){
-        platformInfoDao.insertPlatformInfo(indto);
+    public int insertPlatformInfo(PlatformInfoDto indto){
+        int ret =0;
+        ret = check(indto);
+
+        if (ret != -1){
+            platformInfoDao.insertPlatformInfo(indto);
+        }
+        return ret;
+    }
+
+    private int check(PlatformInfoDto indto){
+        int ret = 0;
+        //平台名称不能重复
+        int temponly  = platformInfoDao.checkPlatformOnly(indto.getPlatformNm());
+
+        if (temponly > 0) {
+            ret = -1;
+        }
+        return ret;
     }
 }

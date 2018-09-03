@@ -28,4 +28,7 @@ public interface PfaccountDao {
 
     //根据平台ID删除所有账号
     public void delPfaccountByPfid(int pfId);
+
+    //判断平台账号是否存在
+    public int checkPfaccountOnly(PfaccountDto into);
 }
