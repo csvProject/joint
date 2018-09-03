@@ -38,6 +38,7 @@
     <update id="updPlatformInfoByPfid" parameterType="PlatformInfoDto">
         update T_PLATFORM_INFO
         set PLATFORM_NM =  #{platformNm,jdbcType=VARCHAR},
+            PLATFORM_TYPE =  #{platformType,jdbcType=INTEGER},
             MEMO =  #{memo,jdbcType=VARCHAR},
             UPDT_BY = #{logId,jdbcType=INTEGER},
             UPDT_TS =CURRENT_TIMESTAMP()

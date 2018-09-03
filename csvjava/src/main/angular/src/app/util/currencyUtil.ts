@@ -203,4 +203,17 @@ export class CurrencyUtil {
 
   return ret;
   }
+
+  //对象copy
+  copyObj(srcObj):any {
+    let ret = {};
+    for ( let param in srcObj)
+    {
+      //属性名称
+      ret[param] = srcObj[param];
+
+    }
+
+    return ret;
+  }
 }

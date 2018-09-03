@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlatformacctService } from '../../../http/platformacct.service';
 import {AccountInfo, PlatInfo} from "../../../entity/setData";
+import {CurrencyUtil} from "../../../util/currencyUtil";
 
 @Component({
   selector: 'app-platformacctset',
@@ -91,16 +92,17 @@ export class PlatformacctsetComponent implements OnInit {
   }
 
   showModal(i,type,modalData?): void {
+
     this.isVisible = true;
     this.modalType = type;
     if(type == 0){
       this.platInfo = new PlatInfo();
     }else if(type == 1){
-      this.platInfo = modalData;
+      this.platInfo = Object.assign({},modalData);
     }else if(type == 2){
       this.accountInfo = new AccountInfo();
     }else if(type == 3){
-      this.accountInfo = modalData;
+      this.accountInfo = Object.assign({},modalData);
     }
   }
 
