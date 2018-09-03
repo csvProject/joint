@@ -37,8 +37,12 @@ public class CsvTemplateInfoController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public Result insertCsvTempInfo(@RequestBody CsvTemplateInfoDto indto) {
         System.out.println("开始添加..."+indto.toString());
-        csvTemplateInfoService.insertCsvTempInfo(indto);
-        return ResultUtil.success(null) ;
+        int ret = csvTemplateInfoService.insertCsvTempInfo(indto);
+        if (ret == -1){
+            return ResultUtil.success(ret,"模板已存在",null) ;
+        }else {
+            return ResultUtil.success(null);
+        }
     }
 
     //根据ID删除

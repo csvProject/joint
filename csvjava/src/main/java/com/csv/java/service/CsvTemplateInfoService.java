@@ -16,7 +16,7 @@ public interface CsvTemplateInfoService {
 
     public void updCsvTempInfoById(CsvTemplateInfoDto indto);
 
-    public void insertCsvTempInfo(CsvTemplateInfoDto indto);
+    public int insertCsvTempInfo(CsvTemplateInfoDto indto);
 
     public void delCsvTempInfoById(int csvtempId);
 }
