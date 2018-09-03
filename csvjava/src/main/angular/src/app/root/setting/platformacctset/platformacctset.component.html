@@ -48,7 +48,12 @@
            (click)="clickPlat(i,plat)" [ngClass]="{'active':(selectPlatIndex == i)}">
         <div nz-col nzSpan="2">{{i+1}}</div>
         <div nz-col nzSpan="8">{{plat.platformNm}}</div>
-        <div nz-col nzSpan="4">{{plat.platformType}}</div>
+        <div nz-col nzSpan="4" [ngSwitch]="plat.platformType">
+          <span *ngSwitchCase="1">英文</span>
+          <span *ngSwitchCase="2">日文</span>
+          <span *ngSwitchCase="3">中文</span>
+          <span *ngSwitchDefault>中文</span>
+        </div>
         <div nz-col nzSpan="6">{{plat.memo}}</div>
         <div nz-col nzSpan="4">
           <div nz-col nzSpan="12">
@@ -130,9 +135,9 @@
         <div style="margin:24px 0;"></div>
         <h3>平台类型:</h3>
         <nz-select style="width: 120px;" [(ngModel)]="platInfo.platformType" nzAllowClear nzPlaceHolder="Choose">
-          <nz-option nzValue="1" nzLabel="Jack"></nz-option>
-          <nz-option nzValue="2" nzLabel="Lucy"></nz-option>
-          <nz-option nzValue="3" nzLabel="Disabled"></nz-option>
+          <nz-option nzValue="1" nzLabel="英文"></nz-option>
+          <nz-option nzValue="2" nzLabel="日文"></nz-option>
+          <nz-option nzValue="3" nzLabel="中文"></nz-option>
         </nz-select>
         <div style="margin:24px 0;"></div>
         <h3>备注:</h3>

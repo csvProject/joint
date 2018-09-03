@@ -15,7 +15,7 @@ export class CsvexportComponent implements OnInit {
   isVisible = false;
   constructor(private notification: NzNotificationService,private service:CsvexportService) { }
   ngOnInit(): void {
-    this.findProductList(null);
+    this.findProductList({});
   }
 
   private findProductList(body){
