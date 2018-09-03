@@ -39,7 +39,7 @@ public class CsvTemplateInfoController {
         System.out.println("开始添加..."+indto.toString());
         int ret = csvTemplateInfoService.insertCsvTempInfo(indto);
         if (ret == -1){
-            return ResultUtil.success(ret,"模板已存在",null) ;
+            return ResultUtil.success(ret,"该平台、账号、商品类型、供应商下模板已存在",null) ;
         }else {
             return ResultUtil.success(null);
         }
