@@ -206,14 +206,14 @@ export class TemplatesetComponent implements OnInit {
       if(dataInfo == undefined){
         this.templateInfo = new CsvTemplateInfo()
       } else{
-        this.templateInfo = Object.create(dataInfo);
+        this.templateInfo = Object.assign({},dataInfo);
         this.templateInfo.csvtempId = null;
       }
     }else if(type == 1){
       this.templateInfo = dataInfo;
     }else if(type == 2){
       console.log(dataInfo);
-      this.templateInfo = dataInfo;
+      this.templateInfo = Object.assign({},dataInfo);
       this.getFieldListCsvtempid(dataInfo.csvtempId);
     }
   }
