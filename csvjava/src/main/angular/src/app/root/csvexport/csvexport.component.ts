@@ -16,6 +16,7 @@ export class CsvexportComponent implements OnInit {
   constructor(private notification: NzNotificationService,private service:CsvexportService) { }
   ngOnInit(): void {
     this.findProductList({});
+    this.loadingBaseSelectData();
   }
 
   private findProductList(body){
@@ -139,6 +140,7 @@ export class CsvexportComponent implements OnInit {
 
   platSearchChange$ = new BehaviorSubject('');
   private loadingBaseSelectData(){
+    console.log(11);
     const getRandomNameList = (pfnm: string) =>
       this.service.getPlatInfo(pfnm).pipe(map((results: any) =>
         results
