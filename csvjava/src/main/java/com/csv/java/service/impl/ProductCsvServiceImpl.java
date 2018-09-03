@@ -4,15 +4,22 @@ package com.csv.java.service.impl;
 
 
 
+import com.csv.java.common.tool.CSVUtils;
 import com.csv.java.dao.CsvTemplateRuleDao;
+import com.csv.java.dao.CustomDao;
 import com.csv.java.dao.ProductDao;
 import com.csv.java.entity.*;
 import com.csv.java.service.ProductCsvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import static com.csv.java.config.ConstantConfig.CSV_FILE_TEMP_PATH;
 
 @Service(value = "productCsvService")
 public class ProductCsvServiceImpl implements ProductCsvService {
@@ -22,6 +29,9 @@ public class ProductCsvServiceImpl implements ProductCsvService {
 
     @Autowired
     private CsvTemplateRuleDao csvTemplateRuleDao;
+
+    @Resource
+    private CustomDao customDao;
 
     public List<ProductDto> findProductByCondi(ProductCondiInDto indto){
         return productDao.findProductByCondi(indto);
@@ -102,12 +112,39 @@ public class ProductCsvServiceImpl implements ProductCsvService {
 
         //生成csv
         for (ProductGroupOutDto productGroupOutDto : productGroupOutDtoList) {
+            String ids = "";
             for ( ProductDto productDto:productGroupOutDto.getProductDtoList()) {
-
+                String s = productDto.getProductId()+"";
+                ids = ids + s + ",";
+            }
+            if (ids.endsWith(",")) {
+                ids = ids.substring(0,ids.length() - 1) + "";
+            }else{
+                ids = ids + "";
+            }
+            String sql = productGroupOutDto.getCsvSql()+" \n WHERE id in("+ids+")";
+            System.out.println(sql);
+            List<Map<String,Object>> csvData = customDao.customSelect(sql);
+            if(csvData != null && csvData.size()>0){
+                //csv文件头
+                List heads = new ArrayList<>();
+                for (String k : csvData.get(0).keySet()) {
+                    heads.add(k);
+                }
+                //数据
+                List<List<Object>> dataList = new ArrayList<List<Object>>();
+                for(Map<String,Object> row: csvData ){
+                    List<Object> rowList = null;
+                    for (String k : row.keySet()) {
+                        rowList.add(row.get(k));
+                    }
+                    dataList.add(rowList);
+                }
+                String fileName = new Date().getTime()+ ".CSV";
+                productGroupOutDto.setCsvFileName(fileName);
+                CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);
             }
         }
-
-
         return ret;
 
     }

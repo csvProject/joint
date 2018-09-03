@@ -17,9 +17,13 @@ public class ConstantConfig {
     /*字段表*/
     public static String FIELD_MATCHING_TABLE;
 
+    /*CSV文件临时存储路径*/
+    public static String CSV_FILE_TEMP_PATH;
+
     @PostConstruct
     public void initialization() {
         Origins = _environment.getProperty("cors.mappings.origins")==null?"*".split(","):_environment.getProperty("cors.mappings.origins").split(",");
         FIELD_MATCHING_TABLE = _environment.getProperty("field.matching.table");
+        CSV_FILE_TEMP_PATH = _environment.getProperty("csv.file.temp.path");
     }
 }

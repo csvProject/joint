@@ -19,6 +19,9 @@ public class ProductGroupOutDto extends BaseDto{
     //对应模板sql
     private String csvSql;
 
+    //对应CSV文件名
+    private String csvFileName;
+
     public int getPlatformId() {
         return platformId;
     }
@@ -65,5 +68,13 @@ public class ProductGroupOutDto extends BaseDto{
 
     public void setCsvSql(String csvSql) {
         this.csvSql = csvSql;
+    }
+
+    public String getCsvFileName() {
+        return csvFileName;
+    }
+
+    public void setCsvFileName(String csvFileName) {
+        this.csvFileName = csvFileName;
     }
 }

@@ -52,7 +52,7 @@ public class StringFormatForSQL{
             if(i != list.size()-1){
                 ret = ret + StringFormatForSQL.ruleFormat(k,v, arguments) + ",\n  ";
             }else{
-                ret = ret + StringFormatForSQL.ruleFormat(k,v, arguments) + "\n";
+                ret = ret + StringFormatForSQL.ruleFormat(k,v, arguments) + " \n";
             }
         }
         ret = ret + "FROM \n  " + FIELD_MATCHING_TABLE;
