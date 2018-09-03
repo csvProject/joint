@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {BaseApiResponseModel, url} from './index';
-import {CsvTemplateInfo} from "../entity/tempData";
-import {Observable} from "rxjs/index";
+import { BaseApiResponseModel, url} from './index';
+import { Observable } from 'rxjs/index';
 
 @Injectable()
 export class CsvexportService {
@@ -10,6 +9,10 @@ export class CsvexportService {
 
   findProductList(body): Observable<BaseApiResponseModel> {
     return this.http.post<BaseApiResponseModel>(url.findproductList,body);
+  }
+
+  exportCSV(body): Observable<BaseApiResponseModel> {
+    return this.http.post<BaseApiResponseModel>(url.exportCSV,body);
   }
 
   getPlatInfo(pfnm:string): Observable<BaseApiResponseModel> {

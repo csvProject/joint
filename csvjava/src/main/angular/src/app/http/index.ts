@@ -40,6 +40,7 @@ export const url = {
 
 
   findproductList:'productcsv/findListbycondi', //查询匹配字段
+  exportCSV:'productcsv/export', //导出
 };
 
 
