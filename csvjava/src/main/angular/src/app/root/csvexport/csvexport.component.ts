@@ -127,7 +127,6 @@ export class CsvexportComponent implements OnInit {
 
   private getPfaccountInfo(pfid): void {
     this.service.getPfaccountInfo(pfid).subscribe(result=>{
-      console.log(result);
       if(result.code == 0){
         this.accountList = result.data;
       }else if(result.code == 1){
@@ -140,7 +139,6 @@ export class CsvexportComponent implements OnInit {
 
   platSearchChange$ = new BehaviorSubject('');
   private loadingBaseSelectData(){
-    console.log(11);
     const getRandomNameList = (pfnm: string) =>
       this.service.getPlatInfo(pfnm).pipe(map((results: any) =>
         results
