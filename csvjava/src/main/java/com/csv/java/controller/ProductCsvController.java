@@ -2,6 +2,8 @@ package com.csv.java.controller;
 
 import com.csv.java.common.result.Result;
 import com.csv.java.common.result.ResultUtil;
+import com.csv.java.entity.CsvExportInDto;
+import com.csv.java.entity.ProductBatDto;
 import com.csv.java.entity.ProductCondiInDto;
 import com.csv.java.service.ProductCsvService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +29,10 @@ public class ProductCsvController {
         return ResultUtil.success(productCsvService.findProductById(productId)) ;
     }
 
+    //根据主key条件查询
+    @RequestMapping(value = "/export", method = RequestMethod.POST)
+    public Result exportProductCsv(@RequestBody CsvExportInDto indto) {
+        System.out.println("开始查询...");
+        return ResultUtil.success(productCsvService.exportProductCsv(indto)) ;
+    }
 }

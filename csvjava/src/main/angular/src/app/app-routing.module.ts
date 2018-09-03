@@ -5,7 +5,7 @@ import { SecondComponent } from './root/second/second.component';
 import { ErrorComponent } from './root/error/error.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'first', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path:'first',
     component:FirstComponent

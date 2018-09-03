@@ -1,11 +1,7 @@
 package com.csv.java.service;
 
-
-
-
-
-
 import com.csv.java.entity.CsvExportInDto;
+import com.csv.java.entity.ProductBatDto;
 import com.csv.java.entity.ProductCondiInDto;
 import com.csv.java.entity.ProductDto;
 
@@ -17,4 +13,5 @@ public interface ProductCsvService {
     ProductDto findProductById(int productId);
 
     String exportProductCsv(CsvExportInDto csvExportInDto );
+
 }

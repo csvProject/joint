@@ -11,7 +11,6 @@ export class DatePipe implements PipeTransform{
 
   // isSpecial为true 特殊处理
   transform(date: string,format:string):string{
-    console.log(date);
     if (date == undefined || date == null || date =='') {
       return '';
     }else{

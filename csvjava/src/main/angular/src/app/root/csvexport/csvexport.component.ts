@@ -4,6 +4,7 @@ import { NzNotificationDataOptions } from "ng-zorro-antd/src/notification/nz-not
 import {CsvexportService} from "../../http/csvexport.service";
 import {debounceTime, map, switchMap} from "rxjs/internal/operators";
 import {BehaviorSubject, Observable} from "rxjs/index";
+import {CurrencyUtil} from "../../util/currencyUtil";
 
 @Component({
   selector: 'app-csvexport',
@@ -13,9 +14,13 @@ import {BehaviorSubject, Observable} from "rxjs/index";
 export class CsvexportComponent implements OnInit {
 
   isVisible = false;
-  constructor(private notification: NzNotificationService,private service:CsvexportService) { }
+  constructor(private notification: NzNotificationService,private service:CsvexportService,private util:CurrencyUtil) { }
+  private get msg(){
+    return this.util.msg;
+  }
   ngOnInit(): void {
     this.findProductList({});
+    this.loadingBaseSelectData();
   }
 
   private findProductList(body){
@@ -23,11 +28,9 @@ export class CsvexportComponent implements OnInit {
       console.log(result);
       if(result.code == 0){
         this.dataSet = result.data==null?[]:result.data;
-        for (let a of this.dataSet){
-          a.checked = false
-        }
+        this.dataSet.forEach(data => data.checked = false)
       }else {
-
+        console.error(result.msg);
       }
     })
   }
@@ -61,12 +64,6 @@ export class CsvexportComponent implements OnInit {
   operateData(template: TemplateRef<{}>): void {
     this.checkedData = this.getCheckedData();
     this.operating = true;
-    setTimeout(_ => {
-      this.dataSet.forEach(value => value.checked = false);
-      this.refreshStatus();
-      this.operating = false;
-      this.createBasicNotification(template);
-    }, 1000);
 
     this.isVisible = true;
   }
@@ -92,6 +89,12 @@ export class CsvexportComponent implements OnInit {
     this.isVisible = false;
   }
   handleOk(){
+    let body = {
+      platformId:this.platformId,//平台ID
+      pfaccountId:this.pfaccountId,//平台账号ID
+      productDtoList:this.dataSet.filter(value => value.checked)
+    };
+    this.exportCSV(body);
     this.isVisible = false;
   }
 
@@ -126,13 +129,25 @@ export class CsvexportComponent implements OnInit {
 
   private getPfaccountInfo(pfid): void {
     this.service.getPfaccountInfo(pfid).subscribe(result=>{
-      console.log(result);
       if(result.code == 0){
         this.accountList = result.data;
       }else if(result.code == 1){
 
       }else{
         console.error(result.msg);
+      }
+    })
+  }
+
+  private exportCSV(body){
+    this.operating = false;
+    this.service.exportCSV(body).subscribe(result=>{
+      this.operating = false;
+      if(result.code == 0){
+        this.dataSet.forEach(value => value.checked = false);
+        this.refreshStatus();
+      }else {
+        this.msg.error(result.msg);
       }
     })
   }

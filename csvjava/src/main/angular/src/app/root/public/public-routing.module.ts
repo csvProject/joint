@@ -7,6 +7,7 @@ const routes: Routes = [
     path: '',
     component: PublicComponent,
     children:[
+      { path: '', redirectTo: 'csvexport', pathMatch: 'full' },
       {
         path:'csvexport',
         loadChildren: '../csvexport/csvexport.module#CsvexportModule'

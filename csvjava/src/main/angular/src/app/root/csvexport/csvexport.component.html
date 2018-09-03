@@ -21,17 +21,11 @@
       <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
       <th>图片</th>
       <th>sku</th>
-      <th>供应商</th>
-      <th>采购链接</th>
-      <th>厂商编号</th>
-      <th>单品&组合</th>
       <th>产品类别</th>
       <th>成本价格</th>
       <th>重量</th>
       <th>中文品名</th>
       <th>中文套组</th>
-      <th>启用日期</th>
-      <th>操作</th>
     </tr>
     </thead>
     <tbody>
@@ -39,17 +33,11 @@
       <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus($event)"></td>
       <td>{{data.picUrl}}</td>
       <td>{{data.sku}}</td>
-      <td>{{data.address}}</td>
-      <td>{{data.name}}</td>
-      <td>{{data.age}}</td>
-      <td>{{data.address}}</td>
-      <td>{{data.name}}</td>
-      <td>{{data.age}}</td>
-      <td>{{data.address}}</td>
-      <td>{{data.name}}</td>
-      <td>{{data.age}}</td>
-      <td>{{data.address}}</td>
-      <td>{{data.address}}</td>
+      <td>{{data.ptypeNm }}</td>
+      <td>{{data.basePrice }}</td>
+      <td>{{data.weight }}</td>
+      <td>{{data.pmCn }}</td>
+      <td>{{data.setCn }}</td>
     </tr>
     </tbody>
   </nz-table>
@@ -78,28 +66,30 @@
     <h3 style="margin-bottom:0">选择条件</h3>
   </ng-template>
   <ng-template #modalBody>
-    <div nz-col  nzSpan="24" style="margin-bottom: 16px">
-      <span class="span_label_title">平台选择</span>
-      <nz-select class="select_input"
-                 [(ngModel)]="platformNm" (ngModelChange)="provinceAllChange(0,$event)"
-                 nzAllowClear nzShowSearch
-                 [nzServerSearch]="true" (nzOnSearch)="onSearchByPlat($event)">
-        <ng-container *ngFor="let o of platList">
-          <nz-option *ngIf="!platIsLoading"
-                     [nzValue]="o.platformId" [nzLabel]="o.platformNm"></nz-option>
-        </ng-container>
-        <nz-option *ngIf="platIsLoading" nzDisabled nzCustomContent>
-          <i class="anticon anticon-loading anticon-spin loading-icon"></i> Loading Data...
-        </nz-option>
-      </nz-select>
-      <span class="span_label_title">账号选择</span>
-      <nz-select class="select_input"  nzShowSearch nzAllowClear
-                 [(ngModel)]="pfaccountNm"
-                 (ngModelChange)="provinceAllChange(1,$event)"
-                 [nzDisabled]="platformNm == null || platformNm == ''">
-        <nz-option *ngFor="let c of accountList"
-                   [nzValue]="c.pfaccountId" [nzLabel]="c.pfaccountNm"></nz-option>
-      </nz-select>
+    <div nz-row >
+      <div nz-col  nzSpan="24" style="margin-bottom: 16px">
+        <span class="span_label_title">平台选择</span>
+        <nz-select class="select_input"
+                   [(ngModel)]="platformNm" (ngModelChange)="provinceAllChange(0,$event)"
+                   nzAllowClear nzShowSearch
+                   [nzServerSearch]="true" (nzOnSearch)="onSearchByPlat($event)">
+          <ng-container *ngFor="let o of platList">
+            <nz-option *ngIf="!platIsLoading"
+                       [nzValue]="o.platformId" [nzLabel]="o.platformNm"></nz-option>
+          </ng-container>
+          <nz-option *ngIf="platIsLoading" nzDisabled nzCustomContent>
+            <i class="anticon anticon-loading anticon-spin loading-icon"></i> Loading Data...
+          </nz-option>
+        </nz-select>
+        <span class="span_label_title">账号选择</span>
+        <nz-select class="select_input"  nzShowSearch nzAllowClear
+                   [(ngModel)]="pfaccountNm"
+                   (ngModelChange)="provinceAllChange(1,$event)"
+                   [nzDisabled]="platformNm == null || platformNm == ''">
+          <nz-option *ngFor="let c of accountList"
+                     [nzValue]="c.pfaccountId" [nzLabel]="c.pfaccountNm"></nz-option>
+        </nz-select>
+      </div>
     </div>
   </ng-template>
   <ng-template #modalFooter>
