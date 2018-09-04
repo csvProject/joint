@@ -186,7 +186,6 @@ export class TemplatesetComponent implements OnInit {
   titleList=['新增模板','编辑模板','编辑字段'];
   modalType;
   isVisible = false;
-  isConfirmLoading = false;
 
   delete(type,data){
     this.deletePlatInfo(data.csvtempId).subscribe(result=>{
@@ -235,16 +234,14 @@ export class TemplatesetComponent implements OnInit {
   }
 
   handleOk(modalType,templateInfo): void {
-    this.isConfirmLoading = true;
     if(modalType == 1|| modalType == 0){
-      if(!this.checkTemplateInfo(templateInfo)){
-        return;
-      }
       if(modalType == 0){
+        if(!this.checkTemplateInfo(templateInfo)){
+          return;
+        }
         this.insertTemplateInfo(templateInfo) .subscribe(result=>{
           if(result.code == 0){
             this.isVisible = false;
-            this.isConfirmLoading = false;
           }else if(result.code == 1){
 
           }else{
@@ -255,7 +252,6 @@ export class TemplatesetComponent implements OnInit {
         this.updateTemplateInfo(templateInfo) .subscribe(result=>{
           if(result.code == 0){
             this.isVisible = false;
-            this.isConfirmLoading = false;
           }else if(result.code == 1){
 
           }else{
@@ -273,7 +269,6 @@ export class TemplatesetComponent implements OnInit {
         this.fieldUpdate(csvTempBat).subscribe(result=>{
           if(result.code == 0){
             this.isVisible = false;
-            this.isConfirmLoading = false;
           }else if(result.code == 1){
 
           }else{
@@ -313,7 +308,6 @@ export class TemplatesetComponent implements OnInit {
 
   handleCancel(): void {
     this.isVisible = false;
-    this.isConfirmLoading = false;
     this.getTemplateInfo(this.selectTemplateInfo);
   }
 }
