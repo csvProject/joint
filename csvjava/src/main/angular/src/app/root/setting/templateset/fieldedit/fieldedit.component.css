@@ -45,6 +45,10 @@
   height: 296px;
   border-radius: 4px;
   background-color: white;
+
+  /*只允许文本*/
+  -webkit-user-modify: read-write-plaintext-only;
+  user-modify: read-write-plaintext-only;
 }
 
 .span_label_title{
