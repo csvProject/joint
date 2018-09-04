@@ -44,14 +44,15 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
         csvTemplateInfoDao.updCsvTempInfoById(indto);
     }
 
-    public void insertCsvTempInfo(CsvTemplateInfoDto indto){
+    public int insertCsvTempInfo(CsvTemplateInfoDto indto){
 
+        int ret = 0;
         //判断同一平台，账号，商品类型，供应商下是否存在模板，
         int temponly  = csvTemplateInfoDao.checkCsvTempInfoOnly(indto);
 
         if (temponly > 0) {
         //处理代码未写
-
+            ret = -1;
         }else{
             //添加模板
             csvTemplateInfoDao.insertCsvTempInfo(indto);
@@ -62,5 +63,7 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
             csvTemplateInfoDto.setCsvtempId(indto.getCsvtempId());
             csvTemplateRuleDao.insertCsvTempRule(csvTemplateInfoDto);
         }
+
+        return ret;
     }
 }

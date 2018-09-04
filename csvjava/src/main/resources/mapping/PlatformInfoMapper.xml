@@ -55,5 +55,10 @@
         WHERE  PLATFORM_NM like  CONCAT('%', #{pfNm,jdbcType=VARCHAR}, '%')
     </select>
 
-
+    <select id="checkPlatformOnly" parameterType="java.lang.String"  resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM T_PLATFORM_INFO
+        WHERE
+        PLATFORM_NM = #{pfNm,jdbcType=VARCHAR}
+    </select>
 </mapper>

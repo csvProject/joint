@@ -12,9 +12,9 @@ public interface PlatformInforService {
 
     PlatformInfoDto findPlatformInfoByPfid(int pfId);
 
-    public void updPlatformInfoByPfid(PlatformInfoDto indto);
+    public int updPlatformInfoByPfid(PlatformInfoDto indto);
 
-    public void insertPlatformInfo(PlatformInfoDto indto);
+    public int insertPlatformInfo(PlatformInfoDto indto);
 
     public void delPlatformInfoByPfid(int pfId);
 }

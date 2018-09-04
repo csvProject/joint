@@ -14,9 +14,9 @@ public interface PfaccountService {
 
     PfaccountDto findPfaccountByPfacid(int pfacId);
 
-    public void updPfaccountByPfacid( PfaccountDto indto);
+    public int updPfaccountByPfacid( PfaccountDto indto);
 
-    public void insertPfaccount(PfaccountDto indto);
+    public int insertPfaccount(PfaccountDto indto);
 
     public void delPfaccountByPfacid(int pfacId);
 

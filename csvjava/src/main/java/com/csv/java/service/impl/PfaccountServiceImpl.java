@@ -30,12 +30,36 @@ public class PfaccountServiceImpl implements PfaccountService {
         pfaccountDao.delPfaccountByPfacid(pfacId);
     }
 
-    public void updPfaccountByPfacid(PfaccountDto indto){
-        pfaccountDao.updPfaccountByPfacid(indto);
+    public int updPfaccountByPfacid(PfaccountDto indto){
+        int ret =0;
+        ret = check(indto);
+
+        if (ret != -1){
+            pfaccountDao.updPfaccountByPfacid(indto);
+        }
+        return ret;
+
     }
 
-    public void insertPfaccount(PfaccountDto indto){
-        pfaccountDao.insertPfaccount(indto);
+    public int insertPfaccount(PfaccountDto indto){
+        int ret =0;
+        ret = check(indto);
+
+        if (ret != -1){
+            pfaccountDao.insertPfaccount(indto);
+        }
+        return ret;
+
     }
 
+    private int check(PfaccountDto indto){
+        int ret = 0;
+        //平台账号名称不能重复
+        int temponly  = pfaccountDao.checkPfaccountOnly(indto);
+
+        if (temponly > 0) {
+            ret = -1;
+        }
+        return ret;
+    }
 }

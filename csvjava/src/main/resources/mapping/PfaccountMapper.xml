@@ -69,4 +69,12 @@
         delete from
         T_PF_ACCOUNT where PLATFORM_ID=#{pfId,jdbcType=INTEGER}
     </delete>
+
+    <select id="checkPfaccountOnly" parameterType="PfaccountDto"  resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM T_PF_ACCOUNT
+        WHERE
+         PLATFORM_ID=#{platformId,jdbcType=INTEGER}
+        AND PFACCOUNT_NM = #{pfaccountNm,jdbcType=VARCHAR}
+    </select>
 </mapper>
