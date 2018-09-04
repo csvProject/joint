@@ -26,9 +26,6 @@ export class PublicInterceptor implements HttpInterceptor {
         if (event instanceof HttpResponse && event.status === 200)
           return this.handleData(event);
         // 若一切都正常，则后续操作
-        if(event.body != null && event.body.code == -1){
-          this.msg.error(event.body.msg);
-        }
         return of(event);
       }),
       catchError((err: HttpErrorResponse) => this.handleData(err)),
@@ -36,9 +33,12 @@ export class PublicInterceptor implements HttpInterceptor {
   }
 
   private handleData(
-    event: HttpResponse<any> | HttpErrorResponse,
+    event: HttpResponse<any> | HttpErrorResponse | any,
   ): Observable<any> {
     // 业务处理：一些通用操作
+    if(event.body != null && event.body.code == -1){
+      this.msg.error(event.body.msg);
+    }
     switch (event.status) {
       case 200:
         // 业务层级错误处理，以下是假定restful有一套统一输出格式（指不管成功与否都有相应的数据格式）情况下进行处理
