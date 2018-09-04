@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CsvTemplateDetail} from "../../../../entity/tempData";
 import {CurrencyUtil} from "../../../../util/currencyUtil";
 import {TemplatesetService} from "../../../../http/templateset.service";
@@ -95,6 +95,10 @@ export class FieldEditComponent implements OnInit {
       editDiv.innerHTML =csvTemplateDetail.fieldValue;
     }
     this.isVisible = true;
+
+    let classdiv:any =  document.getElementsByClassName("field_input_div")[0];
+    this.msgTextLastPos(classdiv);
+    this.saveRange();
   }
 
 
@@ -109,9 +113,18 @@ export class FieldEditComponent implements OnInit {
   }
 
 
+
   /*记录光标位置*/
   saveRange(){
-    this.lastRange = this.util.saveRange();//保存光标位置
+    let T_lastRange = this.util.saveRange("stop-propagation");//保存光标位置
+    if(T_lastRange!=null){
+      this.lastRange = T_lastRange;//保存光标位置
+    }
+  }
+
+  //把光标移到末尾
+  msgTextLastPos(obj) {
+    this.util.msgTextLastPos(obj);
   }
 
   //插入相应文案
@@ -121,7 +134,7 @@ export class FieldEditComponent implements OnInit {
     ${ this.getEleData } = "${JSON.stringify(item.sysCd).replace(/"/g,'\'')}"
    (click)="stopEvent($event)">${item.sysNm}</span>`;  */
 
-    let test = `<span class="stop-propagation" contenteditable="false" >${item.sysNm}</span>`;
+    let test = `<span class="stop-propagation" contenteditable="false" >${item.sysNm}</span><span editDiv="true"></span>`;
     htmlSrc = test;
     if(this.lastRange.startContainer==undefined ){
       return ;
@@ -133,6 +146,7 @@ export class FieldEditComponent implements OnInit {
       }
     }
     this.util.insertContent(htmlSrc,this.lastRange);//指定位置插入内容
+    // this.util.insertContent(`<span contenteditable="true"></span>`,this.lastRange);//指定位置插入内容
     let insertSpanList:any = document.getElementsByClassName('stop-propagation');
     for(let span of insertSpanList){
       span.addEventListener('click',function(e){
@@ -143,7 +157,6 @@ export class FieldEditComponent implements OnInit {
 
   private getSysCodeList(typecd){
     this.service.getSysCodeList(typecd).subscribe(result=>{
-      console.log(result);
       if(result.code == 0){
         this.data = result.data == null?[]:result.data;
       }else {

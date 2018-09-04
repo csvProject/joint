@@ -127,13 +127,32 @@ export class CurrencyUtil {
     }
 
   };
+  //把光标移到末尾
+  msgTextLastPos(obj) {
+// 解决浏览器的兼容问题，做如下条件判断
+    if (window.getSelection) {
+      obj.focus();
+      let range = window.getSelection();
+      range.selectAllChildren(obj);
+      range.collapseToEnd();//光标移至最后
+    }
+    else if (documentSys.selection) {
+      let range = documentSys.selection.createRange();
+      range.moveToElementText(obj);
+      range.collapse(false);//光标移至最后
+      range.select();
+    }
+  }
 
   //保存光标位置
-  saveRange() {
+  saveRange(className) {
     let selection = window.getSelection ? window.getSelection() : documentSys.selection;
     if (!selection.rangeCount) return;
     let range = selection.createRange ? selection.createRange() : selection.getRangeAt(0);
-    return range;
+    if (range!= null && range.startContainer!=null && (range.startContainer.className != 'stop-propagation')){
+      return range
+    }
+    return null;
   }
 
 
