@@ -66,6 +66,7 @@ public class CsvTemplateDetailServiceImpl implements CsvTemplateDetailService {
         //处理代码代码---
 
         for (CsvTemplateDetailDto cvsDtlDto:indto.getCsvTemplateDetailDtoList()) {
+            cvsDtlDto.setCsvtempId(indto.getCsvtempId());
             csvTemplateDetailDao.insertCsvTempDetail(cvsDtlDto);
         }
         //----

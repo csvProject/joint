@@ -36,9 +36,9 @@ public class StringFormatForSQL{
             ret = ret +""+ s + ",";
         }
         if (ret.endsWith(",")) {
-            ret = ret.substring(0,ret.length() - 1) + ") AS "+key;
+            ret = ret.substring(0,ret.length() - 1) + ") AS '"+key+"'";
         }else{
-            ret = ret + ") AS "+key;
+            ret = ret + ") AS '"+key+"'";
         }
         return ret;
     }
