@@ -5,6 +5,7 @@ import com.csv.java.entity.CsvTemplateDetailDto;
 import java.util.List;
 import java.util.Map;
 
+import static com.csv.java.common.tool.MYSQLEncoder.encode;
 import static com.csv.java.config.ConstantConfig.FIELD_MATCHING_TABLE;
 
 
@@ -31,14 +32,15 @@ public class StringFormatForSQL{
             if(s.endsWith("^")){
                 s = s.substring(0,s.length() - 1);
             }else{
-                s = "'"+s+"'";
+//                s = "@'"+encode(s)+"@'";
+                s = "@'"+s+"@'";
             }
-            ret = ret +""+ s + ",";
+            ret = ret +""+s+ ",";
         }
         if (ret.endsWith(",")) {
-            ret = ret.substring(0,ret.length() - 1) + ") AS '"+key+"'";
+            ret = ret.substring(0,ret.length() - 1) + ") AS @'"+key+"@'";
         }else{
-            ret = ret + ") AS '"+key+"'";
+            ret = ret + ") AS @'"+key+"@'";
         }
         return ret;
     }
@@ -56,6 +58,14 @@ public class StringFormatForSQL{
             }
         }
         ret = ret + "FROM \n  " + FIELD_MATCHING_TABLE;
+        ret = ret.replaceAll("@'","'")
+                .replaceAll("&lt;","<")
+                .replaceAll("&gt;",">");
+        System.out.println("**********************************************************");
+
+        System.out.println(ret);
+
+        System.out.println("**********************************************************");
         return ret;
     }
 
@@ -69,7 +79,7 @@ public class StringFormatForSQL{
         // 去掉其它的<>之间的东西
         content = content.replaceAll("\\<.*?>", "");
         // 去掉空格
-         content = content.replaceAll(" ", "");
+         content = content.replaceAll(" ", " ");
         return content;
     }
 

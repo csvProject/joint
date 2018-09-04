@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.csv.java.config.ConstantConfig.CSV_FILE_TEMP_PATH;
 
@@ -107,42 +104,54 @@ public class ProductCsvServiceImpl implements ProductCsvService {
                     String.valueOf(productGroupOutDto.getPtypeId()) +
                     String.valueOf(productGroupOutDto.getsId());
             CsvTemplateRuleDto csvTemplateRuleDto = csvTemplateRuleDao.findCsvsqlByFourKey(fourKey);
-            productGroupOutDto.setCsvSql(csvTemplateRuleDto.getCsvSql());
+            if(csvTemplateRuleDto == null){
+                productGroupOutDto.setCsvSql("");
+            }else{
+                productGroupOutDto.setCsvSql(csvTemplateRuleDto.getCsvSql());
+            }
         }
 
+        List noCsvTempList = new ArrayList(); //没有模板商品集合
         //生成csv
         for (ProductGroupOutDto productGroupOutDto : productGroupOutDtoList) {
-            String ids = "";
-            for ( ProductDto productDto:productGroupOutDto.getProductDtoList()) {
-                String s = productDto.getProductId()+"";
-                ids = ids + s + ",";
-            }
-            if (ids.endsWith(",")) {
-                ids = ids.substring(0,ids.length() - 1) + "";
+            if("".equals(productGroupOutDto.getCsvSql())){
+                noCsvTempList.addAll(productGroupOutDto.getProductDtoList());
             }else{
-                ids = ids + "";
-            }
-            String sql = productGroupOutDto.getCsvSql()+" \n WHERE id in("+ids+")";
-            System.out.println(sql);
-            List<Map<String,Object>> csvData = customDao.customSelect(sql);
-            if(csvData != null && csvData.size()>0){
-                //csv文件头
-                List heads = new ArrayList<>();
-                for (String k : csvData.get(0).keySet()) {
-                    heads.add(k);
+                String ids = "";
+                for ( ProductDto productDto:productGroupOutDto.getProductDtoList()) {
+                    String s = productDto.getProductId()+"";
+                    ids = ids + s + ",";
                 }
-                //数据
-                List<List<Object>> dataList = new ArrayList<List<Object>>();
-                for(Map<String,Object> row: csvData ){
-                    List<Object> rowList = null;
-                    for (String k : row.keySet()) {
-                        rowList.add(row.get(k));
+                if (ids.endsWith(",")) {
+                    ids = ids.substring(0,ids.length() - 1) + "";
+                }else{
+                    ids = ids + "";
+                }
+                String sql = productGroupOutDto.getCsvSql()+" \n WHERE id in("+ids+")";
+                System.out.println(sql);
+                List<LinkedHashMap<String,Object>> csvData = customDao.customSelect(sql);
+                if(csvData != null && csvData.size()>0){
+                    //csv文件头
+                    List heads = new ArrayList<>();
+                    System.out.println();
+                    for (String k : csvData.get(0).keySet()) {
+                        System.out.print(k);
+                        heads.add(k);
                     }
-                    dataList.add(rowList);
+                    System.out.println();
+                    //数据
+                    List<List<Object>> dataList = new ArrayList<List<Object>>();
+                    for(Map<String,Object> row: csvData ){
+                        List<Object> rowList = new ArrayList<>();
+                        for (String k : row.keySet()) {
+                            rowList.add(row.get(k)==null?"":(row.get(k)+"").replaceAll("\"","\\\\"));
+                        }
+                        dataList.add(rowList);
+                    }
+                    String fileName = new Date().getTime()+ ".CSV";
+                    productGroupOutDto.setCsvFileName(fileName);
+                    CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);
                 }
-                String fileName = new Date().getTime()+ ".CSV";
-                productGroupOutDto.setCsvFileName(fileName);
-                CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);
             }
         }
         return ret;

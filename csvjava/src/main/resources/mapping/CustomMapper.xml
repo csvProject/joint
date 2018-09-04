@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csv.java.dao.CustomDao" >
     <!-- 查询条件 -->
-    <select id="customSelect" parameterType="string" resultType="map" >
+    <select id="customSelect" parameterType="string" resultType="java.util.LinkedHashMap" >
         ${_parameter}
     </select>
 

@@ -1,7 +1,7 @@
 package com.csv.java.dao;
 
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
  /**
   * CustomDao 自定义sql查询
@@ -13,7 +13,7 @@ public interface CustomDao {
     * @Param sql 传入sql自定义sql查询语句
     * @Return {key:value}
     * */
-    List<Map<String,Object>> customSelect(String sql);
+    List<LinkedHashMap<String,Object>> customSelect(String sql);
 
      /*
       * @Param sql 传入sql自定义sql查询语句
