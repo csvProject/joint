@@ -80,4 +80,13 @@ export class TemplatesetService {
   getFieldListData(){
     return this.fieldListData.asObservable();
   }
+
+  templateInfo = new Subject<any>();
+
+  sendTemplateInfoData(list){
+    this.templateInfo.next(list);
+  }
+  getTemplateInfoData(){
+    return this.templateInfo.asObservable();
+  }
 }

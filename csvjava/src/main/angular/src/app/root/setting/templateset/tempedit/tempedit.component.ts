@@ -8,28 +8,43 @@ import {TemplatesetService} from "../../../../http/templateset.service";
   styleUrls: ['./tempedit.component.css']
 })
 export class TempeditComponent implements OnInit {
-  @Input() tempData:CsvTemplateInfo;
+  tempData:CsvTemplateInfo = new CsvTemplateInfo();
   @Input() platList = [];
   @Input() supplierList = [];
   @Input() pTypeList = [];
 
+  platformNm = '';
+  pfaccountNm = '';
+  ptypeNm = '';
+  sNm = '';
+
   accountList = [];
 
-  selectedAccount = '';
 
   constructor(private service:TemplatesetService) { }
 
   ngOnInit() {
-    console.log(this.tempData)
+    this.service.getTemplateInfoData().subscribe(data=>{
+      this.tempData = data;
+      console.log(this.tempData);
+      this.platformNm = this.tempData.platformNm;
+      this.pfaccountNm = this.tempData.pfaccountNm;
+      this.ptypeNm = this.tempData.ptypeNm;
+      this.sNm = this.tempData.sNm;
+    })
   }
 
+
+
   provinceAllChange(type,id): void {
-    console.log(id);
+    this.tempData.platformNm = this.platformNm;
+    this.tempData.pfaccountNm = this.pfaccountNm;
+    this.tempData.ptypeNm = this.ptypeNm;
+    this.tempData.sNm = this.sNm;
     if(type == 0){
       if(id == this.tempData.platformId){
 
       }else{
-        this.selectedAccount = '';
         this.getPfaccountInfo(id);
       }
       this.tempData.platformId = id;

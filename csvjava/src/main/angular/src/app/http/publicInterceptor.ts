@@ -26,6 +26,9 @@ export class PublicInterceptor implements HttpInterceptor {
         if (event instanceof HttpResponse && event.status === 200)
           return this.handleData(event);
         // 若一切都正常，则后续操作
+        if(event.body != null && event.body.code == -1){
+          this.msg.error(event.body.msg);
+        }
         return of(event);
       }),
       catchError((err: HttpErrorResponse) => this.handleData(err)),

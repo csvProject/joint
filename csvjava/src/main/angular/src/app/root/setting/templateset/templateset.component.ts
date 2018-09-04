@@ -209,8 +209,10 @@ export class TemplatesetComponent implements OnInit {
         this.templateInfo = Object.assign({},dataInfo);
         this.templateInfo.csvtempId = null;
       }
+      this.service.sendTemplateInfoData(this.templateInfo);
     }else if(type == 1){
-      this.templateInfo = dataInfo;
+      // this.templateInfo = dataInfo;
+      this.service.sendTemplateInfoData(dataInfo);
     }else if(type == 2){
       console.log(dataInfo);
       this.templateInfo = Object.assign({},dataInfo);
