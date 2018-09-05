@@ -1,10 +1,7 @@
 package com.csv.java.service.impl;
 
-
-
-
-
 import com.csv.java.common.tool.CSVUtils;
+import com.csv.java.common.tool.DeleteFileUtil;
 import com.csv.java.dao.CsvTemplateRuleDao;
 import com.csv.java.dao.CustomDao;
 import com.csv.java.dao.ProductDao;
@@ -14,9 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.*;
 
+import static com.csv.java.common.tool.UUIDUtil.getUUID;
+import static com.csv.java.common.tool.ZipFileUtils.zipPath;
 import static com.csv.java.config.ConstantConfig.CSV_FILE_TEMP_PATH;
+import static com.csv.java.config.ConstantConfig.CSV_ZIP_FILE_TEMP_PATH;
+import static com.csv.java.config.ScheduledComponent.ZIP_Files;
 
 @Service(value = "productCsvService")
 public class ProductCsvServiceImpl implements ProductCsvService {
@@ -38,9 +40,8 @@ public class ProductCsvServiceImpl implements ProductCsvService {
         return productDao.findProductById(productId);
     }
 
-    public String exportProductCsv(CsvExportInDto csvExportInDto){
-        String ret="";
-
+    public Map<String,Object> exportProductCsv(CsvExportInDto csvExportInDto){
+        Map<String,Object>  ret= new HashMap<>();
         List <ProductGroupOutDto> productGroupOutDtoList = new ArrayList();
 
         //根据产品类型与供应商分组
@@ -112,6 +113,10 @@ public class ProductCsvServiceImpl implements ProductCsvService {
         }
 
         List noCsvTempList = new ArrayList(); //没有模板商品集合
+
+        String zipFileName = getUUID();
+        List<String> filePaths = new ArrayList<String>();
+
         //生成csv
         for (ProductGroupOutDto productGroupOutDto : productGroupOutDtoList) {
             if("".equals(productGroupOutDto.getCsvSql())){
@@ -128,7 +133,6 @@ public class ProductCsvServiceImpl implements ProductCsvService {
                     ids = ids + "";
                 }
                 String sql = productGroupOutDto.getCsvSql()+" \n WHERE id in("+ids+")";
-                System.out.println(sql);
                 List<LinkedHashMap<String,Object>> csvData = customDao.customSelect(sql);
                 if(csvData != null && csvData.size()>0){
                     //csv文件头
@@ -148,14 +152,66 @@ public class ProductCsvServiceImpl implements ProductCsvService {
                         }
                         dataList.add(rowList);
                     }
-                    String fileName = new Date().getTime()+ ".CSV";
+                    String fileName = getUUID()+ ".CSV";
                     productGroupOutDto.setCsvFileName(fileName);
                     CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);
+                    filePaths.add(CSV_FILE_TEMP_PATH + fileName);
                 }
             }
         }
+        String noCsvTempFileName = noCsvFile(zipFileName,noCsvTempList);
+        try {
+            filePaths.add(CSV_FILE_TEMP_PATH + noCsvTempFileName);
+            zipPath(CSV_ZIP_FILE_TEMP_PATH + zipFileName+".zip",filePaths);
+            FileDto zipFile= new FileDto();
+            zipFile.setCreateTime(new Date().getTime());
+            zipFile.setFileName(CSV_ZIP_FILE_TEMP_PATH + zipFileName+".zip");
+            ZIP_Files.add(zipFile);
+            for (String f:filePaths) {
+                if(DeleteFileUtil.delete(f)){
+                    System.out.println(f + " 删除成功！");
+                }else{
+                    System.out.println(f + " 删除失败！");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("压缩文件："+zipFileName + ".zip 生成失败！");
+        }
+        ret.put("zipFileName",zipFileName);
+        ret.put("noCsvTempFileName",noCsvTempFileName);
+        ret.put("noCsvTempList",noCsvTempList); //无模板商品信息
         return ret;
-
     }
 
+    /* 生成无模板csv文件 */
+    private String noCsvFile(String zipFileName,List<ProductDto> noCsvTempList){
+        //csv文件头
+        List<Object> heads = new ArrayList<>();
+        heads.add("图片");
+        heads.add("sku");
+        heads.add("供应商");
+        heads.add("产品类别");
+        heads.add("成本价格");
+        heads.add("重量");
+        heads.add("中文品名");
+        heads.add("中文套组");
+        //数据
+        List<List<Object>> dataList = new ArrayList<List<Object>>();
+        for(ProductDto productDtos: noCsvTempList ){
+            List<Object> rowList = new ArrayList<>();
+            rowList.add(productDtos.getPicUrl()==null?"":(productDtos.getPicUrl()+"").replaceAll("\"","\\\\"));
+            rowList.add(productDtos.getSku()==null?"":(productDtos.getSku()+"").replaceAll("\"","\\\\"));
+            rowList.add(productDtos.getsNm()==null?"":(productDtos.getsNm()+"").replaceAll("\"","\\\\"));
+            rowList.add(productDtos.getPtypeNm()==null?"":(productDtos.getPtypeNm()+"").replaceAll("\"","\\\\"));
+            rowList.add(productDtos.getBasePrice());
+            rowList.add(productDtos.getWeight());
+            rowList.add(productDtos.getPmCn()==null?"":(productDtos.getPmCn()+"").replaceAll("\"","\\\\"));
+            rowList.add(productDtos.getSetCn()==null?"":(productDtos.getSetCn()+"").replaceAll("\"","\\\\"));
+            dataList.add(rowList);
+        }
+        String fileName = "无模板_"+zipFileName+".CSV";
+        CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);
+        return  fileName;
+    }
 }

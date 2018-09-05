@@ -1,7 +1,7 @@
 <div style="margin-bottom: 16px;">
   <button nz-button [disabled]="disabledButton"
           [nzType]="'primary'" [nzLoading]="operating"
-          (click)="operateData(tpl)">
+          (click)="operateData()">
     导出
   </button>
   <span style="margin-left: 8px;" *ngIf="checkedNumber">已选择 {{checkedNumber}} 件商品</span>
@@ -49,11 +49,14 @@
 <ng-template #tpl>
   <div class="ant-notification-notice-content">
     <div class="ant-notification-notice-with-icon">
-      <span class="ant-notification-notice-icon"><i class="anticon anticon-smile-circle" style="color: rgb(16, 142, 233);"></i></span>
-      <div class="ant-notification-notice-message">已选中商品</div>
+      <span class="ant-notification-notice-icon"><i class="anticon anticon-exclamation-circle" style="color:  rgba(255, 193, 7, 0.78);"></i></span>
+      <div class="ant-notification-notice-message">失败商品</div>
       <div class="ant-notification-notice-description">
         <div nz-row>
-          <div nz-col class="u-leaveOut" nzSpan="12" *ngFor="let info of checkedData;let i =index">{{info.name}}</div>
+          <div nz-col class="u-leaveOut" nzSpan="12" *ngFor="let info of noCsvTempList;let i =index" title="{{info.pmCn}}">{{info.pmCn}}</div>
+        </div>
+        <div nz-row>
+          <div class="center">详情请见{{zipFileName}}压缩文件</div>
         </div>
       </div>
     </div>
@@ -96,6 +99,6 @@
   </ng-template>
   <ng-template #modalFooter>
     <button nz-button nzType="default" (click)="handleCancel()">取消</button>
-    <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">确认</button>
+    <button nz-button nzType="primary" (click)="handleOk(tpl)" [nzLoading]="isConfirmLoading">确认</button>
   </ng-template>
 </nz-modal>

@@ -5,6 +5,7 @@ import {CsvexportService} from "../../http/csvexport.service";
 import {debounceTime, map, switchMap} from "rxjs/internal/operators";
 import {BehaviorSubject, Observable} from "rxjs/index";
 import {CurrencyUtil} from "../../util/currencyUtil";
+import {PublicService} from "../../http/public.service";
 
 @Component({
   selector: 'app-csvexport',
@@ -14,7 +15,7 @@ import {CurrencyUtil} from "../../util/currencyUtil";
 export class CsvexportComponent implements OnInit {
 
   isVisible = false;
-  constructor(private notification: NzNotificationService,private service:CsvexportService,private util:CurrencyUtil) { }
+  constructor(private notification: NzNotificationService,private service:CsvexportService,private util:CurrencyUtil,private fileService:PublicService) { }
   private get msg(){
     return this.util.msg;
   }
@@ -41,7 +42,6 @@ export class CsvexportComponent implements OnInit {
   operating = false;
   dataSet = [];
   indeterminate = false;
-  checkedData=[];
 
   currentPageDataChange($event): void {
     this.displayData = $event;
@@ -61,10 +61,9 @@ export class CsvexportComponent implements OnInit {
     this.refreshStatus();
   }
 
-  operateData(template: TemplateRef<{}>): void {
-    this.checkedData = this.getCheckedData();
+  operateData(): void {
+    // this.checkedData = this.getCheckedData();
     this.operating = true;
-
     this.isVisible = true;
   }
 
@@ -88,13 +87,13 @@ export class CsvexportComponent implements OnInit {
   handleCancel(){
     this.isVisible = false;
   }
-  handleOk(){
+  handleOk(template){
     let body = {
       platformId:this.platformId,//平台ID
       pfaccountId:this.pfaccountId,//平台账号ID
       productDtoList:this.dataSet.filter(value => value.checked)
     };
-    this.exportCSV(body);
+    this.exportCSV(body,template);
     this.isVisible = false;
   }
 
@@ -139,11 +138,19 @@ export class CsvexportComponent implements OnInit {
     })
   }
 
-  private exportCSV(body){
+  zipFileName = ""; //下载文件名
+  noCsvTempList:any = []; //无模板商品信息
+  private exportCSV(body,template){
     this.operating = false;
     this.service.exportCSV(body).subscribe(result=>{
       this.operating = false;
       if(result.code == 0){
+        this.zipFileName = result.data.zipFileName+'.zip';
+        this.noCsvTempList = result.data.noCsvTempList == null?[]:result.data.noCsvTempList;
+        this.fileService.downloadFile(this.zipFileName);
+        if(this.noCsvTempList.length !=  0){
+          this.createBasicNotification(template);
+        }
         this.dataSet.forEach(value => value.checked = false);
         this.refreshStatus();
       }else {

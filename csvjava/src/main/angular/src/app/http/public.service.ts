@@ -1,13 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { url } from './index';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class PublicService {
   constructor(private http: HttpClient) { }
 
-  getConfig() {
-    return this.http.get(url.configUrl);
+  downloadFile(fileName) {
+    let getUrl = environment.uri+ url.download+'?fileName='+fileName;
+    let a = document.createElement('a');
+    document.body.appendChild(a);
+    a.setAttribute('style', 'display:none');
+    a.setAttribute('href', getUrl);
+    a.setAttribute('download', 'zip文件');
+    a.click();
+    document.body.removeChild(a);
+    //释放URL地址
+    URL.revokeObjectURL(getUrl);
   }
 
 }
