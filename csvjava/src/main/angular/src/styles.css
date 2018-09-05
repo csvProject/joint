@@ -10,3 +10,7 @@
 .stop-propagation{
   color: red;
 }
+
+.padding_0_3{
+  padding: 0 3px;
+}

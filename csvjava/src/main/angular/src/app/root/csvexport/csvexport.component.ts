@@ -1,11 +1,11 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { NzNotificationService} from "ng-zorro-antd";
-import { NzNotificationDataOptions } from "ng-zorro-antd/src/notification/nz-notification.definitions";
-import {CsvexportService} from "../../http/csvexport.service";
-import {debounceTime, map, switchMap} from "rxjs/internal/operators";
-import {BehaviorSubject, Observable} from "rxjs/index";
-import {CurrencyUtil} from "../../util/currencyUtil";
-import {PublicService} from "../../http/public.service";
+import { NzNotificationService} from 'ng-zorro-antd';
+import { NzNotificationDataOptions } from 'ng-zorro-antd/src/notification/nz-notification.definitions';
+import { CsvexportService } from '../../http/csvexport.service';
+import { debounceTime, map, switchMap } from 'rxjs/internal/operators';
+import { BehaviorSubject, Observable } from 'rxjs/index';
+import { CurrencyUtil } from '../../util/currencyUtil';
+import { PublicService } from '../../http/public.service';
 
 @Component({
   selector: 'app-csvexport',
@@ -39,7 +39,6 @@ export class CsvexportComponent implements OnInit {
   disabledButton = true;
   checkedNumber = 0;
   displayData= [];
-  operating = false;
   dataSet = [];
   indeterminate = false;
 
@@ -63,7 +62,6 @@ export class CsvexportComponent implements OnInit {
 
   operateData(): void {
     // this.checkedData = this.getCheckedData();
-    this.operating = true;
     this.isVisible = true;
   }
 
@@ -78,7 +76,10 @@ export class CsvexportComponent implements OnInit {
     this.notification.config({
       nzPlacement:'topLeft'
     });
-    let option:NzNotificationDataOptions = { nzDuration:0, };
+    let option:NzNotificationDataOptions = { nzDuration:0,nzStyle: {
+        width : '920px',
+      },
+      nzClass: 'test-class' };
     this.notification.template(template,option);
   }
 
@@ -92,9 +93,24 @@ export class CsvexportComponent implements OnInit {
       platformId:this.platformId,//平台ID
       pfaccountId:this.pfaccountId,//平台账号ID
       productDtoList:this.dataSet.filter(value => value.checked)
+
     };
-    this.exportCSV(body,template);
-    this.isVisible = false;
+    if(this.checkTemplateInfo(body)){
+      this.exportCSV(body,template);
+      this.isVisible = false;
+    }
+  }
+  private checkTemplateInfo(body):boolean{
+    let num = 0;
+    if(!this.util.isEmpty(body.platformId)){
+      num++;
+      this.util.msg.warning('请选择平台');
+    }
+    if(!this.util.isEmpty(body.pfaccountId)){
+      num++;
+      this.util.msg.warning('请选择账号');
+    }
+    return num == 0?true:false;
   }
 
   platformId;
@@ -138,12 +154,10 @@ export class CsvexportComponent implements OnInit {
     })
   }
 
-  zipFileName = ""; //下载文件名
+  zipFileName = ''; //下载文件名
   noCsvTempList:any = []; //无模板商品信息
   private exportCSV(body,template){
-    this.operating = false;
     this.service.exportCSV(body).subscribe(result=>{
-      this.operating = false;
       if(result.code == 0){
         this.zipFileName = result.data.zipFileName+'.zip';
         this.noCsvTempList = result.data.noCsvTempList == null?[]:result.data.noCsvTempList;

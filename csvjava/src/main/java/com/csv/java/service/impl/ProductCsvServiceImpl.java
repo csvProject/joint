@@ -210,7 +210,7 @@ public class ProductCsvServiceImpl implements ProductCsvService {
             rowList.add(productDtos.getSetCn()==null?"":(productDtos.getSetCn()+"").replaceAll("\"","\\\\"));
             dataList.add(rowList);
         }
-        String fileName = "无模板_"+zipFileName+".CSV";
+        String fileName = "失败商品_"+zipFileName+".CSV";
         CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);
         return  fileName;
     }

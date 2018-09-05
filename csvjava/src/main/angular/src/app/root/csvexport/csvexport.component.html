@@ -1,6 +1,6 @@
 <div style="margin-bottom: 16px;">
   <button nz-button [disabled]="disabledButton"
-          [nzType]="'primary'" [nzLoading]="operating"
+          [nzType]="'primary'"
           (click)="operateData()">
     导出
   </button>
@@ -53,10 +53,8 @@
       <div class="ant-notification-notice-message">失败商品</div>
       <div class="ant-notification-notice-description">
         <div nz-row>
-          <div nz-col class="u-leaveOut" nzSpan="12" *ngFor="let info of noCsvTempList;let i =index" title="{{info.pmCn}}">{{info.pmCn}}</div>
-        </div>
-        <div nz-row>
-          <div class="center">详情请见{{zipFileName}}压缩文件</div>
+          <div nz-col class="u-leaveOut padding_0_3" nzSpan="12" *ngFor="let info of noCsvTempList;let i =index"
+               title="{{info.sku + ' - '+info.pmCn}}">{{info.sku + ' - '+info.pmCn}}</div>
         </div>
       </div>
     </div>

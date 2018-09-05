@@ -15,7 +15,7 @@ import static com.csv.java.config.ConstantConfig.DELETE_ZIP_FILE_DAY;
 @Component
 public class ScheduledComponent {
     public static List<FileDto> ZIP_FILES = new ArrayList<>();
-    @Scheduled(cron = "0 0 2 ? * 7")  //表示每个星期日凌晨2点
+    @Scheduled(cron = "0 0 2 ? * 1")  //表示每个星期一凌晨2点
     public void pushDataScheduled() {
         Iterator<FileDto> it = ZIP_FILES.iterator();
         while(it.hasNext()){

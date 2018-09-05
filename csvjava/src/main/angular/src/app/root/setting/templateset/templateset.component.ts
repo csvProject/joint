@@ -280,7 +280,7 @@ export class TemplatesetComponent implements OnInit {
 
 
   }
-  checkTemplateInfo(templateInfo:CsvTemplateInfo):boolean{
+  private checkTemplateInfo(templateInfo:CsvTemplateInfo):boolean{
     let num = 0;
     if(!this.util.isEmpty(templateInfo.csvtempNm)){
       num++;
