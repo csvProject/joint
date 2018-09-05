@@ -39,7 +39,7 @@ export class FirstComponent implements OnInit {
 
   /*记录光标位置*/
   saveRange(){
-    this.lastRange = this.util.saveRange();//保存光标位置
+    // this.lastRange = this.util.saveRange();//保存光标位置
   }
 
   //插入相应文案
