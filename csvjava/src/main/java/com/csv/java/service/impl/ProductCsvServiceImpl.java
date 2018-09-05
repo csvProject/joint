@@ -18,7 +18,7 @@ import static com.csv.java.common.tool.UUIDUtil.getUUID;
 import static com.csv.java.common.tool.ZipFileUtils.zipPath;
 import static com.csv.java.config.ConstantConfig.CSV_FILE_TEMP_PATH;
 import static com.csv.java.config.ConstantConfig.CSV_ZIP_FILE_TEMP_PATH;
-import static com.csv.java.config.ScheduledComponent.ZIP_Files;
+import static com.csv.java.config.ScheduledComponent.ZIP_FILES;
 
 @Service(value = "productCsvService")
 public class ProductCsvServiceImpl implements ProductCsvService {
@@ -166,7 +166,7 @@ public class ProductCsvServiceImpl implements ProductCsvService {
             FileDto zipFile= new FileDto();
             zipFile.setCreateTime(new Date().getTime());
             zipFile.setFileName(CSV_ZIP_FILE_TEMP_PATH + zipFileName+".zip");
-            ZIP_Files.add(zipFile);
+            ZIP_FILES.add(zipFile);
             for (String f:filePaths) {
                 if(DeleteFileUtil.delete(f)){
                     System.out.println(f + " 删除成功！");
