@@ -3,7 +3,7 @@ package com.csv.java.service.impl;
 
 
 
-import com.csv.java.dao.CsvCustmerFieldDao;
+import com.csv.java.dao.CsvCustomFieldDao;
 import com.csv.java.dao.CsvTemplateDetailDao;
 import com.csv.java.dao.CsvTemplateInfoDao;
 import com.csv.java.dao.CsvTemplateRuleDao;
@@ -28,7 +28,7 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
     private CsvTemplateRuleDao csvTemplateRuleDao;
 
     @Autowired
-    private CsvCustmerFieldDao csvCustmerFieldDao;
+    private CsvCustomFieldDao csvCustomFieldDao;
 
     public CsvTemplateInfoDto findCsvTempInfoById(int csvtempId){
         return csvTemplateInfoDao.findCsvTempInfoById(csvtempId);
@@ -41,7 +41,7 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
     public void delCsvTempInfoById(int csvtempId){
         csvTemplateInfoDao.delCsvTempInfoById(csvtempId);
         csvTemplateDetailDao.delCsvTempDetailBycsvtempId(csvtempId);
-        csvCustmerFieldDao.delCustmerFieldBycsvtempId(csvtempId);
+        csvCustomFieldDao.delCustomFieldBycsvtempId(csvtempId);
         csvTemplateRuleDao.delCsvTempRuleBycsvtempId(csvtempId);
     }
 

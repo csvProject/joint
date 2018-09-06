@@ -1,9 +1,9 @@
 package com.csv.java.entity;
 
 //模板自定义字段dto
-public class CsvCustmerFieldDto extends BaseDto{
+public class CsvCustomFieldDto extends BaseDto{
     //模板自定义字段ID
-    private int csvCustmerFieldId;
+    private int csvCustomFieldId;
     //模板ID
     private int csvtempId;
     //自定义字段类型
@@ -13,12 +13,12 @@ public class CsvCustmerFieldDto extends BaseDto{
     //自定义字段内容
     private String cfieldValue;
 
-    public int getCsvCustmerFieldId() {
-        return csvCustmerFieldId;
+    public int getCsvCustomFieldId() {
+        return csvCustomFieldId;
     }
 
-    public void setCsvCustmerFieldId(int csvCustmerFieldId) {
-        this.csvCustmerFieldId = csvCustmerFieldId;
+    public void setCsvCustomFieldId(int csvCustomFieldId) {
+        this.csvCustomFieldId = csvCustomFieldId;
     }
 
     public int getCsvtempId() {

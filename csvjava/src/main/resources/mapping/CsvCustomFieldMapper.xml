@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csv.java.dao.CsvCustomFieldDao" >
+
+
+    <select id="findCsvCustomField" parameterType="java.lang.Integer"  resultType="CsvCustomFieldDto">
+        SELECT
+            CSVCUSTOM_FIELD_ID csvCustomFieldId,
+            CSVTEMP_ID csvtempId,
+            CFIELD_TYPE cfieldType,
+            CFIELD_NM cfieldNm,
+            CFIELD_VALUE cfieldValue
+        FROM t_csvcustom_field
+        WHERE CFIELD_TYPE = 0
+        and  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+    </select>
+
+    <update id="updCustomFieldById" parameterType="CsvCustomFieldDto"  >
+        UPDATE t_csvcustom_field
+        set
+            CFIELD_NM =  #{cfieldNm,jdbcType=VARCHAR} ,
+            CFIELD_VALUE =  #{cfieldValue,jdbcType=VARCHAR},
+            UPDT_BY = #{logId,jdbcType=INTEGER},
+            UPDT_TS =CURRENT_TIMESTAMP()
+        WHERE  CFIELD_TYPE = 0
+        and CSVCUSTOM_FIELD_ID = #{csvCustomFieldId,jdbcType=INTEGER}
+    </update>
+
+    <delete id="delCustomFieldBycsvtempId" parameterType="java.lang.Integer">
+        delete from
+        t_csvcustom_field  WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insertCustomField" parameterType="CsvCustomFieldDto">
+
+        insert into t_csvcustom_field
+        (
+        CSVTEMP_ID ,
+        CFIELD_TYPE ,
+        CFIELD_NM ,
+        CFIELD_VALUE ,
+        UPDT_BY,
+        UPDT_TS)
+        VALUES(
+        #{csvtempId,jdbcType=INTEGER},
+        #{cfieldType,jdbcType=VARCHAR},
+        #{cfieldNm,jdbcType=VARCHAR},
+        #{cfieldValue,jdbcType=VARCHAR},
+        #{logId,jdbcType=INTEGER},
+        CURRENT_TIMESTAMP())
+
+    </insert>
+</mapper>
