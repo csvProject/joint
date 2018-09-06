@@ -80,7 +80,6 @@ export class PlatformacctsetComponent implements OnInit {
   }
   private getPfaccountInfo(pfid): void {
     this.service.getPfaccountInfo(pfid).subscribe(result=>{
-      console.log(result);
       if(result.code == 0){
         this.accountList = result.data;
       }else if(result.code == 1){
@@ -110,10 +109,9 @@ export class PlatformacctsetComponent implements OnInit {
     this.isConfirmLoading = true;
     if(modalType == 0){
       this.service.insertPlatInfo(this.platInfo).subscribe(result=>{
-        this.isVisible = false;
-        this.isConfirmLoading = false;
-        console.log(result);
         if(result.code == 0){
+          this.isVisible = false;
+          this.isConfirmLoading = false;
           this.getPlatInfos(this.pfnm,this.selectPlatIndex);
         }else if(result.code == 1){
         }else{
@@ -122,10 +120,9 @@ export class PlatformacctsetComponent implements OnInit {
       });
     }else if(modalType == 1){
       this.service.upDatePlatInfo(this.platInfo).subscribe(result=>{
-        this.isVisible = false;
-        this.isConfirmLoading = false;
-        console.log(result);
         if(result.code == 0){
+          this.isVisible = false;
+          this.isConfirmLoading = false;
           this.getPlatInfos(this.pfnm,this.selectPlatIndex);
         }else if(result.code == 1){
         }else{
@@ -136,10 +133,9 @@ export class PlatformacctsetComponent implements OnInit {
       this.accountInfo.platformId = this.platList[this.selectPlatIndex].platformId;
       this.platList[this.selectPlatIndex] != null?
       this.service.insertPfaccountInfo(this.accountInfo).subscribe(result=>{
-        this.isVisible = false;
-        this.isConfirmLoading = false;
-        console.log(result);
         if(result.code == 0){
+          this.isVisible = false;
+          this.isConfirmLoading = false;
           this.getPlatInfos(this.pfnm,this.selectPlatIndex);
         }else if(result.code == 1){
         }else{
@@ -148,10 +144,9 @@ export class PlatformacctsetComponent implements OnInit {
       }):null;
     }else if(modalType == 3){
       this.service.upDatePfaccountInfo(this.accountInfo).subscribe(result=>{
-        this.isVisible = false;
-        this.isConfirmLoading = false;
-        console.log(result);
         if(result.code == 0){
+          this.isVisible = false;
+          this.isConfirmLoading = false;
           this.getPlatInfos(this.pfnm,this.selectPlatIndex);
         }else if(result.code == 1){
         }else{

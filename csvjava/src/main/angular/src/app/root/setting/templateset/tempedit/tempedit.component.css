@@ -1,6 +1,7 @@
 .temp_edit_table{
   border: 1px solid #cccccc;
   border-radius: 3px;
+  margin-bottom: 24px;
 }
 
 .temp_edit_table>.ant-col-24{
