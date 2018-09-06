@@ -211,7 +211,8 @@ export class TemplatesetComponent implements OnInit {
       this.service.sendTemplateInfoData(this.templateInfo);
     }else if(type == 1){
       // this.templateInfo = dataInfo;
-      this.service.sendTemplateInfoData(dataInfo);
+      this.templateInfo = Object.assign({},dataInfo);
+      this.service.sendTemplateInfoData(this.templateInfo);
     }else if(type == 2){
       console.log(dataInfo);
       this.templateInfo = Object.assign({},dataInfo);
@@ -249,6 +250,7 @@ export class TemplatesetComponent implements OnInit {
           }
         });
       }else{
+        console.log(templateInfo);
         this.updateTemplateInfo(templateInfo) .subscribe(result=>{
           if(result.code == 0){
             this.isVisible = false;

@@ -36,7 +36,7 @@ export class PublicInterceptor implements HttpInterceptor {
     event: HttpResponse<any> | HttpErrorResponse | any,
   ): Observable<any> {
     // 业务处理：一些通用操作
-    if(event.body != null && event.body.code == -1){
+    if(event.body != null && event.body.code < 0){
       this.msg.error(event.body.msg);
     }
     switch (event.status) {
