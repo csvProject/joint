@@ -45,30 +45,40 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
         csvTemplateRuleDao.delCsvTempRuleBycsvtempId(csvtempId);
     }
 
-    public void updCsvTempInfoById(CsvTemplateInfoDto indto){
+    public int updCsvTempInfoById(CsvTemplateInfoDto indto){
+        //判断模板名称是否已存在
+        int temponly  = csvTemplateInfoDao.checkCsvTempNmOnly(indto.getCsvtempNm());
+        if (temponly > 0) {
+            return -2;
+        }
         csvTemplateInfoDao.updCsvTempInfoById(indto);
+        return 0;
     }
 
     public int insertCsvTempInfo(CsvTemplateInfoDto indto){
 
-        int ret = 0;
-        //判断同一平台，账号，商品类型，供应商下是否存在模板，
-        int temponly  = csvTemplateInfoDao.checkCsvTempInfoOnly(indto);
-
+        //判断模板名称是否已存在
+        int temponly  = csvTemplateInfoDao.checkCsvTempNmOnly(indto.getCsvtempNm());
         if (temponly > 0) {
-        //处理代码未写
-            ret = -1;
-        }else{
-            //添加模板
-            csvTemplateInfoDao.insertCsvTempInfo(indto);
-
-            //添加模板空规则
-            CsvTemplateRuleDto csvTemplateInfoDto = new CsvTemplateRuleDto();
-            csvTemplateInfoDto.setCsvSql("");
-            csvTemplateInfoDto.setCsvtempId(indto.getCsvtempId());
-            csvTemplateRuleDao.insertCsvTempRule(csvTemplateInfoDto);
+            return -2;
         }
 
-        return ret;
+        //判断同一平台，账号，商品类型，供应商下是否存在模板，
+        temponly  = csvTemplateInfoDao.checkCsvTempInfoOnly(indto);
+
+        if (temponly > 0) {
+            return  -1;
+        }
+
+        //添加模板
+        csvTemplateInfoDao.insertCsvTempInfo(indto);
+
+        //添加模板空规则
+        CsvTemplateRuleDto csvTemplateInfoDto = new CsvTemplateRuleDto();
+        csvTemplateInfoDto.setCsvSql("");
+        csvTemplateInfoDto.setCsvtempId(indto.getCsvtempId());
+        csvTemplateRuleDao.insertCsvTempRule(csvTemplateInfoDto);
+
+        return 0;
     }
 }
