@@ -40,9 +40,11 @@ public class CsvTemplateInfoController {
         int ret = csvTemplateInfoService.insertCsvTempInfo(indto);
         if (ret == -1){
             return ResultUtil.success(ret,"该平台、账号、商品类型、供应商下模板已存在",null) ;
-        }else {
-            return ResultUtil.success(null);
         }
+        if (ret == -2){
+            return ResultUtil.success(ret,"模板名称已存在",null) ;
+        }
+        return ResultUtil.success(null);
     }
 
     //根据ID删除
@@ -57,7 +59,10 @@ public class CsvTemplateInfoController {
     @RequestMapping(value = "/updatebyid", method = RequestMethod.POST)
     public Result updCsvTempInfoById(@RequestBody CsvTemplateInfoDto indto) {
         System.out.println("开始更新..."+indto.toString());
-        csvTemplateInfoService.updCsvTempInfoById(indto);
+        int ret = csvTemplateInfoService.updCsvTempInfoById(indto);
+        if (ret == -2){
+            return ResultUtil.success(ret,"模板名称已存在",null) ;
+        }
         return ResultUtil.success(null) ;
     }
 

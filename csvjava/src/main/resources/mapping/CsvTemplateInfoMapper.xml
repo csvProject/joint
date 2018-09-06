@@ -77,7 +77,13 @@
         AND PFACCOUNT_ID = #{pfaccountId,jdbcType=INTEGER}
         AND PTYPEID = #{ptypeId,jdbcType=INTEGER}
         AND SID = #{sId,jdbcType=INTEGER}
-        AND CSVTEMP_NM = #{csvtempNm,jdbcType=VARCHAR}
+    </select>
+
+    <select id="checkCsvTempNmOnly" parameterType="java.lang.String"  resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM T_CSVTEMPLATE_INFO
+        WHERE
+         CSVTEMP_NM = #{csvtempNm,jdbcType=VARCHAR}
     </select>
 
     <insert id="insertCsvTempInfo" parameterType="CsvTemplateInfoDto" useGeneratedKeys="true" keyProperty="csvtempId">
