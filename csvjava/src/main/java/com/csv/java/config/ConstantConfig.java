@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+
+import static com.csv.java.common.tool.DeleteFileUtil.deleteFile;
 
 @Configuration
 public class ConstantConfig {
@@ -33,5 +36,14 @@ public class ConstantConfig {
         CSV_FILE_TEMP_PATH = _environment.getProperty("csv.file.temp.path");
         CSV_ZIP_FILE_TEMP_PATH = _environment.getProperty("csv.zip.file.temp.path");
         DELETE_ZIP_FILE_DAY = Integer.getInteger(_environment.getProperty("delete.zip.file.day"));
+
+        initDeleteZipFile();
+    }
+
+    private void initDeleteZipFile(){
+        File[] files = new File(CSV_ZIP_FILE_TEMP_PATH).listFiles();
+        for (File file:files) {
+            deleteFile(CSV_ZIP_FILE_TEMP_PATH + file.getName());
+        }
     }
 }
