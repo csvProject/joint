@@ -43,7 +43,7 @@ public class CsvCustomFieldServiceImpl implements CsvCustomFieldService {
             //'round((($cnlowsalesprice+50)/$ryhl)/0.9/100,0)*100'
             formula = formula.replaceAll("(?:\\$cnlowsalesprice|\\$rblowsalesprice|\\$omlowsalesprice|\\$baseprice|\\$mll|\\$ryhl|\\$myhl)", "1");
 
-            String sql = "select " + formula + " from dual";
+            String sql = "select " + formula + " as w from dual";
             data = customDao.customSelect(sql);
             ret = true;
         }catch(Exception ex){
