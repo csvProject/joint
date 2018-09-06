@@ -7,6 +7,7 @@ import com.csv.java.dao.CsvCustomFieldDao;
 import com.csv.java.dao.CsvTemplateDetailDao;
 import com.csv.java.dao.CsvTemplateInfoDao;
 import com.csv.java.dao.CsvTemplateRuleDao;
+import com.csv.java.entity.CsvCustomFieldDto;
 import com.csv.java.entity.CsvTemplateInfoDto;
 import com.csv.java.entity.CsvTemplateRuleDto;
 import com.csv.java.service.CsvTemplateInfoService;
@@ -47,18 +48,30 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
 
     public int updCsvTempInfoById(CsvTemplateInfoDto indto){
         //判断模板名称是否已存在
-        int temponly  = csvTemplateInfoDao.checkCsvTempNmOnly(indto.getCsvtempNm());
+        int temponly  = csvTemplateInfoDao.checkCsvTempNmOnly(indto);
         if (temponly > 0) {
             return -2;
         }
+
         csvTemplateInfoDao.updCsvTempInfoById(indto);
+
+        //删除模板下所有自定义字段
+        csvCustomFieldDao.delCustomFieldBycsvtempId(indto.getCsvtempId());
+
+        //批量添加模板自定义字段
+        if (indto.getCsvCustomFieldDtoList() !=null) {
+            for (CsvCustomFieldDto cvsCustomFieldDto : indto.getCsvCustomFieldDtoList()) {
+                cvsCustomFieldDto.setCsvtempId(indto.getCsvtempId());
+                csvCustomFieldDao.insertCustomField(cvsCustomFieldDto);
+            }
+        }
         return 0;
     }
 
     public int insertCsvTempInfo(CsvTemplateInfoDto indto){
 
         //判断模板名称是否已存在
-        int temponly  = csvTemplateInfoDao.checkCsvTempNmOnly(indto.getCsvtempNm());
+        int temponly  = csvTemplateInfoDao.chkAddCsvTempNmOnly(indto.getCsvtempNm());
         if (temponly > 0) {
             return -2;
         }
@@ -72,6 +85,16 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
 
         //添加模板
         csvTemplateInfoDao.insertCsvTempInfo(indto);
+
+        //删除模板下所有自定义字段
+        csvCustomFieldDao.delCustomFieldBycsvtempId(indto.getCsvtempId());
+        if (indto.getCsvCustomFieldDtoList() !=null) {
+            //批量添加模板自定义字段
+            for (CsvCustomFieldDto cvsCustomFieldDto : indto.getCsvCustomFieldDtoList()) {
+                cvsCustomFieldDto.setCsvtempId(indto.getCsvtempId());
+                csvCustomFieldDao.insertCustomField(cvsCustomFieldDto);
+            }
+        }
 
         //添加模板空规则
         CsvTemplateRuleDto csvTemplateInfoDto = new CsvTemplateRuleDto();

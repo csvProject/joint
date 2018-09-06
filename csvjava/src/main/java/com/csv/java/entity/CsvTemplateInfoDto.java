@@ -1,6 +1,7 @@
 package com.csv.java.entity;
 
 import java.util.Date;
+import java.util.List;
 
 //模板信息dto
 public class CsvTemplateInfoDto extends BaseDto{
@@ -57,6 +58,9 @@ public class CsvTemplateInfoDto extends BaseDto{
 
     //csv头部是否显示
     private int headShow;
+
+    //模板自定义字段LIST
+    private List<CsvCustomFieldDto> csvCustomFieldDtoList;
 
     public int getCsvtempId() {
         return csvtempId;
@@ -200,5 +204,13 @@ public class CsvTemplateInfoDto extends BaseDto{
 
     public void setHeadShow(int headShow) {
         this.headShow = headShow;
+    }
+
+    public List<CsvCustomFieldDto> getCsvCustomFieldDtoList() {
+        return csvCustomFieldDtoList;
+    }
+
+    public void setCsvCustomFieldDtoList(List<CsvCustomFieldDto> csvCustomFieldDtoList) {
+        this.csvCustomFieldDtoList = csvCustomFieldDtoList;
     }
 }

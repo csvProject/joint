@@ -79,11 +79,19 @@
         AND SID = #{sId,jdbcType=INTEGER}
     </select>
 
-    <select id="checkCsvTempNmOnly" parameterType="java.lang.String"  resultType="java.lang.Integer">
+    <select id="checkCsvTempNmOnly" parameterType="CsvTemplateInfoDto"  resultType="java.lang.Integer">
         SELECT count(*)
         FROM T_CSVTEMPLATE_INFO
         WHERE
          CSVTEMP_NM = #{csvtempNm,jdbcType=VARCHAR}
+         and CSVTEMP_ID &lt;> #{csvtempId,jdbcType=INTEGER}
+    </select>
+
+    <select id="chkAddCsvTempNmOnly" parameterType="java.lang.String"  resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM T_CSVTEMPLATE_INFO
+        WHERE
+        CSVTEMP_NM = #{csvtempNm,jdbcType=VARCHAR}
     </select>
 
     <insert id="insertCsvTempInfo" parameterType="CsvTemplateInfoDto" useGeneratedKeys="true" keyProperty="csvtempId">

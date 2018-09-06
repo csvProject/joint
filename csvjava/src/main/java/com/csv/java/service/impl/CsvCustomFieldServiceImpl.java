@@ -30,9 +30,11 @@ public class CsvCustomFieldServiceImpl implements CsvCustomFieldService {
         csvCustomFieldDao.delCustomFieldBycsvtempId(indto.getCsvtempId());
 
         //批量添加模板自定义字段
-        for (CsvCustomFieldDto cvsCustomFieldDto:indto.getCsvCustomFieldDtoList()) {
-            cvsCustomFieldDto.setCsvtempId(indto.getCsvtempId());
-            csvCustomFieldDao.insertCustomField(cvsCustomFieldDto);
+        if (indto.getCsvCustomFieldDtoList() !=null) {
+            for (CsvCustomFieldDto cvsCustomFieldDto : indto.getCsvCustomFieldDtoList()) {
+                cvsCustomFieldDto.setCsvtempId(indto.getCsvtempId());
+                csvCustomFieldDao.insertCustomField(cvsCustomFieldDto);
+            }
         }
     }
 

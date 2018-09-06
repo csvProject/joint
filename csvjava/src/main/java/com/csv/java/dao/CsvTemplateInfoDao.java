@@ -27,6 +27,9 @@ public interface CsvTemplateInfoDao {
     //判断同一平台，账号，商品类型，供应商下是否存在模板,结果大于0则表示存在
     public int checkCsvTempInfoOnly(CsvTemplateInfoDto indto);
 
-    //判断模板名称是否相同,结果大于0则表示存在
-    public int checkCsvTempNmOnly(String csvtempNm);
+    //判断更新时模板名称是否相同,结果大于0则表示存在
+    public int checkCsvTempNmOnly(CsvTemplateInfoDto indto);
+
+    //判断添加时模板名称是否相同,结果大于0则表示存在
+    public int chkAddCsvTempNmOnly(String csvtempNm);
 }
