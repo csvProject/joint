@@ -76,5 +76,14 @@
         WHERE
          PLATFORM_ID=#{platformId,jdbcType=INTEGER}
         AND PFACCOUNT_NM = #{pfaccountNm,jdbcType=VARCHAR}
+        and PFACCOUNT_ID &lt;> #{pfaccountId,jdbcType=INTEGER}
+    </select>
+
+    <select id="chkAddPfaccountOnly" parameterType="PfaccountDto"  resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM T_PF_ACCOUNT
+        WHERE
+        PLATFORM_ID=#{platformId,jdbcType=INTEGER}
+        AND PFACCOUNT_NM = #{pfaccountNm,jdbcType=VARCHAR}
     </select>
 </mapper>

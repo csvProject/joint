@@ -31,4 +31,7 @@ public interface PfaccountDao {
 
     //判断平台账号是否存在
     public int checkPfaccountOnly(PfaccountDto into);
+
+    //添加时判断平台账号是否存在
+    public int chkAddPfaccountOnly(PfaccountDto into);
 }
