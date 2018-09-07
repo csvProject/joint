@@ -6,6 +6,7 @@ import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.IOException;
 
 import static com.csv.java.common.tool.DeleteFileUtil.deleteFile;
 
@@ -41,7 +42,17 @@ public class ConstantConfig {
     }
 
     private void initDeleteZipFile(){
-        File[] files = new File(CSV_ZIP_FILE_TEMP_PATH).listFiles();
+        File csvFile = new File(CSV_ZIP_FILE_TEMP_PATH);
+        try {
+            File parent = csvFile.getParentFile();
+            if (parent != null && !parent.exists()) {
+                parent.mkdirs();
+            }
+            csvFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        File[] files = csvFile.listFiles();
         for (File file:files) {
             deleteFile(CSV_ZIP_FILE_TEMP_PATH + file.getName());
         }
