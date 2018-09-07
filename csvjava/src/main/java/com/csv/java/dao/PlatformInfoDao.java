@@ -24,6 +24,8 @@ public interface PlatformInfoDao {
     List<PlatformInfoDto> findPlatformInfoByPfnm(String pfNm);
 
     //判断平台是否存在
-    public int checkPlatformOnly(String pfNm);
+    public int checkPlatformOnly(PlatformInfoDto indto);
 
+    //添加时判断平台是否存在
+    public int chkAddPlatformOnly(String pfNm);
 }

@@ -32,22 +32,25 @@ public class PfaccountServiceImpl implements PfaccountService {
 
     public int updPfaccountByPfacid(PfaccountDto indto){
         int ret =0;
-        ret = check(indto);
+        ret = pfaccountDao.checkPfaccountOnly(indto);
 
-        if (ret != -1){
-            pfaccountDao.updPfaccountByPfacid(indto);
+        if (ret >0){
+            return -1;
         }
+        pfaccountDao.updPfaccountByPfacid(indto);
         return ret;
 
     }
 
     public int insertPfaccount(PfaccountDto indto){
         int ret =0;
-        ret = check(indto);
+        ret = pfaccountDao.chkAddPfaccountOnly(indto);
 
-        if (ret != -1){
-            pfaccountDao.insertPfaccount(indto);
+        if (ret >0){
+            return -1;
         }
+        pfaccountDao.insertPfaccount(indto);
+
         return ret;
 
     }
