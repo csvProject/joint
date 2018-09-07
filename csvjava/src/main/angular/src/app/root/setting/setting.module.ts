@@ -13,7 +13,7 @@ import { DatePipe } from '../../pipe/date.pipe';
 import { TempeditComponent } from './templateset/tempedit/tempedit.component';
 import { FieldEditComponent } from './templateset/fieldedit/fieldedit.component';
 import { SortableModule } from 'ngx-bootstrap';
-import { FormulasComponent } from './templateset/tempedit/formulas/formulas.component';
+import { FormulasComponent } from './templateset/formulas/formulas.component';
 
 @NgModule({
   imports: [
