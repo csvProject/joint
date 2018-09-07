@@ -15,25 +15,10 @@
 .temp_edit_table>.ant-col-24>div{
   padding: 6px;
 }
-.temp_edit_table>.ant-col-24>div:nth-child(1){
-  padding: 10px 6px;
-}
+
 .temp_edit_table>.ant-col-24>div:nth-child(2){
   border-left: 1px solid #ccc;
 }
-
-
-
-.span_label_title{
-  padding: 5px 10px 5px 0;
-  width: 66px;
-  margin-left: 15px;
-  display: inline-block;
-}
-.span_label_title:nth-child(1){
-  margin-left: 0;
-}
-
-.select_input{
-  width: 170px;
+.temp_edit_table>.ant-col-24>div:nth-child(3){
+  border-left: 1px solid #ccc;
 }

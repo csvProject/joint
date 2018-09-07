@@ -17,7 +17,7 @@ public class StringFormatForSQL{
         }*/
         for (String k : arguments.keySet()) {
 //            formatedStr = formatedStr.replaceAll("\\$\\{:"+k+"\\}","%`~"+ arguments.get(k).toString()+"^%`~");
-            String regex = "<span class=\"stop-propagation\" contenteditable=\"false\">"+k+"</span>";
+            String regex = "<span class=\"stop-propagation\" contenteditable=\"false\">"+k+"</span><span editDiv=\"true\" inVal=\""+arguments.get(k).toString()+"\"";
             formatedStr =
                     formatedStr.replaceAll(
                             regex,

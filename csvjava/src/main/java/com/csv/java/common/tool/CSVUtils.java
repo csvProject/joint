@@ -17,6 +17,7 @@ public class CSVUtils {
      * 创建CSV文件
      */
     public static void createCSV( List<Object> headList ,List<List<Object>> dataList,String fileName,String filePath) {
+
         File csvFile = null;
         BufferedWriter csvWtriter = null;
         try {
@@ -28,13 +29,17 @@ public class CSVUtils {
             csvFile.createNewFile();
             // GB2312使正确读取分隔符","
             csvWtriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile), "GB2312"), 1024);
-            int num = headList.size() / 2;
-            StringBuffer buffer = new StringBuffer();
-            for (int i = 0; i < num; i++) {
-                buffer.append(" ,");
+
+            if(headList != null){
+                int num = headList.size() / 2;
+                StringBuffer buffer = new StringBuffer();
+                for (int i = 0; i < num; i++) {
+                    buffer.append(" ,");
+                }
+                // 写入文件头部
+                writeRow(headList, csvWtriter);
             }
-            // 写入文件头部
-            writeRow(headList, csvWtriter);
+
             // 写入文件内容
             for (List<Object> row : dataList) {
                 writeRow(row, csvWtriter);

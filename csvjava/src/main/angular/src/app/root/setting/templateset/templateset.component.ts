@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TemplatesetService } from "../../../http/templateset.service";
-import {CsvTempBat, CsvTemplateInfo} from "../../../entity/tempData";
+import {CsvCustomField, CsvTempBat, CsvTemplateInfo} from "../../../entity/tempData";
 import { BehaviorSubject, Observable } from "rxjs/index";
 import { debounceTime, map, switchMap } from "rxjs/internal/operators";
 import {CurrencyUtil} from "../../../util/currencyUtil";
@@ -214,9 +214,9 @@ export class TemplatesetComponent implements OnInit {
       this.templateInfo = Object.assign({},dataInfo);
       this.service.sendTemplateInfoData(this.templateInfo);
     }else if(type == 2){
-      console.log(dataInfo);
       this.templateInfo = Object.assign({},dataInfo);
       this.getFieldListCsvtempid(dataInfo.csvtempId);
+      this.service.sendTemplateInfoDataForField(dataInfo);
     }
   }
 
@@ -240,6 +240,7 @@ export class TemplatesetComponent implements OnInit {
         if(!this.checkTemplateInfo(templateInfo)){
           return;
         }
+        this.checkCsvCustomField(templateInfo);
         this.insertTemplateInfo(templateInfo) .subscribe(result=>{
           if(result.code == 0){
             this.isVisible = false;
@@ -250,7 +251,7 @@ export class TemplatesetComponent implements OnInit {
           }
         });
       }else{
-        console.log(templateInfo);
+        this.checkCsvCustomField(templateInfo);
         this.updateTemplateInfo(templateInfo) .subscribe(result=>{
           if(result.code == 0){
             this.isVisible = false;
@@ -278,10 +279,25 @@ export class TemplatesetComponent implements OnInit {
           }
         });
     }
-
-
-
   }
+
+  private checkCsvCustomField(templateInfo){
+    if(templateInfo.csvCustomFieldDtoList ==null){
+      templateInfo.csvCustomFieldDtoList = [];
+    }else{
+      if(templateInfo.csvCustomFieldDtoList.length == 0){
+        templateInfo.csvCustomFieldDtoList = [];
+      }else{
+        let len = templateInfo.csvCustomFieldDtoList.length;
+        if(!this.util.isEmpty(templateInfo.csvCustomFieldDtoList[len-1].cfieldNm)){
+          templateInfo.csvCustomFieldDtoList.splice(len-1,1);
+        }else{
+          return;
+        }
+      }
+    }
+  }
+
   private checkTemplateInfo(templateInfo:CsvTemplateInfo):boolean{
     let num = 0;
     if(!this.util.isEmpty(templateInfo.csvtempNm)){
@@ -312,4 +328,5 @@ export class TemplatesetComponent implements OnInit {
     this.isVisible = false;
     this.getTemplateInfo(this.selectTemplateInfo);
   }
+
 }

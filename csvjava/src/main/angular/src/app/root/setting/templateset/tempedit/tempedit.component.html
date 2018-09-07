@@ -51,45 +51,7 @@
     </div>
   </div>
 </div>
-<h2>自定义公式</h2>
-<div nz-row class="temp_edit_table">
-  <div nz-col nzSpan="24">
-    <div nz-col nzSpan="4">
-      价格可用变量
-    </div>
-    <div nz-col nzSpan="20">
-      <span>$baseprice 成本,$mll 毛利率,$ryhl 日元汇率,$myhl
-      欧美汇率,$cnlowsalesprice 淘宝售价,$rblowsalesprice
-      日本最低售价,$omlowsalesprice 欧美最低售价</span>
-    </div>
-  </div>
-  <div nz-col nzSpan="24">
-    <div nz-col nzSpan="4">
-      原价公式
-    </div>
-    <div nz-col nzSpan="20">
-      <input nz-input  [(ngModel)]="tempData.lowExpr">
-    </div>
-  </div>
-  <div nz-col nzSpan="24">
-    <div nz-col nzSpan="4">
-      推荐价公式
-    </div>
-    <div nz-col nzSpan="20">
-      <input nz-input  [(ngModel)]="tempData.gdExpr">
-    </div>
-  </div>
-  <div nz-col nzSpan="24">
-    <div nz-col nzSpan="4">
-      最低价公式
-    </div>
-    <div nz-col nzSpan="20">
-      <input nz-input  [(ngModel)]="tempData.origiExpr">
-    </div>
-  </div>
-</div>
-
-
+<app-formulas [csvCustomFields]="csvCustomFields"></app-formulas>
 <ng-template #DisabledTemp>
   <div nz-col  nzSpan="24" style="margin-bottom: 10px">
     <span class="span_label_title">平台选择</span>

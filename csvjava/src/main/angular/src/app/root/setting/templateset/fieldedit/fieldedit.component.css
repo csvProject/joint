@@ -77,3 +77,12 @@
   max-height: 65px;
   overflow-y: auto;
 }
+
+
+.list-height-auto{
+  border-radius: 4px;
+  overflow: auto;
+  padding: 8px 24px;
+  height: attr(itemNum px);
+  max-height: 55px;
+}

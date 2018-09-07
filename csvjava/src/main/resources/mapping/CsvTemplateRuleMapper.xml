@@ -51,7 +51,8 @@
 
     <select id="findCsvsqlByFourKey" parameterType="java.lang.String"  resultType="CsvTemplateRuleDto">
         SELECT
-        t.CSV_SQL csvSql
+        t.CSV_SQL csvSql,
+	    ci.HEAD_SHOW headShow
         FROM T_CSVTEMPLATE_RULE t
         INNER JOIN T_CSVTEMPLATE_INFO ci on t.CSVTEMP_ID = ci.CSVTEMP_ID
         WHERE  CONCAT(ci.PLATFORM_ID,ci.PFACCOUNT_ID,ci.PTYPEID,ci.SID)  = #{fourKey,jdbcType=VARCHAR}

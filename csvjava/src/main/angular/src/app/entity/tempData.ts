@@ -35,6 +35,9 @@ export class CsvTemplateInfo {
   ptypeNm:string;
   //供应商名称
   sNm:string;
+
+  csvCustomFieldDtoList:any;
+
   constructor(){
     this.isUse = 0;
     this.headShow=0;
@@ -68,4 +71,17 @@ export class CsvTempBat{
   csvtempId:number;
   //模板字段集合
   csvTemplateDetailDtoList:[CsvTemplateDetail];
+}
+
+export class CsvCustomField{
+  //模板自定义字段ID
+  csvCustomFieldId;
+  //模板ID
+  csvtempId;
+  //自定义字段类型
+  cfieldType;
+  //自定义字段名称
+  cfieldNm;
+  //自定义字段内容
+  cfieldValue;
 }

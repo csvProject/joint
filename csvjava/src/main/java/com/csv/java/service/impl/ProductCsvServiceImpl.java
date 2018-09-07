@@ -109,6 +109,7 @@ public class ProductCsvServiceImpl implements ProductCsvService {
                 productGroupOutDto.setCsvSql("");
             }else{
                 productGroupOutDto.setCsvSql(csvTemplateRuleDto.getCsvSql());
+                productGroupOutDto.setHeadShow(csvTemplateRuleDto.getHeadShow());
             }
         }
 
@@ -154,7 +155,11 @@ public class ProductCsvServiceImpl implements ProductCsvService {
                     }
                     String fileName = getUUID()+ ".CSV";
                     productGroupOutDto.setCsvFileName(fileName);
-                    CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);
+                    if("0".equals(productGroupOutDto.getHeadShow())){
+                        CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);
+                    }else{
+                        CSVUtils.createCSV(null,dataList,fileName,CSV_FILE_TEMP_PATH);
+                    }
                     filePaths.add(CSV_FILE_TEMP_PATH + fileName);
                 }
             }

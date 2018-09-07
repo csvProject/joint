@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {CsvTemplateDetail} from "../../../../entity/tempData";
+import {CsvCustomField, CsvTemplateDetail} from "../../../../entity/tempData";
 import {CurrencyUtil} from "../../../../util/currencyUtil";
 import {TemplatesetService} from "../../../../http/templateset.service";
 
@@ -10,7 +10,6 @@ import {TemplatesetService} from "../../../../http/templateset.service";
 })
 export class FieldEditComponent implements OnInit {
   constructor(private util:CurrencyUtil,private service:TemplatesetService){}
-  getEleData = '_sysCd';
 
   @Input() fieldList = [];
   @ViewChild("editDiv1") editDiv1;
@@ -110,6 +109,9 @@ export class FieldEditComponent implements OnInit {
 
   ngOnInit() {
     this.getSysCodeList(1);
+    this.service.getTemplateInfoDataForField().subscribe(result=>{
+      this.getCsvCustomField(result.csvtempid);
+    });
   }
 
 
@@ -128,14 +130,16 @@ export class FieldEditComponent implements OnInit {
   }
 
   //插入相应文案
-  clickFun(item){
+  clickFun(item,type){
     let htmlSrc = '';
     /*let test = `<span class="stop-propagation" contenteditable="false"
     ${ this.getEleData } = "${JSON.stringify(item.sysCd).replace(/"/g,'\'')}"
    (click)="stopEvent($event)">${item.sysNm}</span>`;  */
-
-    let test = `<span class="stop-propagation" contenteditable="false" >${item.sysNm}</span><span editDiv="true"></span>`;
-    htmlSrc = test;
+    if(type == 0){
+      htmlSrc = `<span class="stop-propagation" contenteditable="false">${item.sysNm}</span><span editDiv="true" inVal="`+item.sysCd+`" ></span>`;
+    }else if(type == 1){
+      htmlSrc = `<span class="stop-propagation" contenteditable="false">${item.cfieldNm}</span><span editDiv="true" inVal="`+item.cfieldValue+`"></span>`;
+    }
     if(this.lastRange.startContainer==undefined ){
       return ;
     }else{
@@ -159,6 +163,16 @@ export class FieldEditComponent implements OnInit {
     this.service.getSysCodeList(typecd).subscribe(result=>{
       if(result.code == 0){
         this.data = result.data == null?[]:result.data;
+      }else {
+
+      }
+    })
+  }
+  csvCustomFields : CsvCustomField[] = [];
+  private getCsvCustomField(csvtempid){
+    this.service.getCsvCustomField(csvtempid).subscribe(result=>{
+      if(result.code == 0){
+        this.csvCustomFields = result.data == null?[]:result.data;
       }else {
 
       }

@@ -22,6 +22,9 @@ public class ProductGroupOutDto extends BaseDto{
     //对应CSV文件名
     private String csvFileName;
 
+    //是否显示头部
+    private Integer headShow;
+
     public int getPlatformId() {
         return platformId;
     }
@@ -76,5 +79,13 @@ public class ProductGroupOutDto extends BaseDto{
 
     public void setCsvFileName(String csvFileName) {
         this.csvFileName = csvFileName;
+    }
+
+    public Integer getHeadShow() {
+        return headShow;
+    }
+
+    public void setHeadShow(Integer headShow) {
+        this.headShow = headShow;
     }
 }

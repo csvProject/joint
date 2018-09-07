@@ -31,6 +31,7 @@ export class TempeditComponent implements OnInit {
       this.pfaccountNm = this.tempData.pfaccountNm;
       this.ptypeNm = this.tempData.ptypeNm;
       this.sNm = this.tempData.sNm;
+      this.getCsvCustomField(this.tempData.csvtempId==null?(-1):this.tempData.csvtempId);
     })
   }
 
@@ -84,5 +85,17 @@ export class TempeditComponent implements OnInit {
     }else{
       this.tempData.headShow = 1;
     }
+  }
+
+  csvCustomFields = [];
+  private getCsvCustomField(csvtempid){
+    this.service.getCsvCustomField(csvtempid).subscribe(result=>{
+      if(result.code == 0){
+        this.csvCustomFields = result.data == null?[]:result.data;
+        this.tempData.csvCustomFieldDtoList = this.csvCustomFields;
+      }else{
+        console.error(result.msg)
+      }
+    })
   }
 }

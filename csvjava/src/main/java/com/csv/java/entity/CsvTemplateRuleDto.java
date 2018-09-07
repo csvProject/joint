@@ -1,7 +1,5 @@
 package com.csv.java.entity;
 
-import java.util.Date;
-
 //模板规则dto
 public class CsvTemplateRuleDto extends BaseDto{
     //CSV模板ID
@@ -12,6 +10,10 @@ public class CsvTemplateRuleDto extends BaseDto{
 
     //CSVSQL规则
     private String csvSql;
+
+
+    //是否显示头部
+    private Integer headShow;
 
     public int getCsvtempId() {
         return csvtempId;
@@ -35,5 +37,13 @@ public class CsvTemplateRuleDto extends BaseDto{
 
     public void setCsvSql(String csvSql) {
         this.csvSql = csvSql;
+    }
+
+    public Integer getHeadShow() {
+        return headShow;
+    }
+
+    public void setHeadShow(Integer headShow) {
+        this.headShow = headShow;
     }
 }

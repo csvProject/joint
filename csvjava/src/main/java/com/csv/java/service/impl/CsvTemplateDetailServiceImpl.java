@@ -1,16 +1,8 @@
 package com.csv.java.service.impl;
 
-
-
-
 import com.csv.java.common.tool.StringFormatForSQL;
-import com.csv.java.dao.CsvTemplateDetailDao;
-import com.csv.java.dao.CsvTemplateRuleDao;
-import com.csv.java.dao.SysCodeDao;
-import com.csv.java.entity.CsvTempBatDto;
-import com.csv.java.entity.CsvTemplateDetailDto;
-import com.csv.java.entity.CsvTemplateRuleDto;
-import com.csv.java.entity.SysCodeDto;
+import com.csv.java.dao.*;
+import com.csv.java.entity.*;
 import com.csv.java.service.CsvTemplateDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,10 +18,13 @@ public class CsvTemplateDetailServiceImpl implements CsvTemplateDetailService {
     @Resource
     private SysCodeDao sysCodeDao;
 
-    @Autowired
+    @Resource
+    private CsvCustomFieldDao csvCustomFieldDao;
+
+    @Resource
     private CsvTemplateDetailDao csvTemplateDetailDao;
 
-    @Autowired
+    @Resource
     private CsvTemplateRuleDao csvTemplateRuleDao;
 
     public List<CsvTemplateDetailDto> findCsvTempDetailBycsvtempId(int csvtempId){
@@ -76,9 +71,12 @@ public class CsvTemplateDetailServiceImpl implements CsvTemplateDetailService {
         //更新模板规则表中的csvsql处理----
         Map map = new HashMap<String,String>();
         List<SysCodeDto> l =  sysCodeDao.findSysCodeByTypeCd(1);
-        for (SysCodeDto s: l
-             ) {
+        List<CsvCustomFieldDto> l2 =  csvCustomFieldDao.findCsvCustomField(indto.getCsvtempId());
+        for (SysCodeDto s: l) {
             map.put(s.getSysNm(),s.getSysCd());
+        }
+        for (CsvCustomFieldDto s: l2) {
+            map.put(s.getCfieldNm(),s.getCfieldNm());
         }
         String csvSql="";
         csvSql = StringFormatForSQL.fieldListFormat(indto.getCsvTemplateDetailDtoList(),map);

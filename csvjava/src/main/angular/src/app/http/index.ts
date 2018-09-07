@@ -38,6 +38,8 @@ export const url = {
 
   findsyscodebytypecd:'syscode/findbytypecd', //查询匹配字段
 
+  findCsvCustomField:'csvcustomfield/findCsvCustomField', //根据模板所有自定义公式字段
+
 
   findproductList:'productcsv/findListbycondi', //查询匹配字段
   exportCSV:'productcsv/export', //导出

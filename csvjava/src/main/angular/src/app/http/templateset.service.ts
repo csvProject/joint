@@ -70,6 +70,14 @@ export class TemplatesetService {
     });
   }
 
+  getCsvCustomField(csvtempid): Observable<BaseApiResponseModel> {
+    return this.http.get<BaseApiResponseModel>(url.findCsvCustomField,{
+      params:{
+        csvtempid
+      }
+    });
+  }
+
 
 
   fieldListData = new Subject();
@@ -88,5 +96,14 @@ export class TemplatesetService {
   }
   getTemplateInfoData(){
     return this.templateInfo.asObservable();
+  }
+
+  templateInfoForField = new Subject<any>();
+
+  sendTemplateInfoDataForField(data){
+    this.templateInfoForField.next(data);
+  }
+  getTemplateInfoDataForField(){
+    return this.templateInfoForField.asObservable();
   }
 }
