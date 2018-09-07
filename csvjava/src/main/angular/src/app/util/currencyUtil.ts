@@ -235,6 +235,21 @@ export class CurrencyUtil {
     return ret;
   }
 
+  /*判断数组中是否有相同元素*/
+  arrayIsMore(arr){
+    return /(\x0f[^\x0f]+)\x0f[\s\S]*\1/.test("\x0f"+arr.join("\x0f\x0f") +"\x0f")
+  }
 
-
+  /* 查找出相同项 */
+  findCopyEle(arr):String{
+    // 方法三，通过字符串查找
+    var s = arr.join(",") +",";
+    for(var i = 0; i < arr.length; i++)
+    {
+      if(s.replace(arr[i] + ",", "").indexOf(arr[i] +",") > -1)
+      {
+        return  arr[i];
+      }
+    }
+  }
 }

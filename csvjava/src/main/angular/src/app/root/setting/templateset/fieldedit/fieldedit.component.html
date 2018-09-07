@@ -1,13 +1,13 @@
 <ng-template #itemTemplate let-item="item.value" let-index="index">
   <div nz-col  nzSpan="24" class="field_edit">
     <div nz-col  nzSpan="2">{{index + 1}}</div>
-    <div nz-col  nzSpan="5">
+    <div nz-col  nzSpan="8">
       {{item.fieldKey}}
     </div>
-    <div nz-col  nzSpan="6">
+    <!--<div nz-col  nzSpan="6">
       {{item.fieldType == '0'?'固定值':'商品表字段'}}
-    </div>
-    <div nz-col  nzSpan="7">
+    </div>-->
+    <div nz-col  nzSpan="10">
       <div class="field_value_show" [innerHtml]="item.fieldValue"></div>
     </div>
     <div nz-col  nzSpan="4">
@@ -33,13 +33,10 @@
       <div nz-col  nzSpan="2">
         序号
       </div>
-      <div nz-col  nzSpan="5">
+      <div nz-col  nzSpan="8">
         表头
       </div>
-      <div nz-col  nzSpan="6">
-        字段类型
-      </div>
-      <div nz-col  nzSpan="7">
+      <div nz-col  nzSpan="10">
         字段值
       </div>
       <div nz-col  nzSpan="4" style="">
@@ -88,20 +85,21 @@
         <span class="span_label_title">表头:</span>
         <input class="span_input" nz-input  [(ngModel)]="selectFielDetail.fieldKey">
       </div>
-      <div nz-col nzSpan="12">
+      <!--<div nz-col nzSpan="12">
         <nz-radio-group [(ngModel)]="selectFielDetail.fieldType">
           <label nz-radio nzValue="0">固定值</label>
           <label nz-radio nzValue="1">商品表字段</label>
         </nz-radio-group>
-      </div>
+      </div>-->
     </div>
     <div nz-col nzSpan="24">
       <div nz-col nzSpan="11">
         <div class="field_div_height">
           <h3>表字段</h3>
-          <div class="list-height-auto" itemNum="{{data?.length*5 }}">
+          <div class="list-height-auto" [style.height]="data.length*5 + 'px'"
+               [style.border]="'1px solid #ccc'"
+          >
             <nz-list [nzDataSource]="data"
-                     nzBordered
                      nzSize="small"
                      [nzRenderItem]="item">
               <ng-template #item let-item>
@@ -110,13 +108,14 @@
             </nz-list>
           </div>
           <h3>自定义公式</h3>
-          <div class="list-height-auto" itemNum="{{csvCustomFields?.length*5 }}">
+          <div class="list-height-auto" [style.height]="csvCustomFields.length*30 + 'px'"
+               [style.border]="csvCustomFields?.length==0?'':'1px solid #ccc'"
+          >
             <nz-list [nzDataSource]="csvCustomFields"
-                     nzBordered
                      nzSize="small"
-                     [nzRenderItem]="item">
-              <ng-template #item let-item>
-                <nz-list-item (click)="clickFun(item,1)" [nzContent]="item.cfieldNm"></nz-list-item>
+                     [nzRenderItem]="item2">
+              <ng-template #item2 let-item2>
+                <nz-list-item (click)="clickFun(item2,1)" [nzContent]="item2.cfieldNm"></nz-list-item>
               </ng-template>
             </nz-list>
           </div>

@@ -12,20 +12,11 @@ export class FieldEditComponent implements OnInit {
   constructor(private util:CurrencyUtil,private service:TemplatesetService){}
 
   @Input() fieldList = [];
+
+  @Input() csvtempId;
   @ViewChild("editDiv1") editDiv1;
   selectFielDetail:CsvTemplateDetail = new CsvTemplateDetail();
   selectModelType = 0;
-  selectTrueField;
-  selectTrueFieldList= [
-    {
-    pfaccountId:1,
-    pfaccountNm:1
-  },
-    {
-      pfaccountId:2,
-      pfaccountNm:2
-    },
-  ];
   data = [];
   provinceChange(fieldType){
 
@@ -33,15 +24,12 @@ export class FieldEditComponent implements OnInit {
 
 
   onChangeSorTable(ev){
-    this.fieldList ;
-    console.log(ev);
   }
 
   deleteField(data,i){
     this.fieldList.splice(i,1);
   }
 
-  isConfirmLoading = false;
   isVisible = false;
   handleCancel(): void {
     this.isVisible = false;
@@ -88,13 +76,12 @@ export class FieldEditComponent implements OnInit {
       this.selectFielDetail = new CsvTemplateDetail();
     }else{
       this.selectFielDetail = csvTemplateDetail;
-      console.info('编辑');
       this.selectModelType = 1;
       let editDiv = this.editDiv1.nativeElement;
       editDiv.innerHTML =csvTemplateDetail.fieldValue;
     }
     this.isVisible = true;
-
+    this.getCsvCustomField(this.csvtempId);
     let classdiv:any =  document.getElementsByClassName("field_input_div")[0];
     this.msgTextLastPos(classdiv);
     this.saveRange();
@@ -109,9 +96,7 @@ export class FieldEditComponent implements OnInit {
 
   ngOnInit() {
     this.getSysCodeList(1);
-    this.service.getTemplateInfoDataForField().subscribe(result=>{
-      this.getCsvCustomField(result.csvtempid);
-    });
+
   }
 
 

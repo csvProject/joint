@@ -241,6 +241,9 @@ export class TemplatesetComponent implements OnInit {
           return;
         }
         this.checkCsvCustomField(templateInfo);
+        if(this.findCopyEle(templateInfo)){
+          return
+        }
         this.insertTemplateInfo(templateInfo) .subscribe(result=>{
           if(result.code == 0){
             this.isVisible = false;
@@ -252,6 +255,9 @@ export class TemplatesetComponent implements OnInit {
         });
       }else{
         this.checkCsvCustomField(templateInfo);
+        if(this.findCopyEle(templateInfo)){
+          return
+        }
         this.updateTemplateInfo(templateInfo) .subscribe(result=>{
           if(result.code == 0){
             this.isVisible = false;
@@ -284,6 +290,7 @@ export class TemplatesetComponent implements OnInit {
   private checkCsvCustomField(templateInfo){
     if(templateInfo.csvCustomFieldDtoList ==null){
       templateInfo.csvCustomFieldDtoList = [];
+      return;
     }else{
       if(templateInfo.csvCustomFieldDtoList.length == 0){
         templateInfo.csvCustomFieldDtoList = [];
@@ -294,6 +301,25 @@ export class TemplatesetComponent implements OnInit {
         }else{
           return;
         }
+      }
+    }
+
+  }
+  findCopyEle(templateInfo){
+    if(templateInfo.csvCustomFieldDtoList ==null){
+      templateInfo.csvCustomFieldDtoList = [];
+      return false;
+    }else {
+      let cfieldNms = [];
+      templateInfo.csvCustomFieldDtoList.forEach((v,i)=>{
+        cfieldNms.push(v.cfieldNm);
+      });
+      let src = this.util.findCopyEle(cfieldNms);
+      if(src == null){
+        return false
+      }else{
+        this.util.msg.warning("重复公式名:"+src);
+        return true;
       }
     }
   }

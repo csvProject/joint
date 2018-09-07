@@ -82,7 +82,10 @@
 .list-height-auto{
   border-radius: 4px;
   overflow: auto;
-  padding: 8px 24px;
-  height: attr(itemNum px);
-  max-height: 55px;
+  max-height: 200px;
+}
+
+
+.list-height-auto .ant-list-sm .ant-list-item {
+  padding: 4px 8px;
 }
