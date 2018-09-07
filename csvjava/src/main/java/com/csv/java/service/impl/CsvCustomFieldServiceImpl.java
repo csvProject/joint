@@ -7,6 +7,7 @@ import com.csv.java.entity.CsvCustomFieldDto;
 import com.csv.java.service.CsvCustomFieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -25,6 +26,7 @@ public class CsvCustomFieldServiceImpl implements CsvCustomFieldService {
         return csvCustomFieldDao.findCsvCustomField(csvtempId);
     }
 
+    @Transactional
     public void updCsvCustomFieldBat(CsvCustomFieldBatDto indto){
         //删除模板下所有自定义字段
         csvCustomFieldDao.delCustomFieldBycsvtempId(indto.getCsvtempId());
@@ -38,6 +40,7 @@ public class CsvCustomFieldServiceImpl implements CsvCustomFieldService {
         }
     }
 
+    @Transactional
     public Boolean verifyFormula(String formula){
         Boolean ret = false;
         try{

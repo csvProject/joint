@@ -9,6 +9,7 @@ import com.csv.java.entity.*;
 import com.csv.java.service.ProductCsvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -23,10 +24,10 @@ import static com.csv.java.config.ScheduledComponent.ZIP_FILES;
 @Service(value = "productCsvService")
 public class ProductCsvServiceImpl implements ProductCsvService {
 
-    @Autowired
+    @Resource
     private ProductDao productDao;
 
-    @Autowired
+    @Resource
     private CsvTemplateRuleDao csvTemplateRuleDao;
 
     @Resource
@@ -40,6 +41,7 @@ public class ProductCsvServiceImpl implements ProductCsvService {
         return productDao.findProductById(productId);
     }
 
+    @Transactional
     public Map<String,Object> exportProductCsv(CsvExportInDto csvExportInDto){
         Map<String,Object>  ret= new HashMap<>();
         List <ProductGroupOutDto> productGroupOutDtoList = new ArrayList();
