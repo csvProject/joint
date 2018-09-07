@@ -67,6 +67,7 @@
         left join t_ptype pt on t.PTYPEID = pt.ID
         WHERE 1=1
         <include refid="forcondi"></include>
+        order by t.JOIN_DATE desc
     </select>
 
     <select id="checkCsvTempInfoOnly" parameterType="CsvTemplateInfoDto"  resultType="java.lang.Integer">

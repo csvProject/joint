@@ -82,6 +82,7 @@
         left join t_ptype pt on t.PTYPEID = pt.ID
         WHERE 1=1
         <include refid="forcondi"></include>
+        order by t.sj_datetime desc
     </select>
 
     <select id="findProductById" parameterType="java.lang.Integer"  resultType="ProductDto">

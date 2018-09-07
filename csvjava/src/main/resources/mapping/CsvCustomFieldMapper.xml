@@ -13,6 +13,7 @@
         FROM t_csvcustom_field
         WHERE CFIELD_TYPE = 0
         and  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+        order by CFIELD_NM
     </select>
 
     <update id="updCustomFieldById" parameterType="CsvCustomFieldDto"  >
