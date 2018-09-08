@@ -89,8 +89,19 @@
     <div nz-col nzSpan="24">
       <div nz-col nzSpan="11">
         <div class="field_div_height">
-          <h3>表字段</h3>
-          <div class="list-height-auto" style="max-height: 175px"
+          <div style="float: left; margin-bottom: 5px;">
+            <h3><div style="float: left;width: 56px">表字段</div>
+              <div style="float: left;width: 158px">
+                <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
+                  <input type="text" nz-input placeholder="表字段" [(ngModel)]="selectSrc">
+                </nz-input-group>
+              </div>
+              <ng-template #suffixIconButton>
+                <button nz-button nzType="primary" nzSearch (click)="selectSrcFun(selectSrc)"><i class="anticon anticon-search"></i></button>
+              </ng-template>
+            </h3>
+          </div>
+          <div class="list-height-auto" style="max-height: 175px;float: left;width: 100%"
                [style.border]="'1px solid #ccc'"
           >
             <nz-list [nzDataSource]="data"
@@ -109,8 +120,8 @@
           <span class="span_label_title">表头:</span>
           <input class="span_input" nz-input  [(ngModel)]="selectFielDetail.fieldKey">
         </div>-->
-        <h3>自定义公式</h3>
-        <div class="list-height-auto" style="max-height: 175px"
+        <h3 style="">自定义公式</h3>
+        <div class="list-height-auto" style="max-height: 175px; margin-top: 5px;"
              [style.border]="csvCustomFields?.length==0?'':'1px solid #ccc'"
         >
           <nz-list [nzDataSource]="csvCustomFields"

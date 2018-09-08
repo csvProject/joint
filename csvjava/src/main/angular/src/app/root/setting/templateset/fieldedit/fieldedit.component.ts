@@ -103,11 +103,23 @@ export class FieldEditComponent implements OnInit {
   lastRange:(any|Range) = {};//光标停留位置
 
 
-
+  copyList = [];
+  selectSrc = "";
+  selectSrcFun(src){
+    let t = [];
+    if(src == null){
+      src = "";
+    }
+    for(let l of this.copyList){
+      if((l.sysNm+"").indexOf(src)>=0){
+        t.push(Object.assign({},l))
+      }
+    }
+    this.data = t;
+  }
 
   ngOnInit() {
     this.getSysCodeList(1);
-
   }
 
 
@@ -159,6 +171,10 @@ export class FieldEditComponent implements OnInit {
     this.service.getSysCodeList(typecd).subscribe(result=>{
       if(result.code == 0){
         this.data = result.data == null?[]:result.data;
+        for(let t of this.data){
+          let o = Object.assign({},t);
+          this.copyList.push(o);
+        }
       }else {
 
       }
