@@ -62,9 +62,9 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
                 Boolean ret = false;
                 try{
                     List<LinkedHashMap<String,Object>> data = new LinkedList<>();
-                    //'round((($cnlowsalesprice+50)/$ryhl)/0.9/100,0)*100'
+                    //'round(((#cnlowsalesprice+50)/#ryhl)/0.9/100,0)*100'
                     String formula = cvsCustomFieldDto.getCfieldValue().replaceAll(
-                            "(?:\\$cnlowsalesprice|\\$rblowsalesprice|\\$omlowsalesprice|\\$baseprice|\\$mll|\\$ryhl|\\$myhl)",
+                            "(?:\\#cnlowsalesprice|\\#rblowsalesprice|\\#omlowsalesprice|\\#baseprice|\\#mll|\\#ryhl|\\#myhl)",
                             "1");
 
                     String sql = "select " + formula + " as w from dual";
@@ -127,7 +127,7 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
                     List<LinkedHashMap<String,Object>> data = new LinkedList<>();
                     //'round((($cnlowsalesprice+50)/$ryhl)/0.9/100,0)*100'
                     String formula = cvsCustomFieldDto.getCfieldValue().replaceAll(
-                            "(?:\\$cnlowsalesprice|\\$rblowsalesprice|\\$omlowsalesprice|\\$baseprice|\\$mll|\\$ryhl|\\$myhl)",
+                            "(?:\\#cnlowsalesprice|\\#rblowsalesprice|\\#omlowsalesprice|\\#baseprice|\\#mll|\\#ryhl|\\#myhl)",
                             "1");
 
                     String sql = "select " + formula + " as w from dual";
