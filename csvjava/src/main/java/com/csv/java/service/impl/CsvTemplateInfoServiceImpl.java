@@ -3,10 +3,7 @@ package com.csv.java.service.impl;
 
 
 
-import com.csv.java.dao.CsvCustomFieldDao;
-import com.csv.java.dao.CsvTemplateDetailDao;
-import com.csv.java.dao.CsvTemplateInfoDao;
-import com.csv.java.dao.CsvTemplateRuleDao;
+import com.csv.java.dao.*;
 import com.csv.java.entity.CsvCustomFieldDto;
 import com.csv.java.entity.CsvTemplateInfoDto;
 import com.csv.java.entity.CsvTemplateRuleDto;
@@ -14,6 +11,9 @@ import com.csv.java.service.CsvTemplateInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service(value = "csvTemplateInfoService")
@@ -30,6 +30,9 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
 
     @Autowired
     private CsvCustomFieldDao csvCustomFieldDao;
+
+    @Autowired
+    private CustomDao customDao;
 
     public CsvTemplateInfoDto findCsvTempInfoById(int csvtempId){
         return csvTemplateInfoDao.findCsvTempInfoById(csvtempId);
@@ -53,16 +56,49 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
             return -2;
         }
 
+        //判断模板自定义字段公式是否有效
+        if (indto.getCsvCustomFieldDtoList() !=null) {
+            for (CsvCustomFieldDto cvsCustomFieldDto : indto.getCsvCustomFieldDtoList()) {
+                Boolean ret = false;
+                try{
+                    List<LinkedHashMap<String,Object>> data = new LinkedList<>();
+                    //'round((($cnlowsalesprice+50)/$ryhl)/0.9/100,0)*100'
+                    String formula = cvsCustomFieldDto.getCfieldValue().replaceAll(
+                            "(?:\\$cnlowsalesprice|\\$rblowsalesprice|\\$omlowsalesprice|\\$baseprice|\\$mll|\\$ryhl|\\$myhl)",
+                            "1");
+
+                    String sql = "select " + formula + " as w from dual";
+                    data = customDao.customSelect(sql);
+                }catch(Exception ex){
+                    return -3;
+                }
+            }
+        }
+
         csvTemplateInfoDao.updCsvTempInfoById(indto);
 
-        //删除模板下所有自定义字段
-        csvCustomFieldDao.delCustomFieldBycsvtempId(indto.getCsvtempId());
+        //获取当前模板下所有自定义公式
+        List<CsvCustomFieldDto> oldCsvCfList = new ArrayList<>();
+        oldCsvCfList = csvCustomFieldDao.findCsvCustomField(indto.getCsvtempId());
 
         //批量添加模板自定义字段
         if (indto.getCsvCustomFieldDtoList() !=null) {
-            for (CsvCustomFieldDto cvsCustomFieldDto : indto.getCsvCustomFieldDtoList()) {
-                cvsCustomFieldDto.setCsvtempId(indto.getCsvtempId());
-                csvCustomFieldDao.insertCustomField(cvsCustomFieldDto);
+            for (CsvCustomFieldDto newCvsCustomFieldDto : indto.getCsvCustomFieldDtoList()) {
+                boolean blnHave = false;
+                for (CsvCustomFieldDto oldCsvCf :oldCsvCfList ) {
+                    //如果存在则更新
+                    if (oldCsvCf.getCsvCustomFieldId() == newCvsCustomFieldDto.getCsvCustomFieldId()) {
+                        csvCustomFieldDao.updCustomFieldById(newCvsCustomFieldDto);
+                        blnHave = true;
+                        break;
+                    }
+                }
+
+                //不存在则新增
+                if (!blnHave){
+                    newCvsCustomFieldDto.setCsvtempId(indto.getCsvtempId());
+                    csvCustomFieldDao.insertCustomField(newCvsCustomFieldDto);
+                }
             }
         }
         return 0;
@@ -81,6 +117,25 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
 
         if (temponly > 0) {
             return  -1;
+        }
+
+        //判断模板自定义字段公式是否有效
+        if (indto.getCsvCustomFieldDtoList() !=null) {
+            for (CsvCustomFieldDto cvsCustomFieldDto : indto.getCsvCustomFieldDtoList()) {
+                Boolean ret = false;
+                try{
+                    List<LinkedHashMap<String,Object>> data = new LinkedList<>();
+                    //'round((($cnlowsalesprice+50)/$ryhl)/0.9/100,0)*100'
+                    String formula = cvsCustomFieldDto.getCfieldValue().replaceAll(
+                            "(?:\\$cnlowsalesprice|\\$rblowsalesprice|\\$omlowsalesprice|\\$baseprice|\\$mll|\\$ryhl|\\$myhl)",
+                            "1");
+
+                    String sql = "select " + formula + " as w from dual";
+                    data = customDao.customSelect(sql);
+                }catch(Exception ex){
+                    return -3;
+                }
+            }
         }
 
         //添加模板

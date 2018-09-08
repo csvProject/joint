@@ -44,6 +44,9 @@ public class CsvTemplateInfoController {
         if (ret == -2){
             return ResultUtil.success(ret,"模板名称已存在",null) ;
         }
+        if (ret == -3){
+            return ResultUtil.success(ret,"自定义公式无效",null) ;
+        }
         return ResultUtil.success(null);
     }
 
@@ -62,6 +65,9 @@ public class CsvTemplateInfoController {
         int ret = csvTemplateInfoService.updCsvTempInfoById(indto);
         if (ret == -2){
             return ResultUtil.success(ret,"模板名称已存在",null) ;
+        }
+        if (ret == -3){
+            return ResultUtil.success(ret,"自定义公式无效",null) ;
         }
         return ResultUtil.success(null) ;
     }
