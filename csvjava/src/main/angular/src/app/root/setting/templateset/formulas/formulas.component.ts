@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CsvCustomField} from "../../../../../entity/tempData";
-import {CurrencyUtil} from "../../../../../util/currencyUtil";
+import {CsvCustomField} from "../../../../entity/tempData";
+import {CurrencyUtil} from "../../../../util/currencyUtil";
 
 @Component({
   selector: 'app-formulas',
