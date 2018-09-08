@@ -73,10 +73,16 @@ public class CsvTemplateDetailServiceImpl implements CsvTemplateDetailService {
         List<SysCodeDto> l =  sysCodeDao.findSysCodeByTypeCd(1);
         List<CsvCustomFieldDto> l2 =  csvCustomFieldDao.findCsvCustomField(indto.getCsvtempId());
         for (SysCodeDto s: l) {
+            if(s.getSysCd() == null){
+                s.setSysCd("");
+            }
             map.put(s.getSysNm(),s.getSysCd());
         }
         for (CsvCustomFieldDto s: l2) {
-            map.put(s.getCfieldNm(),s.getCfieldNm());
+            if(s.getCfieldValue() == null){
+                s.setCfieldValue("");
+            }
+            map.put(s.getCfieldNm(),"t_csvcustom_field."+s.getCsvCustomFieldId());
         }
         String csvSql="";
         csvSql = StringFormatForSQL.fieldListFormat(indto.getCsvTemplateDetailDtoList(),map);

@@ -13,6 +13,9 @@ public class ProductGroupOutDto extends BaseDto{
     //供应商ID
     private  int sId;
 
+    //模板ID
+    private  int csvtempId;
+
     //选中商品LIST
     List<ProductDto> productDtoList;
 
@@ -87,5 +90,13 @@ public class ProductGroupOutDto extends BaseDto{
 
     public void setHeadShow(Integer headShow) {
         this.headShow = headShow;
+    }
+
+    public int getCsvtempId() {
+        return csvtempId;
+    }
+
+    public void setCsvtempId(int csvtempId) {
+        this.csvtempId = csvtempId;
     }
 }

@@ -12,12 +12,8 @@ import static com.csv.java.config.ConstantConfig.FIELD_MATCHING_TABLE;
 public class StringFormatForSQL{
     public static String ruleFormat(String key,String value, Map<String,String> arguments){
         String formatedStr = value;
-        /*for (String key : arguments.keySet()) {
-            formatedStr = formatedStr.replaceAll("\\$\\{:"+key+"\\}", arguments.get(key).toString());
-        }*/
         for (String k : arguments.keySet()) {
-//            formatedStr = formatedStr.replaceAll("\\$\\{:"+k+"\\}","%`~"+ arguments.get(k).toString()+"^%`~");
-            String regex = "<span class=\"stop-propagation\" contenteditable=\"false\">"+k+"</span><span editDiv=\"true\" inVal=\""+arguments.get(k).toString()+"\"";
+            String regex = "<span class=\"stop-propagation\" contenteditable=\"false\" inval=\""+arguments.get(k).toString()+"\">"+k;
             formatedStr =
                     formatedStr.replaceAll(
                             regex,
@@ -57,6 +53,7 @@ public class StringFormatForSQL{
                 ret = ret + StringFormatForSQL.ruleFormat(k,v, arguments) + " \n";
             }
         }
+
         ret = ret + "FROM \n  " + FIELD_MATCHING_TABLE;
         ret = ret.replaceAll("@'","'")
                 .replaceAll("&lt;","<")
@@ -90,5 +87,18 @@ public class StringFormatForSQL{
         newstr = newstr.replaceAll(" ", "");
         return newstr;
     }
+
+    public static String csvExportSql(String sql,Map<String,String> arguments){
+        for (String k : arguments.keySet()) {
+            String regex = k;
+            String v = arguments.get(k);
+            if(v == null){
+                v = "";
+            }
+            sql =sql.replaceAll(regex,v.toString());
+        }
+        return sql;
+    }
+
 }
 

@@ -2,6 +2,7 @@ package com.csv.java.service.impl;
 
 import com.csv.java.common.tool.CSVUtils;
 import com.csv.java.common.tool.DeleteFileUtil;
+import com.csv.java.dao.CsvCustomFieldDao;
 import com.csv.java.dao.CsvTemplateRuleDao;
 import com.csv.java.dao.CustomDao;
 import com.csv.java.dao.ProductDao;
@@ -15,6 +16,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.*;
 
+import static com.csv.java.common.tool.StringFormatForSQL.csvExportSql;
 import static com.csv.java.common.tool.UUIDUtil.getUUID;
 import static com.csv.java.common.tool.ZipFileUtils.zipPath;
 import static com.csv.java.config.ConstantConfig.CSV_FILE_TEMP_PATH;
@@ -32,6 +34,9 @@ public class ProductCsvServiceImpl implements ProductCsvService {
 
     @Resource
     private CustomDao customDao;
+
+    @Resource
+    private CsvCustomFieldDao csvCustomFieldDao;
 
     public List<ProductDto> findProductByCondi(ProductCondiInDto indto){
         return productDao.findProductByCondi(indto);
@@ -111,6 +116,7 @@ public class ProductCsvServiceImpl implements ProductCsvService {
                 productGroupOutDto.setCsvSql("");
             }else{
                 productGroupOutDto.setCsvSql(csvTemplateRuleDto.getCsvSql());
+                productGroupOutDto.setCsvtempId(csvTemplateRuleDto.getCsvtempId());
                 productGroupOutDto.setHeadShow(csvTemplateRuleDto.getHeadShow());
             }
         }
@@ -135,7 +141,18 @@ public class ProductCsvServiceImpl implements ProductCsvService {
                 }else{
                     ids = ids + "";
                 }
-                String sql = productGroupOutDto.getCsvSql()+" \n WHERE id in("+ids+")";
+                String sql = "";
+                /* 自定义公式 */
+                Map map = new HashMap();
+                List<CsvCustomFieldDto> tempList =  csvCustomFieldDao.findCsvCustomField(productGroupOutDto.getCsvtempId());
+                for (CsvCustomFieldDto s: tempList) {
+                    if(s.getCfieldValue() == null){
+                        s.setCfieldValue("");
+                    }
+                    map.put(s.getCfieldValue(),"t_csvcustom_field."+s.getCsvCustomFieldId());
+                }
+                sql = csvExportSql(productGroupOutDto.getCsvSql(),map);
+                sql = sql +"  \n WHERE id in("+ids+")";
                 List<LinkedHashMap<String,Object>> csvData = customDao.customSelect(sql);
                 if(csvData != null && csvData.size()>0){
                     //csv文件头
