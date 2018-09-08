@@ -29,4 +29,11 @@ export class CsvexportService {
       }
     });
   }
+
+  getPtypeList(): Observable<BaseApiResponseModel> {
+    return this.http.post<BaseApiResponseModel>(url.ptypefindbycondi,{});
+  }
+  getSupplierList(): Observable<BaseApiResponseModel> {
+    return this.http.post<BaseApiResponseModel>(url.supplierfindbycondi,{});
+  }
 }

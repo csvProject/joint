@@ -22,6 +22,9 @@ export class CsvexportComponent implements OnInit {
   ngOnInit(): void {
     this.findProductList({});
     this.loadingBaseSelectData();
+
+    this.getSupplierList();
+    this.getPtypeList();
   }
 
   private findProductList(body){
@@ -127,7 +130,6 @@ export class CsvexportComponent implements OnInit {
     this.platSearchChange$.next(pfnm);
   }
   provinceAllChange(type,id): void {
-
     if(type == 0){
       if(id == this.platformId){
 
@@ -141,6 +143,64 @@ export class CsvexportComponent implements OnInit {
     }
   }
 
+  skuSrc = '';
+  sNm='';
+  ptypeNm='';
+
+  ptypeId='';
+  sId='';
+
+  sjDatetime = [];
+  sjStartDt;
+  sjEndDt;
+
+
+  pTypeList = [];
+  supplierList = [];
+  selectAllChange(type,id){
+    if(type == 0){
+      this.ptypeId = id
+    }else {
+      this.sId = id
+    }
+  }
+  onChangeDate(ev){
+    this.sjStartDt = this.util.dateFormat(ev[0],'yyyy-MM-dd');
+    this.sjEndDt = this.util.dateFormat(ev[1],'yyyy-MM-dd');
+  }
+  selectData(){
+    let body = {
+      sjStartDt:this.sjStartDt,
+      sjEndDt:this.sjEndDt,
+      sku:this.skuSrc,
+      ptypeId:this.ptypeId,
+      sId:this.sId
+    };
+    this.findProductList(body);
+  }
+
+  private getPtypeList() {
+    this.service.getPtypeList().subscribe(result=>{
+      if(result.code == 0){
+        this.pTypeList = result.data == null?[]:result.data;
+      }else if(result.code == 1){
+
+      }else{
+        console.error(result.msg);
+      }
+    })
+  }
+  private getSupplierList() {
+    this.service.getSupplierList().subscribe(result=>{
+      if(result.code == 0){
+        this.supplierList = result.data == null?[]:result.data;
+      }else if(result.code == 1){
+
+      }else{
+        console.error(result.msg);
+      }
+    })
+  }
 
   private getPfaccountInfo(pfid): void {
     this.service.getPfaccountInfo(pfid).subscribe(result=>{

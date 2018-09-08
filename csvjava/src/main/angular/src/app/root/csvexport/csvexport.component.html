@@ -1,48 +1,97 @@
-<div style="margin-bottom: 16px;">
-  <button nz-button [disabled]="disabledButton"
-          [nzType]="'primary'"
-          (click)="operateData()">
-    导出
-  </button>
-  <span style="margin-left: 8px;" *ngIf="checkedNumber">已选择 {{checkedNumber}} 件商品</span>
+<div nz-col  nzSpan="24" style="margin-bottom: 16px">
+  <span class="span_label_title" style="padding-left:0">sku或产品名称</span>
+  <input class="select_input2" nz-input [(ngModel)]="skuSrc">
+  <span class="span_label_title">产品类别</span>
+  <nz-select class="select_input2"
+             [(ngModel)]="ptypeNm"
+             nzShowSearch nzAllowClear (ngModelChange)="selectAllChange(0,$event)">
+    <nz-option *ngFor="let c of pTypeList"
+               nz-tooltip nzTitle="{{c.typeName}}"
+               [nzValue]="c.ptypeId" [nzLabel]="c.typeName"></nz-option>
+  </nz-select>
+  <span class="span_label_title">供应商</span>
+  <nz-select class="select_input2"
+             [(ngModel)]="sNm"
+             nzShowSearch nzAllowClear (ngModelChange)="selectAllChange(1,$event)">
+    <nz-option *ngFor="let c of supplierList"
+               nz-tooltip nzTitle="{{c.supplierTitle}}"
+               [nzValue]="c.sId" [nzLabel]="c.supplierTitle"></nz-option>
+  </nz-select>
+
 </div>
-<div >
-  <nz-table
-    #rowSelectionTable
-    nzBordered
-    [nzData]="dataSet"
-    [nzScroll]="{x:'1778px'}"
-    [nzTitle]="'商品列表'"
-    (nzCurrentPageDataChange)="currentPageDataChange($event)"
-    (nzPageIndexChange)="refreshStatus()"
-    (nzPageSizeChange)="refreshStatus()">
-    <thead>
-    <tr>
-      <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
-      <th>图片</th>
-      <th>sku</th>
-      <th>供应商</th>
-      <th>产品类别</th>
-      <th>成本价格</th>
-      <th>重量</th>
-      <th>中文品名</th>
-      <th>中文套组</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let data of rowSelectionTable.data">
-      <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus($event)"></td>
-      <td>{{data.picUrl}}</td>
-      <td>{{data.sku}}</td>
-      <td>{{data.sNm}}</td>
-      <td>{{data.ptypeNm }}</td>
-      <td>{{data.basePrice }}</td>
-      <td>{{data.weight }}</td>
-      <td>{{data.pmCn }}</td>
-      <td>{{data.setCn }}</td>
-    </tr>
-    </tbody>
-  </nz-table>
+<div nz-col  nzSpan="24" style="margin-bottom: 16px">
+  <span class="span_label_title" style="padding-left:0">上架时间</span>
+  <nz-range-picker
+    [nzFormat]="'yyyy/MM/dd'"
+    [(ngModel)]="sjDatetime"
+    (ngModelChange)="onChangeDate($event)"
+  ></nz-range-picker>
+</div>
+
+
+<div  nz-col  nzSpan="24">
+  <div style="margin-bottom: 16px;">
+    <button nz-button style=" margin-right: 20px;"
+            [nzType]="'primary'"
+            (click)="selectData()">
+      搜索
+    </button>
+    <button nz-button [disabled]="disabledButton"
+            [nzType]="'primary'"
+            (click)="operateData()">
+      导出
+    </button>
+    <span style="margin-left: 8px;" *ngIf="checkedNumber">已选择 {{checkedNumber}} 件商品</span>
+  </div>
+  <div >
+    <nz-table
+      #rowSelectionTable
+      nzBordered
+      [nzData]="dataSet"
+      [nzScroll]="{x:'1778px'}"
+      [nzTitle]="'商品列表'"
+      (nzCurrentPageDataChange)="currentPageDataChange($event)"
+      (nzPageIndexChange)="refreshStatus()"
+      (nzPageSizeChange)="refreshStatus()">
+      <thead>
+      <tr>
+        <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+        <th>图片</th>
+        <th nzWidth="110px">sku</th>
+        <th nzWidth="180px">供应商</th>
+        <th nzWidth="100px">产品类别</th>
+        <th nzWidth="100px">成本价格</th>
+        <th nzWidth="100px">重量</th>
+        <th>中文品名</th>
+        <th>中文套组</th>
+        <th nzWidth="120px">上架时间</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus($event)"></td>
+        <td>
+          <a [href]="'http://www.ewidertest.com/img_upload/'+data.picUrl"
+             [rel]="'http://www.ewidertest.com/img_upload/'+data.picUrl"
+             class="preview" target="_blank" title="">
+            <img style="max-width: 100px;" [src]="'http://www.ewidertest.com/img_upload/'+data.picUrl"
+                 border="0">
+          </a>
+          <!--{{data.picUrl}}-->
+
+        </td>
+        <td>{{data.sku}}</td>
+        <td>{{data.sNm}}</td>
+        <td>{{data.ptypeNm }}</td>
+        <td>{{data.basePrice }}</td>
+        <td>{{data.weight }}</td>
+        <td>{{data.pmCn }}</td>
+        <td>{{data.setCn }}</td>
+        <td>{{data.sjDatetime }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
 </div>
 
 

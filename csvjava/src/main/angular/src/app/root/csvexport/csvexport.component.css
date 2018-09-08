@@ -1,7 +1,10 @@
 .span_label_title{
-  padding: 5px 14px 5px 10px;
+  padding: 5px 14px 5px 28px;
   width: 45px;
 }
 .select_input{
   width: 150px
+}
+.select_input2{
+  width: 250px
 }
