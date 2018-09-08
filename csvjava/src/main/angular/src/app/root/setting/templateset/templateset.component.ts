@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
 import { TemplatesetService } from "../../../http/templateset.service";
 import {CsvCustomField, CsvTempBat, CsvTemplateInfo} from "../../../entity/tempData";
 import { BehaviorSubject, Observable } from "rxjs/index";
@@ -208,15 +208,16 @@ export class TemplatesetComponent implements OnInit {
         this.templateInfo = Object.assign({},dataInfo);
         this.templateInfo.csvtempId = null;
       }
+      console.log("sendTemplateInfoData");
       this.service.sendTemplateInfoData(this.templateInfo);
     }else if(type == 1){
-      // this.templateInfo = dataInfo;
       this.templateInfo = Object.assign({},dataInfo);
+      console.log("sendTemplateInfoData");
       this.service.sendTemplateInfoData(this.templateInfo);
     }else if(type == 2){
       this.templateInfo = Object.assign({},dataInfo);
-      this.getFieldListCsvtempid(dataInfo.csvtempId);
-      this.service.sendTemplateInfoDataForField(dataInfo);
+      this.getFieldListCsvtempid(this.templateInfo.csvtempId);
+      this.service.sendTemplateInfoDataForField(this.templateInfo);
     }
   }
 

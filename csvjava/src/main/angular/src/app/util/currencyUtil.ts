@@ -252,4 +252,57 @@ export class CurrencyUtil {
       }
     }
   }
+
+
+  //字符串转2进制
+  strToHexCharCode(str) {
+    var result = [];
+    var list = str.split("");
+    for(var i=0;i<list.length;i++){
+      if(i != 0){
+        result.push(" ");
+      }
+      var item = list[i];
+      var binaryStr = item.charCodeAt().toString(2);
+      result.push(binaryStr);
+    }
+    return result.join("") + " ";
+  }
+
+  strToBinary(str){
+    var result = [];
+    var list = str.split("");
+    for(var i=0;i<list.length;i++){
+      if(i != 0){
+        result.push(" ");
+      }
+      var item = list[i];
+      var binaryStr = item.charCodeAt().toString(2);
+      result.push(binaryStr);
+    }
+    return result.join("");
+  }
+
+  // 16进制转字符串
+  hexCharCodeToStr(hexCharCodeStr) {
+    var trimedStr = hexCharCodeStr.trim();
+    var rawStr =
+      trimedStr.substr(0,2).toLowerCase() === "0x"
+        ?
+        trimedStr.substr(2)
+        :
+        trimedStr;
+    var len = rawStr.length;
+    if(len % 2 !== 0) {
+      alert("Illegal Format ASCII Code!");
+      return "";
+    }
+    var curCharCode;
+    var resultStr = [];
+    for(var i = 0; i < len;i = i + 2) {
+      curCharCode = parseInt(rawStr.substr(i, 2), 16); // ASCII Code Value
+      resultStr.push(String.fromCharCode(curCharCode));
+    }
+    return resultStr.join("");
+  }
 }

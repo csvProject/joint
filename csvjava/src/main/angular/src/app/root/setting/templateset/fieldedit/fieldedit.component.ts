@@ -27,7 +27,17 @@ export class FieldEditComponent implements OnInit {
   }
 
   deleteField(data,i){
-    this.fieldList.splice(i,1);
+    let arr = [];
+    this.fieldList.forEach((v,i)=>{
+      let a = Object.assign({},v);
+      arr.push(a)
+    });
+    arr.splice(i,1);
+    console.log(arr);
+    this.fieldList = arr;
+  }
+  objToArr(arr:any[]){
+    return new Array(arr);
   }
 
   isVisible = false;
@@ -123,7 +133,7 @@ export class FieldEditComponent implements OnInit {
     if(type == 0){
       htmlSrc = `<span class="stop-propagation" contenteditable="false">${item.sysNm}</span><span editDiv="true" inVal="`+item.sysCd+`" ></span>`;
     }else if(type == 1){
-      htmlSrc = `<span class="stop-propagation" contenteditable="false">${item.cfieldNm}</span><span editDiv="true" inVal="`+item.cfieldValue+`"></span>`;
+      htmlSrc = `<span class="stop-propagation" contenteditable="false">${item.cfieldNm}</span><span editDiv="true" inVal="`+this.util.strToHexCharCode(item.cfieldValue)+`"></span>`;
     }
     if(this.lastRange.startContainer==undefined ){
       return ;

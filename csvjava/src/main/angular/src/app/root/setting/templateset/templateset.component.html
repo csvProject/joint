@@ -114,7 +114,8 @@
           [nzBodyStyle]="modalType==2?{
           'height':'460px',
            'overflow-y':'auto'}:{}"
-  [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalType==2?fieldeid:tempedit" [nzFooter]="modalFooter"
+  [(nzVisible)]="isVisible" [nzTitle]="modalTitle"
+          [nzContent]="tempedit" [nzFooter]="modalFooter"
           (nzOnCancel)="handleCancel()">
   <ng-template #modalTitle>
     <h3 style="margin-bottom:0">{{titleList[modalType]}}</h3>
@@ -127,10 +128,12 @@
 
 
 
-<ng-template #tempedit>
-  <app-tempedit [platList]="platList"
-                [pTypeList]="pTypeList" [supplierList]="supplierList"></app-tempedit>
-</ng-template>
-<ng-template #fieldeid style=" height: 480px;overflow-y: auto;">
-  <app-fieldedit [fieldList]="fieldList" [csvtempId]="templateInfo.csvtempId"></app-fieldedit>
+<ng-template #tempedit >
+  <div [hidden]="modalType==2">
+    <app-tempedit [platList]="platList"
+                  [pTypeList]="pTypeList" [supplierList]="supplierList"></app-tempedit>
+  </div>
+  <div [hidden]="modalType!=2" style=" height: 480px;overflow-y: auto;">
+    <app-fieldedit [fieldList]="fieldList" [csvtempId]="templateInfo.csvtempId"></app-fieldedit>
+  </div>
 </ng-template>

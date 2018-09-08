@@ -25,14 +25,14 @@ export class TempeditComponent implements OnInit {
 
   ngOnInit() {
     this.service.getTemplateInfoData().subscribe(data=>{
-      this.tempData = data;
-      console.log(this.tempData);
-      this.platformNm = this.tempData.platformNm;
-      this.pfaccountNm = this.tempData.pfaccountNm;
-      this.ptypeNm = this.tempData.ptypeNm;
-      this.sNm = this.tempData.sNm;
-      this.getCsvCustomField(this.tempData.csvtempId==null?(-1):this.tempData.csvtempId);
-    })
+        this.tempData =data;
+        console.log(this.tempData);
+        this.platformNm = this.tempData.platformNm;
+        this.pfaccountNm = this.tempData.pfaccountNm;
+        this.ptypeNm = this.tempData.ptypeNm;
+        this.sNm = this.tempData.sNm;
+        this.getCsvCustomField(this.tempData.csvtempId==null?(-1):this.tempData.csvtempId);
+       })
   }
 
 
