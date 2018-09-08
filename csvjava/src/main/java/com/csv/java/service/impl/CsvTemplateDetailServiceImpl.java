@@ -82,7 +82,7 @@ public class CsvTemplateDetailServiceImpl implements CsvTemplateDetailService {
             if(s.getCfieldValue() == null){
                 s.setCfieldValue("");
             }
-            map.put(s.getCfieldNm(),"t_csvcustom_field."+s.getCsvCustomFieldId());
+            map.put(s.getCfieldNm(),"t_csvcustom_field."+s.getCsvCustomFieldId()+"t_csvcustom_field");
         }
         String csvSql="";
         csvSql = StringFormatForSQL.fieldListFormat(indto.getCsvTemplateDetailDtoList(),map);

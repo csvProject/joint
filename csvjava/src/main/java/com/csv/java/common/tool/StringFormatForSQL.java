@@ -97,7 +97,11 @@ public class StringFormatForSQL{
             }
             sql =sql.replaceAll(regex,v.toString());
         }
-        return sql;
+        sql = sql.replaceAll("#","");
+        String ret = "";
+        String reg = "t_csvcustom_field[^t_csvcustom_field]*t_csvcustom_field";
+        ret = sql.replaceAll(reg, "''");
+        return ret;
     }
 
 }

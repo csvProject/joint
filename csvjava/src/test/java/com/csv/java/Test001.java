@@ -14,8 +14,8 @@ public class Test001 {
     public void test1() {
         String pattern = "你好:${:name}+${:age}-${:name}";
         Map<String,String> arguments = new HashMap<String, String>(){{
-            put("name", "name");
-            put("age",  "age");
+            put("name", "name1");
+            put("age",  "age1");
         }};
 
         String msg = StringFormatForSQL.ruleFormat("",pattern, arguments);
@@ -55,15 +55,12 @@ public class Test001 {
             String sqlSrc = StringFormatForSQL.ruleFormat(k,v, arguments);
             System.out.println(sqlSrc);
         }*/
-       sql = StringFormatForSQL.fieldListFormat(list,arguments);
+//       sql = StringFormatForSQL.fieldListFormat(list,arguments);
         System.out.println(sql);
     }
 
     public static void main(String[] args) {
-        String str = "\"{\"TaxCode\":\"91321000071018179B\",\"RetMsg\":\"1011-XXX开启成功[0000,]\"," +
-                "\"MachineNo\":\"0\",\"TaxClock\":\"2016-11-02 11:21:30\",\"RetCode\":\"1011\"," +
-                "\"IsInvEmpty\":\"0\",\"CorpName\":\"XXXX分公司\",\"CheckCode\":\"661XXX4681\"," +
-                "\"IsLockReached\":\"0\",\"InvLimit\":\"0.0\",\"IsRepReached\":\"0\"}\"";
+        String str = "<span></span><span class=\"stop-propagation\" contenteditable=\"false\">中文属性1</span><span editdiv=\"true\" inval=\"att_cn_1\"></span>";
         if (str.startsWith("\"")) {
             str = str.substring(1);
         }

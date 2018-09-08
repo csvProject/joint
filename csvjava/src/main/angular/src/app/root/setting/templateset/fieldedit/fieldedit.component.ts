@@ -11,6 +11,7 @@ import {TemplatesetService} from "../../../../http/templateset.service";
 export class FieldEditComponent implements OnInit {
   constructor(private util:CurrencyUtil,private service:TemplatesetService){}
 
+
   @Input() fieldList = [];
 
   @Input() csvtempId;
@@ -131,9 +132,9 @@ export class FieldEditComponent implements OnInit {
     ${ this.getEleData } = "${JSON.stringify(item.sysCd).replace(/"/g,'\'')}"
    (click)="stopEvent($event)">${item.sysNm}</span>`;  */
     if(type == 0){
-      htmlSrc = `<span class="stop-propagation" contenteditable="false">${item.sysNm}</span><span editDiv="true" inVal="`+item.sysCd+`" ></span>`;
+      htmlSrc = `<span class="stop-propagation" contenteditable="false" inval="`+item.sysCd+`">${item.sysNm}</span><span editDiv="true"></span>`;
     }else if(type == 1){
-      htmlSrc = `<span class="stop-propagation" contenteditable="false">${item.cfieldNm}</span><span editDiv="true" inVal="`+this.util.strToHexCharCode(item.cfieldValue)+`"></span>`;
+      htmlSrc = `<span class="stop-propagation" contenteditable="false" inval="`+"t_csvcustom_field."+item.csvCustomFieldId+"t_csvcustom_field"+`">${item.cfieldNm}</span><span editDiv="true"></span>`;
     }
     if(this.lastRange.startContainer==undefined ){
       return ;

@@ -149,7 +149,7 @@ public class ProductCsvServiceImpl implements ProductCsvService {
                     if(s.getCfieldValue() == null){
                         s.setCfieldValue("");
                     }
-                    map.put(s.getCfieldValue(),"t_csvcustom_field."+s.getCsvCustomFieldId());
+                    map.put("t_csvcustom_field."+s.getCsvCustomFieldId()+"t_csvcustom_field",s.getCfieldValue());
                 }
                 sql = csvExportSql(productGroupOutDto.getCsvSql(),map);
                 sql = sql +"  \n WHERE id in("+ids+")";
@@ -174,7 +174,7 @@ public class ProductCsvServiceImpl implements ProductCsvService {
                     }
                     String fileName = getUUID()+ ".CSV";
                     productGroupOutDto.setCsvFileName(fileName);
-                    if("0".equals(productGroupOutDto.getHeadShow())){
+                    if(0 == productGroupOutDto.getHeadShow()){
                         CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);
                     }else{
                         CSVUtils.createCSV(null,dataList,fileName,CSV_FILE_TEMP_PATH);

@@ -73,7 +73,7 @@ public class JavaApplicationTests {
             put("pm_cn", "pm_cn");
         }};
 
-        sql = StringFormatForSQL.fieldListFormat(list,arguments);
+//        sql = StringFormatForSQL.fieldListFormat(list,arguments);
         System.out.println(sql);
         List<LinkedHashMap<String,Object>> list2 = customDao.customSelect(sql);
         for (Map<String,Object> a: list2
@@ -84,5 +84,7 @@ public class JavaApplicationTests {
             System.out.println();
         }
     }
+
+
 
 }
