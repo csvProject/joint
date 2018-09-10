@@ -9,7 +9,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "develop": "ng build --output-path=../../../target/classes/static --base-href=/ --watch",
-    "release": "ng build --output-path=../resources/static --base-href=/ --prod --aot"
+    "release": "ng build --output-path=../resources/static --base-href=/ --prod --aot",
+    "prod": "ng build --output-path=../resources/static --base-href=/ --prod --aot --configuration=costProd"
   },
   "private": true,
   "dependencies": {
