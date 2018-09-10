@@ -6,7 +6,7 @@
     <groupId>com.csv</groupId>
     <artifactId>java</artifactId>
     <version>0.0.1</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>java</name>
     <description>Demo project for Spring Boot</description>
@@ -73,14 +73,38 @@
 
     </dependencies>
 
+    <!-- 运行环境 -->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profileActive>dev</profileActive>
+            </properties>
+            <!-- 默认选择运行环境 -->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profileActive>prod</profileActive>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
     <build>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
+                    <include>application-${profileActive}.properties</include>
                     <include>application.properties</include>
                     <!-- myBatis Mapper文件 注:缺少dao层扫描会报错-->
                     <include>mapping/*.xml</include>
+
                     <include>static/*</include>
                     <include>templates/*</include>
                 </includes>
@@ -124,7 +148,7 @@
                 </configuration>
             </plugin>
         </plugins>
-
+        <finalName>ewidercsv</finalName>
     </build>
 
 

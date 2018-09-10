@@ -1,4 +1,4 @@
 export const environment = {
-  uri:'http://192.168.99.17:8080/',
+  uri:window.location.origin+'/',
   production: true
 };
