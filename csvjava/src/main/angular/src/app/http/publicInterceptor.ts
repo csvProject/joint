@@ -4,7 +4,8 @@ import {
 } from '@angular/common/http';
 
 import { mergeMap, catchError } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import {
+   environment } from '../../environments/environment';
 import { Observable, of } from 'rxjs/index';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
