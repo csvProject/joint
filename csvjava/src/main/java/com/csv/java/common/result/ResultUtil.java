@@ -12,21 +12,29 @@ import java.io.IOException;
 public class ResultUtil {
 
     public static Result success(Object object) {
-        Result result = new Result();
-        result.setCode(ResultEnum.SUCCESS.getCode());
-        result.setMsg(ResultEnum.SUCCESS.getMsg());
-        result.setData(object);
-        return result;
+
+        return success(ResultEnum.SUCCESS.getCode(),ResultEnum.SUCCESS.getMsg(),object,0);
+    }
+
+    public static Result success(Object object,int dataCount) {
+
+        return success(ResultEnum.SUCCESS.getCode(),ResultEnum.SUCCESS.getMsg(),object,dataCount);
     }
 
     public static Result success() {
-        return success(null);
+        return success(ResultEnum.SUCCESS.getCode(),ResultEnum.SUCCESS.getMsg(),null,0);
     }
     public static Result success(Integer code, String msg ,Object object) {
+
+        return success(ResultEnum.SUCCESS.getCode(),ResultEnum.SUCCESS.getMsg(),object,0);
+    }
+
+    public static Result success(Integer code, String msg ,Object object,int dataCount) {
         Result result = new Result();
         result.setCode(code);
         result.setMsg(msg);
         result.setData(object);
+        result.setCount(dataCount);
         return result;
     }
 

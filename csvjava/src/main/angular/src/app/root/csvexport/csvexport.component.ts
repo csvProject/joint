@@ -19,8 +19,28 @@ export class CsvexportComponent implements OnInit {
   private get msg(){
     return this.util.msg;
   }
+
+  //保存选中记录
+  productListSel = [];
+
+  //页面page设定
+  pageset={pageSize:10,pageIndex:1,count:1};
+
+  //查询条件
+  condi = {
+    sjStartDt:"",
+    sjEndDt:"",
+    sku:"",
+    ptypeId:"0",
+    sId:"0",
+    pageSize:this.pageset.pageSize,
+    pageStart:1
+  };
+
+  loading = true;
+
   ngOnInit(): void {
-    this.findProductList({});
+    this.selectData();
     this.loadingBaseSelectData();
 
     this.getSupplierList();
@@ -28,11 +48,26 @@ export class CsvexportComponent implements OnInit {
   }
 
   private findProductList(body){
+    this.loading = true;
     this.service.findProductList(body).subscribe(result=>{
+      this.loading = false;
       console.log(result);
       if(result.code == 0){
+        this.pageset.count = result.count;
         this.dataSet = result.data==null?[]:result.data;
-        this.dataSet.forEach(data => data.checked = false)
+        //this.dataSet.forEach(data => data.checked = false)
+
+        //取得数据与选中集合比对，有则checkbox勾选
+        for(let i = 0,len=this.dataSet.length; i < len; i++) {
+          this.dataSet[i].checked = false;
+          for(let j = 0,len=this.productListSel.length; j < len; j++) {
+            if (this.dataSet[i].productId == this.productListSel[j].productId){
+              this.dataSet[i].checked = true;
+              break;
+            }
+          }
+        }
+
       }else {
         console.error(result.msg);
       }
@@ -52,10 +87,43 @@ export class CsvexportComponent implements OnInit {
   refreshStatus(): void {
     const allChecked = this.displayData.every(value => value.checked === true);
     const allUnChecked = this.displayData.every(value => !value.checked);
+    //all checkbox控制
     this.allChecked = allChecked;
     this.indeterminate = (!allChecked) && (!allUnChecked);
-    this.disabledButton = !this.dataSet.some(value => value.checked);
-    this.checkedNumber = this.dataSet.filter(value => value.checked).length;
+    //this.disabledButton = !this.dataSet.some(value => value.checked);
+    //this.checkedNumber = this.dataSet.filter(value => value.checked).length;
+
+    //遍历获取选中记录放入选中集合中,没选中的从选中集合中去除
+    for(let i = 0,len=this.displayData.length; i < len; i++) {
+      let hav = false;
+
+      if (this.displayData[i].checked){
+        //如果是选中的
+        for(let j = 0,len=this.productListSel.length; j < len; j++) {
+          if (this.displayData[i].productId == this.productListSel[j].productId){
+            hav = true;
+            break;
+          }
+        }
+
+        if (!hav){
+          this.productListSel.push(Object.assign({}, this.displayData[i]));
+        }
+      }else{
+        //如果是未选中的
+        for(let j = 0,len=this.productListSel.length; j < len; j++) {
+          if (this.displayData[i].productId == this.productListSel[j].productId){
+            this.productListSel.splice(j,1);
+            break;
+          }
+        }
+      }
+    }
+
+    //导出按钮显隐控制
+    this.disabledButton = this.productListSel.length ==0 ? true:false;
+    //导出选中件数
+    this.checkedNumber = this.productListSel.length;
   }
 
   checkAll(value: boolean): void {
@@ -64,7 +132,6 @@ export class CsvexportComponent implements OnInit {
   }
 
   operateData(): void {
-    // this.checkedData = this.getCheckedData();
     this.isVisible = true;
   }
 
@@ -95,7 +162,8 @@ export class CsvexportComponent implements OnInit {
     let body = {
       platformId:this.platformId,//平台ID
       pfaccountId:this.pfaccountId,//平台账号ID
-      productDtoList:this.dataSet.filter(value => value.checked)
+      //productDtoList:this.dataSet.filter(value => value.checked)
+      productDtoList:this.productListSel
 
     };
     if(this.checkTemplateInfo(body)){
@@ -168,15 +236,36 @@ export class CsvexportComponent implements OnInit {
     this.sjStartDt = this.util.dateFormat(ev[0],'yyyy-MM-dd');
     this.sjEndDt = this.util.dateFormat(ev[1],'yyyy-MM-dd');
   }
+
   selectData(){
-    let body = {
-      sjStartDt:this.sjStartDt,
-      sjEndDt:this.sjEndDt,
-      sku:this.skuSrc,
-      ptypeId:this.ptypeId,
-      sId:this.sId
-    };
-    this.findProductList(body);
+
+    //初始化变量
+    this.allChecked = false;
+    this.disabledButton = true;
+    this.checkedNumber = 0;
+    this.displayData= [];
+    this.dataSet = [];
+    this.indeterminate = false;
+    this.productListSel = [];
+
+    this.pageset.pageIndex = 1;
+
+    this.condi.sjStartDt = this.sjStartDt;
+    this.condi.sjEndDt = this.sjEndDt;
+    this.condi.sku = this.skuSrc;
+    this.condi.ptypeId = this.ptypeId;
+    this.condi.sId = this.sId;
+    this.condi.pageStart = 1;
+    this.findProductList(this.condi);
+
+
+  }
+
+  pageIndexChange(){
+    this.condi.pageStart = this.pageset.pageIndex;
+    this.findProductList(this.condi);
+
+    this.refreshStatus();
   }
 
   private getPtypeList() {
@@ -225,8 +314,8 @@ export class CsvexportComponent implements OnInit {
         if(this.noCsvTempList.length !=  0){
           this.createBasicNotification(template);
         }
-        this.dataSet.forEach(value => value.checked = false);
-        this.refreshStatus();
+        //this.dataSet.forEach(value => value.checked = false);
+        //this.refreshStatus();
       }else {
         this.msg.error(result.msg);
       }

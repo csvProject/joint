@@ -2,6 +2,7 @@ package com.csv.java.service.impl;
 
 import com.csv.java.common.tool.CSVUtils;
 import com.csv.java.common.tool.DeleteFileUtil;
+import com.csv.java.common.tool.ServiceUtil;
 import com.csv.java.dao.CsvCustomFieldDao;
 import com.csv.java.dao.CsvTemplateRuleDao;
 import com.csv.java.dao.CustomDao;
@@ -38,8 +39,21 @@ public class ProductCsvServiceImpl implements ProductCsvService {
     @Resource
     private CsvCustomFieldDao csvCustomFieldDao;
 
-    public List<ProductDto> findProductByCondi(ProductCondiInDto indto){
-        return productDao.findProductByCondi(indto);
+    public Map<String, Object> findProductByCondi(ProductCondiInDto indto){
+        List<ProductDto> productDtoList = new ArrayList();
+        Object hList = new ArrayList<Object>();
+
+        productDtoList = productDao.findProductByCondi(indto);
+
+        ServiceUtil serviceUtil = new ServiceUtil();
+        int psize = indto.getPageSize();
+        int pstart = indto.getPageStart();
+        //根据条件查询所有数据条数和当页所有数据
+        hList = serviceUtil.findListPage(productDtoList,psize,pstart);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("list", hList);
+        map.put("count", productDtoList.size());
+        return map;
     }
 
     public ProductDto findProductById(int productId){

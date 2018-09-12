@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { url } from './index';
 import { environment } from '../../environments/environment';
+import {Subject} from "rxjs/index";
 
 @Injectable()
 export class PublicService {
@@ -20,4 +21,12 @@ export class PublicService {
     URL.revokeObjectURL(getUrl);
   }
 
+  productListSel:any = [];
+
+  setProductListSel(data){
+    this.productListSel = data
+  }
+  getProductListSel():any[]{
+    return this.productListSel;
+  }
 }

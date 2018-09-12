@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ProductCsvService {
-    List<ProductDto> findProductByCondi(ProductCondiInDto indto);
+    Map<String, Object> findProductByCondi(ProductCondiInDto indto);
 
     ProductDto findProductById(int productId);
 

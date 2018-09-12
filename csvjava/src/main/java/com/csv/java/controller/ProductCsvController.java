@@ -3,11 +3,15 @@ package com.csv.java.controller;
 import com.csv.java.common.result.Result;
 import com.csv.java.common.result.ResultUtil;
 import com.csv.java.entity.CsvExportInDto;
-import com.csv.java.entity.ProductBatDto;
 import com.csv.java.entity.ProductCondiInDto;
+import com.csv.java.entity.ProductDto;
 import com.csv.java.service.ProductCsvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/productcsv")
@@ -19,7 +23,11 @@ public class ProductCsvController {
     @RequestMapping(value = "/findListbycondi", method = RequestMethod.POST)
     public Result findProductByCondi(@RequestBody ProductCondiInDto indto) {
         System.out.println("开始查询...");
-        return ResultUtil.success(productCsvService.findProductByCondi(indto)) ;
+        Map<String, Object> map = new HashMap<String, Object>();
+        map = productCsvService.findProductByCondi(indto);
+        List<ProductDto> list = (List<ProductDto>)map.get("list");
+        int count = (int)map.get("count");
+        return ResultUtil.success(list,count) ;
     }
 
     //根据主key条件查询

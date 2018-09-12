@@ -13,6 +13,12 @@ public class BaseDto implements Serializable,Cloneable {
     //更新人
     private int updtBy;
 
+    //开始页数
+    private int pageStart;
+
+    //每页行数
+    private int pageSize;
+
     public int getLogId() {
         return logId;
     }
@@ -29,10 +35,28 @@ public class BaseDto implements Serializable,Cloneable {
         this.updtBy = updtBy;
     }
 
+    public int getPageStart() {
+        return pageStart;
+    }
+
+    public void setPageStart(int pageStart) {
+        this.pageStart = pageStart;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
+
+
 
     @Override
     public Object clone() {

@@ -16,6 +16,9 @@ public class Result<T> {
    /** 具体的内容. */
    private T data;
 
+   /** 数据表list总数. */
+   private int count;
+
    public Integer getCode() {
        return code;
    }
@@ -39,4 +42,12 @@ public class Result<T> {
    public void setData(T data) {
        this.data = data;
    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }
