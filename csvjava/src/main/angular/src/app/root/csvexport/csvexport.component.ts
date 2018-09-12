@@ -47,7 +47,7 @@ export class CsvexportComponent implements OnInit {
     this.getPtypeList();
   }
 
-  private findProductList(body){
+  private findProductList(body,doit){
     this.loading = true;
     this.service.findProductList(body).subscribe(result=>{
       this.loading = false;
@@ -68,6 +68,8 @@ export class CsvexportComponent implements OnInit {
           }
         }
 
+        doit();
+
       }else {
         console.error(result.msg);
       }
@@ -85,8 +87,8 @@ export class CsvexportComponent implements OnInit {
   }
 
   refreshStatus(): void {
-    const allChecked = this.displayData.every(value => value.checked === true);
-    const allUnChecked = this.displayData.every(value => !value.checked);
+    const allChecked = this.dataSet.every(value => value.checked === true);
+    const allUnChecked = this.dataSet.every(value => !value.checked);
     //all checkbox控制
     this.allChecked = allChecked;
     this.indeterminate = (!allChecked) && (!allUnChecked);
@@ -256,16 +258,16 @@ export class CsvexportComponent implements OnInit {
     this.condi.ptypeId = this.ptypeId;
     this.condi.sId = this.sId;
     this.condi.pageStart = 1;
-    this.findProductList(this.condi);
+    this.findProductList(this.condi,function(){ return });
 
 
   }
 
   pageIndexChange(){
     this.condi.pageStart = this.pageset.pageIndex;
-    this.findProductList(this.condi);
+    this.findProductList(this.condi,()=>{this.refreshStatus()});
 
-    this.refreshStatus();
+
   }
 
   private getPtypeList() {
