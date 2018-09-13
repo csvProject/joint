@@ -30,7 +30,7 @@ export class CsvexportComponent implements OnInit {
   condi = {
     sjStartDt:"",
     sjEndDt:"",
-    sku:"",
+    skuName:"",
     ptypeId:"0",
     sId:"0",
     pageSize:this.pageset.pageSize,
@@ -254,7 +254,7 @@ export class CsvexportComponent implements OnInit {
 
     this.condi.sjStartDt = this.sjStartDt;
     this.condi.sjEndDt = this.sjEndDt;
-    this.condi.sku = this.skuSrc;
+    this.condi.skuName = this.skuSrc;
     this.condi.ptypeId = this.ptypeId;
     this.condi.sId = this.sId;
     this.condi.pageStart = 1;
