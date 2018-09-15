@@ -162,8 +162,10 @@ export class CsvexportComponent implements OnInit {
   }
   handleOk(template){
     let body = {
-      platformId:this.platformId,//平台ID
-      pfaccountId:this.pfaccountId,//平台账号ID
+      platformId:this.platformNm.platformId,//平台ID
+      platformNm:this.platformNm.platformNm,
+      pfaccountId:this.pfaccountNm.pfaccountId,//平台账号ID
+      pfaccountNm:this.pfaccountNm.pfaccountNm,
       //productDtoList:this.dataSet.filter(value => value.checked)
       productDtoList:this.productListSel
 
@@ -188,7 +190,7 @@ export class CsvexportComponent implements OnInit {
 
   platformId;
   pfaccountNm;
-  platformNm = '';
+  platformNm:any = {};
   pfaccountId;
   platIsLoading = false;
 
@@ -199,17 +201,17 @@ export class CsvexportComponent implements OnInit {
     pfnm= pfnm==null?'':pfnm;
     this.platSearchChange$.next(pfnm);
   }
-  provinceAllChange(type,id): void {
+  provinceAllChange(type,obj): void {
     if(type == 0){
-      if(id == this.platformId){
+      if(obj.platformId == this.platformId){
 
       }else{
         this.pfaccountNm = '';
-        this.getPfaccountInfo(id);
+        this.getPfaccountInfo(obj.platformId);
       }
-      this.platformId = id;
+      this.platformId = obj.platformId;
     }else if(type == 1){
-      this.pfaccountId = id;
+      this.pfaccountId = obj.pfaccountId;
     }
   }
 

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.csv.java.common.tool.StringFormatForSQL.csvExportSql;
@@ -137,7 +138,12 @@ public class ProductCsvServiceImpl implements ProductCsvService {
 
         List noCsvTempList = new ArrayList(); //没有模板商品集合
 
-        String zipFileName = getUUID();
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS"); //精确到毫秒
+        String suffix = fmt.format(new Date());
+
+        //String zipFileName = getUUID();
+        String tmpfiename = csvExportInDto.getPlatformNm()+"_"+csvExportInDto.getPfaccountNm()+"_"+suffix;
+        String zipFileName = tmpfiename;
         List<String> filePaths = new ArrayList<String>();
 
         //生成csv
@@ -186,7 +192,8 @@ public class ProductCsvServiceImpl implements ProductCsvService {
                         }
                         dataList.add(rowList);
                     }
-                    String fileName = getUUID()+ ".CSV";
+                    //String fileName = getUUID()+ ".CSV";
+                    String fileName = tmpfiename+ ".CSV";
                     productGroupOutDto.setCsvFileName(fileName);
                     if(0 == productGroupOutDto.getHeadShow()){
                         CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);
@@ -197,9 +204,12 @@ public class ProductCsvServiceImpl implements ProductCsvService {
                 }
             }
         }
-        String noCsvTempFileName = noCsvFile(zipFileName,noCsvTempList);
+        String noCsvTempFileName = "";
         try {
-            filePaths.add(CSV_FILE_TEMP_PATH + noCsvTempFileName);
+            if (noCsvTempList != null && noCsvTempList.size()>0) {
+                noCsvTempFileName = noCsvFile(zipFileName, noCsvTempList);
+                filePaths.add(CSV_FILE_TEMP_PATH + noCsvTempFileName);
+            }
             zipPath(CSV_ZIP_FILE_TEMP_PATH + zipFileName+".zip",filePaths);
             FileDto zipFile= new FileDto();
             zipFile.setCreateTime(new Date().getTime());
@@ -226,29 +236,20 @@ public class ProductCsvServiceImpl implements ProductCsvService {
     private String noCsvFile(String zipFileName,List<ProductDto> noCsvTempList){
         //csv文件头
         List<Object> heads = new ArrayList<>();
-        heads.add("图片");
-        heads.add("sku");
-        heads.add("供应商");
-        heads.add("产品类别");
-        heads.add("成本价格");
-        heads.add("重量");
-        heads.add("中文品名");
-        heads.add("中文套组");
+        heads.add("原因:未定义模板");
         //数据
         List<List<Object>> dataList = new ArrayList<List<Object>>();
+        String sku = "sku:";
         for(ProductDto productDtos: noCsvTempList ){
-            List<Object> rowList = new ArrayList<>();
-            rowList.add(productDtos.getPicUrl()==null?"":(productDtos.getPicUrl()+"").replaceAll("\"","\\\\"));
-            rowList.add(productDtos.getSku()==null?"":(productDtos.getSku()+"").replaceAll("\"","\\\\"));
-            rowList.add(productDtos.getsNm()==null?"":(productDtos.getsNm()+"").replaceAll("\"","\\\\"));
-            rowList.add(productDtos.getPtypeNm()==null?"":(productDtos.getPtypeNm()+"").replaceAll("\"","\\\\"));
-            rowList.add(productDtos.getBasePrice());
-            rowList.add(productDtos.getWeight());
-            rowList.add(productDtos.getPmCn()==null?"":(productDtos.getPmCn()+"").replaceAll("\"","\\\\"));
-            rowList.add(productDtos.getSetCn()==null?"":(productDtos.getSetCn()+"").replaceAll("\"","\\\\"));
-            dataList.add(rowList);
+            String tmp = productDtos.getSku()==null?"":(productDtos.getSku()+"").replaceAll("\"","\\\\");
+            sku = sku  + tmp + ",";
+
         }
-        String fileName = "失败商品_"+zipFileName+".CSV";
+        List<Object> rowList = new ArrayList<>();
+        rowList.add(sku);
+        dataList.add(rowList);
+
+        String fileName = "ERROR_"+zipFileName+".CSV";
         CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);
         return  fileName;
     }

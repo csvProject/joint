@@ -8,7 +8,10 @@ public class CsvExportInDto extends BaseDto{
     private int platformId;
     //平台账号ID
     private int pfaccountId;
-
+    //平台名称
+    private String platformNm;
+    //平台账号名称
+    private String pfaccountNm;
     //选中商品LIST
     List<ProductDto> productDtoList;
 
@@ -34,5 +37,21 @@ public class CsvExportInDto extends BaseDto{
 
     public void setProductDtoList(List<ProductDto> productDtoList) {
         this.productDtoList = productDtoList;
+    }
+
+    public String getPfaccountNm() {
+        return pfaccountNm;
+    }
+
+    public void setPfaccountNm(String pfaccountNm) {
+        this.pfaccountNm = pfaccountNm;
+    }
+
+    public String getPlatformNm() {
+        return platformNm;
+    }
+
+    public void setPlatformNm(String platformNm) {
+        this.platformNm = platformNm;
     }
 }

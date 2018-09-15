@@ -132,7 +132,7 @@
                    [nzServerSearch]="true" (nzOnSearch)="onSearchByPlat($event)">
           <ng-container *ngFor="let o of platList">
             <nz-option *ngIf="!platIsLoading"
-                       [nzValue]="o.platformId" [nzLabel]="o.platformNm"></nz-option>
+                       [nzValue]="o" [nzLabel]="o.platformNm"></nz-option>
           </ng-container>
           <nz-option *ngIf="platIsLoading" nzDisabled nzCustomContent>
             <i class="anticon anticon-loading anticon-spin loading-icon"></i> Loading Data...
@@ -144,7 +144,7 @@
                    (ngModelChange)="provinceAllChange(1,$event)"
                    [nzDisabled]="platformNm == null || platformNm == ''">
           <nz-option *ngFor="let c of accountList"
-                     [nzValue]="c.pfaccountId" [nzLabel]="c.pfaccountNm"></nz-option>
+                     [nzValue]="c" [nzLabel]="c.pfaccountNm"></nz-option>
         </nz-select>
       </div>
     </div>
