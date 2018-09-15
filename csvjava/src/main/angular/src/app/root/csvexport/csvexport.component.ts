@@ -37,10 +37,10 @@ export class CsvexportComponent implements OnInit {
     pageStart:1
   };
 
-  loading = true;
+  loading = false;
 
   ngOnInit(): void {
-    this.selectData();
+
     this.loadingBaseSelectData();
 
     this.getSupplierList();

@@ -29,7 +29,7 @@
             AND DATE_FORMAT(t.sj_datetime,'%Y-%m-%d') &gt;=DATE_FORMAT(#{sjStartDt,jdbcType=VARCHAR},'%Y-%m-%d')
         </if>
         <if test="sjEndDt !=null and sjEndDt !=''">
-            AND DATE_FORMAT(t.sj_datetime,'%Y-%m-%d') &lt;=DATE_FORMAT(#{sjStartDt,jdbcType=VARCHAR},'%Y-%m-%d')
+            AND DATE_FORMAT(t.sj_datetime,'%Y-%m-%d') &lt;=DATE_FORMAT(#{sjEndDt,jdbcType=VARCHAR},'%Y-%m-%d')
         </if>
     </sql>
 
