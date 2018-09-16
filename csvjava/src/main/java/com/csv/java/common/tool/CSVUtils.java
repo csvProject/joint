@@ -28,7 +28,7 @@ public class CSVUtils {
             }
             csvFile.createNewFile();
             // GB2312使正确读取分隔符","
-            csvWtriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile), "GB2312"), 1024);
+            csvWtriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile), "GBK"), 1024);
 
             if(headList != null){
                 int num = headList.size() / 2;

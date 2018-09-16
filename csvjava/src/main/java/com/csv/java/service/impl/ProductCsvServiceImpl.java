@@ -188,7 +188,13 @@ public class ProductCsvServiceImpl implements ProductCsvService {
                     for(Map<String,Object> row: csvData ){
                         List<Object> rowList = new ArrayList<>();
                         for (String k : row.keySet()) {
-                            rowList.add(row.get(k)==null?"":(row.get(k)+"").replaceAll("\"","\\\\"));
+                            //rowList.add(row.get(k)==null?"":(row.get(k)+"").replaceAll("\"","\\\\"));
+                            String value = row.get(k)==null?"":row.get(k)+"";
+
+                            if(value.contains("\"")){ //若发现有双引号  需要将字符串中的一个双引号替换为两个 并且需前后加双引号
+                                value = value.replaceAll("\"","\"\"");
+                            }
+                            rowList.add(value);
                         }
                         dataList.add(rowList);
                     }
@@ -241,7 +247,7 @@ public class ProductCsvServiceImpl implements ProductCsvService {
         List<List<Object>> dataList = new ArrayList<List<Object>>();
         String sku = "sku:";
         for(ProductDto productDtos: noCsvTempList ){
-            String tmp = productDtos.getSku()==null?"":(productDtos.getSku()+"").replaceAll("\"","\\\\");
+            String tmp = productDtos.getSku()==null?"":productDtos.getSku()+"";
             sku = sku  + tmp + ",";
 
         }
