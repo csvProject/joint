@@ -13,8 +13,8 @@
       分类
     </div>
     <div nz-col nzSpan="20">
-      <div *ngIf="tempData.csvtempId ==null ;else DisabledTemp" ></div>
-      <div *ngIf="tempData.csvtempId !=null ;else selectTemp" ></div>
+      <div *ngIf="tempData.modalType !=1 ;else DisabledTemp" ></div>
+      <div *ngIf="tempData.modalType ==1 ;else selectTemp" ></div>
     </div>
   </div>
   <div nz-col nzSpan="24">
@@ -85,7 +85,6 @@
     <nz-select class="select_input"
                [(ngModel)]="platformNm" (ngModelChange)="provinceAllChange(0,$event)"
                nzAllowClear nzShowSearch
-               [nzDisabled]="tempData.csvtempId != null"
                [nzServerSearch]="true">
       <ng-container *ngFor="let o of platList">
         <nz-option [nzValue]="o.platformId" [nzLabel]="o.platformNm"></nz-option>
@@ -95,7 +94,7 @@
     <nz-select class="select_input"  nzShowSearch nzAllowClear
                [(ngModel)]="pfaccountNm"
                (ngModelChange)="provinceAllChange(1,$event)"
-               [nzDisabled]="tempData.platformNm == null || tempData.platformNm == ''">
+               [nzDisabled]="tempData.platformId == null || tempData.platformId == 0">
       <nz-option *ngFor="let c of accountList"
                  [nzValue]="c.pfaccountId" [nzLabel]="c.pfaccountNm"></nz-option>
     </nz-select>
@@ -104,7 +103,6 @@
     <span class="span_label_title">产品分类</span>
     <nz-select class="select_input"  nzShowSearch nzAllowClear
                [(ngModel)]="ptypeNm"
-               [nzDisabled]="tempData.csvtempId != null"
                (ngModelChange)="provinceAllChange(2,$event)">
       <nz-option *ngFor="let c of pTypeList"
                  [nzValue]="c.ptypeId" [nzLabel]="c.typeName"></nz-option>
@@ -112,7 +110,6 @@
     <span class="span_label_title">供应商</span>
     <nz-select class="select_input"  nzShowSearch nzAllowClear
                [(ngModel)]="sNm"
-               [nzDisabled]="tempData.csvtempId != null"
                (ngModelChange)="provinceAllChange(3,$event)">
       <nz-option *ngFor="let c of supplierList"
                  [nzValue]="c.sId" [nzLabel]="c.supplierTitle"></nz-option>

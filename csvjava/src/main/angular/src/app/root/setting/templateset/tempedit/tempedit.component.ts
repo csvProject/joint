@@ -13,10 +13,10 @@ export class TempeditComponent implements OnInit {
   @Input() supplierList = [];
   @Input() pTypeList = [];
 
-  platformNm = '';
-  pfaccountNm = '';
-  ptypeNm = '';
-  sNm = '';
+  platformNm ;
+  pfaccountNm ;
+  ptypeNm ;
+  sNm ;
 
   accountList = [];
 
@@ -27,10 +27,18 @@ export class TempeditComponent implements OnInit {
     this.service.getTemplateInfoData().subscribe(data=>{
         this.tempData =data;
         console.log(this.tempData);
-        this.platformNm = this.tempData.platformNm;
-        this.pfaccountNm = this.tempData.pfaccountNm;
-        this.ptypeNm = this.tempData.ptypeNm;
-        this.sNm = this.tempData.sNm;
+        if (this.tempData.modalType == 3){
+          //是复制画面的时候
+          this.platformNm = this.tempData.platformId;
+          this.getPfaccountInfo(this.tempData.platformId,true);
+          this.ptypeNm = this.tempData.ptypeId;
+          this.sNm = this.tempData.sId;
+        }else{
+          this.platformNm = this.tempData.platformNm;
+          this.pfaccountNm = this.tempData.pfaccountNm;
+          this.ptypeNm = this.tempData.ptypeNm;
+          this.sNm = this.tempData.sNm;
+        }
         this.getCsvCustomField(this.tempData.csvtempId==null?(-1):this.tempData.csvtempId);
        })
   }
@@ -38,15 +46,12 @@ export class TempeditComponent implements OnInit {
 
 
   provinceAllChange(type,id): void {
-    this.tempData.platformNm = this.platformNm;
-    this.tempData.pfaccountNm = this.pfaccountNm;
-    this.tempData.ptypeNm = this.ptypeNm;
-    this.tempData.sNm = this.sNm;
+
     if(type == 0){
       if(id == this.tempData.platformId){
 
       }else{
-        this.getPfaccountInfo(id);
+        this.getPfaccountInfo(id,false);
       }
       this.tempData.platformId = id;
     }else if(type == 1){
@@ -58,11 +63,22 @@ export class TempeditComponent implements OnInit {
     }
   }
 
-  private getPfaccountInfo(pfid): void {
+  private getPfaccountInfo(pfid,init): void {
     this.service.getPfaccountInfo(pfid).subscribe(result=>{
       console.log(result);
       if(result.code == 0){
         this.accountList = result.data;
+        this.pfaccountNm = null;
+        if (init) {//如果是初始化，则需要绑定值
+          for (let i = 0; i < this.accountList.length; i++) {
+            if (this.tempData.pfaccountId == this.accountList[i].pfaccountId) {
+              this.pfaccountNm = this.tempData.pfaccountId;
+              break;
+            }
+          }
+        }
+
+
       }else if(result.code == 1){
 
       }else{

@@ -7,6 +7,7 @@ import com.csv.java.entity.PlatformInfoDto;
 import com.csv.java.service.PlatformInforService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class PlatformInfoServiceImpl implements PlatformInforService {
         return platformInfoDao.findPlatformInfoByPfnm(pfNm);
     }
 
+    @Transactional
     public void delPlatformInfoByPfid(int pfId){
         platformInfoDao.delPlatformInfoByPfid(pfId);
         pfaccountDao.delPfaccountByPfid(pfId);

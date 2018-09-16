@@ -72,4 +72,20 @@ public class CsvTemplateInfoController {
         return ResultUtil.success(null) ;
     }
 
+    //
+    @RequestMapping(value = "/copy", method = RequestMethod.POST)
+    public Result copyCsvTempInfo(@RequestBody CsvTemplateInfoDto indto) {
+        System.out.println("开始复制..."+indto.toString());
+        int ret = csvTemplateInfoService.copyCsvTempInfo(indto);
+        if (ret == -1){
+            return ResultUtil.success(ret,"该平台、账号、商品类型、供应商下模板已存在",null) ;
+        }
+        if (ret == -2){
+            return ResultUtil.success(ret,"模板名称已存在",null) ;
+        }
+        if (ret == -3){
+            return ResultUtil.success(ret,"自定义公式无效",null) ;
+        }
+        return ResultUtil.success(null);
+    }
 }

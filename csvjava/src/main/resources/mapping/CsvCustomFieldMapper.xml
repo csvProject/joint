@@ -32,6 +32,11 @@
         t_csvcustom_field  WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
     </delete>
 
+    <delete id="delCustomFieldById" parameterType="java.lang.Integer">
+        delete from
+        t_csvcustom_field  WHERE  CSVCUSTOM_FIELD_ID = #{csvCustomFieldId,jdbcType=INTEGER}
+    </delete>
+
     <insert id="insertCustomField" parameterType="CsvCustomFieldDto">
 
         insert into t_csvcustom_field

@@ -26,7 +26,7 @@ public class ResultUtil {
     }
     public static Result success(Integer code, String msg ,Object object) {
 
-        return success(ResultEnum.SUCCESS.getCode(),ResultEnum.SUCCESS.getMsg(),object,0);
+        return success(code,msg,object,0);
     }
 
     public static Result success(Integer code, String msg ,Object object,int dataCount) {

@@ -64,7 +64,6 @@
     <th>产品分类名称</th>
     <th>供应商名称</th>
     <th>加入时间</th>
-    <th>备注</th>
     <th>
       <div nz-row style="text-align: center">
       <button nz-button nzType="primary" (click)="showModal(0,0)">
@@ -81,21 +80,20 @@
     <td>{{data.ptypeNm}}</td>
     <td>{{data.sNm}}</td>
     <td>{{data.joinDate | DatePipe: "yyyy-MM-dd HH:mm" }}</td>
-    <td>{{data.memo}}</td>
     <td>
       <div nz-row style="text-align: center">
-        <div nz-col nzSpan="12">
+        <div nz-col nzSpan="8">
           <button nz-button nzType="primary" nz-popconfirm
                   nzTitle="确认编辑" nzOkText="编辑字段" nzCancelText="编辑模板"
                   (nzOnConfirm)="confirm(data)" (nzOnCancel)="cancel(data)">
             <i class="anticon anticon-edit" ></i>
           </button>
         </div>
-        <!--<div nz-col nzSpan="8">
-          <button nz-button nzType="primary" (click)="showModal(i,0,data)"><i class="anticon anticon-copy"></i>
+        <div nz-col nzSpan="8">
+          <button nz-button nzType="primary" (click)="showModal(0,3,data)"><i class="anticon anticon-copy"></i>
           </button>
-        </div>-->
-        <div nz-col nzSpan="12">
+        </div>
+        <div nz-col nzSpan="8">
           <button nz-button nzType="primary" nz-popconfirm
                   nzTitle="确认删除" nzOkText="确认" nzCancelText="取消"
                   (nzOnConfirm)="delete(0,data)"

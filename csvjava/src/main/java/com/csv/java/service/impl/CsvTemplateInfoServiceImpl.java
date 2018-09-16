@@ -5,11 +5,14 @@ package com.csv.java.service.impl;
 
 import com.csv.java.dao.*;
 import com.csv.java.entity.CsvCustomFieldDto;
+import com.csv.java.entity.CsvTempBatDto;
 import com.csv.java.entity.CsvTemplateInfoDto;
 import com.csv.java.entity.CsvTemplateRuleDto;
+import com.csv.java.service.CsvTemplateDetailService;
 import com.csv.java.service.CsvTemplateInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -34,6 +37,9 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
     @Autowired
     private CustomDao customDao;
 
+    @Autowired
+    private CsvTemplateDetailService csvTemplateDetailService;
+
     public CsvTemplateInfoDto findCsvTempInfoById(int csvtempId){
         return csvTemplateInfoDao.findCsvTempInfoById(csvtempId);
     }
@@ -42,6 +48,7 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
         return csvTemplateInfoDao.findCsvTempInfoByCondi(indto);
     }
 
+    @Transactional
     public void delCsvTempInfoById(int csvtempId){
         csvTemplateInfoDao.delCsvTempInfoById(csvtempId);
         csvTemplateDetailDao.delCsvTempDetailBycsvtempId(csvtempId);
@@ -49,6 +56,7 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
         csvTemplateRuleDao.delCsvTempRuleBycsvtempId(csvtempId);
     }
 
+    @Transactional
     public int updCsvTempInfoById(CsvTemplateInfoDto indto){
         //判断模板名称是否已存在
         int temponly  = csvTemplateInfoDao.checkCsvTempNmOnly(indto);
@@ -88,6 +96,7 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
                 for (CsvCustomFieldDto oldCsvCf :oldCsvCfList ) {
                     //如果存在则更新
                     if (oldCsvCf.getCsvCustomFieldId() == newCvsCustomFieldDto.getCsvCustomFieldId()) {
+                        newCvsCustomFieldDto.setLogId(indto.getLogId());
                         csvCustomFieldDao.updCustomFieldById(newCvsCustomFieldDto);
                         blnHave = true;
                         break;
@@ -97,13 +106,31 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
                 //不存在则新增
                 if (!blnHave){
                     newCvsCustomFieldDto.setCsvtempId(indto.getCsvtempId());
+                    newCvsCustomFieldDto.setLogId(indto.getLogId());
                     csvCustomFieldDao.insertCustomField(newCvsCustomFieldDto);
                 }
             }
+
+            //如果表记录在画面记录里不存在则删除
+            for (CsvCustomFieldDto oldCsvCf :oldCsvCfList){
+                boolean blnHave = false;
+                for (CsvCustomFieldDto newCvsCustomFieldDto : indto.getCsvCustomFieldDtoList()) {
+                    if (oldCsvCf.getCsvCustomFieldId() == newCvsCustomFieldDto.getCsvCustomFieldId()) {
+                        blnHave = true;
+                        break;
+                    }
+                }
+                //不存在则删除
+                if (!blnHave){
+                    csvCustomFieldDao.delCustomFieldById(oldCsvCf.getCsvCustomFieldId());
+                }
+            }
+
         }
         return 0;
     }
 
+    @Transactional
     public int insertCsvTempInfo(CsvTemplateInfoDto indto){
 
         //判断模板名称是否已存在
@@ -147,6 +174,7 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
             //批量添加模板自定义字段
             for (CsvCustomFieldDto cvsCustomFieldDto : indto.getCsvCustomFieldDtoList()) {
                 cvsCustomFieldDto.setCsvtempId(indto.getCsvtempId());
+                cvsCustomFieldDto.setLogId(indto.getLogId());
                 csvCustomFieldDao.insertCustomField(cvsCustomFieldDto);
             }
         }
@@ -155,7 +183,25 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
         CsvTemplateRuleDto csvTemplateInfoDto = new CsvTemplateRuleDto();
         csvTemplateInfoDto.setCsvSql("");
         csvTemplateInfoDto.setCsvtempId(indto.getCsvtempId());
+        csvTemplateInfoDto.setLogId(indto.getLogId());
         csvTemplateRuleDao.insertCsvTempRule(csvTemplateInfoDto);
+
+        return 0;
+    }
+
+    @Transactional
+    public int copyCsvTempInfo(CsvTemplateInfoDto indto){
+        int ret ;
+        ret = this.insertCsvTempInfo(indto);
+        if (ret <0) {
+            return ret;
+        }
+        CsvTempBatDto csvTempBatDto = new CsvTempBatDto();
+        csvTempBatDto.setCsvtempId(indto.getCsvtempId());
+        csvTempBatDto.setLogId(indto.getLogId());
+        csvTempBatDto.setCsvTemplateDetailDtoList(indto.getCsvTemplateDetailDtoList());
+        csvTemplateDetailService.updCsvTempDetailBat(csvTempBatDto);
+
 
         return 0;
     }

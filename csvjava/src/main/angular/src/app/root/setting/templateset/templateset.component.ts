@@ -141,6 +141,13 @@ export class TemplatesetComponent implements OnInit {
     }));
   }
 
+  private copyTemplateInfo(csvTemplateInfo:CsvTemplateInfo){
+    return this.service.copyTemplateInfo(csvTemplateInfo).pipe(map(data=>{
+      this.getTemplateInfo(this.selectTemplateInfo);
+      return data
+    }));
+  }
+
   private updateTemplateInfo(csvTemplateInfo:CsvTemplateInfo){
     return this.service.updateTemplateInfo(csvTemplateInfo).pipe(map(data=>{
       this.getTemplateInfo(this.selectTemplateInfo);
@@ -183,7 +190,7 @@ export class TemplatesetComponent implements OnInit {
   }
 
 
-  titleList=['新增模板','编辑模板','编辑字段'];
+  titleList=['新增模板','编辑模板','编辑字段','复制模板'];
   modalType;
   isVisible = false;
 
@@ -201,7 +208,7 @@ export class TemplatesetComponent implements OnInit {
   showModal(i,type,dataInfo?): void {
     this.isVisible = true;
     this.modalType = type;
-    if(type == 0){
+    if(type == 0){//新增
       if(dataInfo == undefined){
         this.templateInfo = new CsvTemplateInfo()
       } else{
@@ -209,15 +216,25 @@ export class TemplatesetComponent implements OnInit {
         this.templateInfo.csvtempId = null;
       }
       console.log("sendTemplateInfoData");
+      this.templateInfo.modalType = type;
       this.service.sendTemplateInfoData(this.templateInfo);
-    }else if(type == 1){
+    }else if(type == 1){//编辑基本信息
       this.templateInfo = Object.assign({},dataInfo);
       console.log("sendTemplateInfoData");
+      this.templateInfo.modalType = type;
       this.service.sendTemplateInfoData(this.templateInfo);
-    }else if(type == 2){
+
+    }else if(type == 2){//编辑csv字段画面
       this.templateInfo = Object.assign({},dataInfo);
       this.getFieldListCsvtempid(this.templateInfo.csvtempId);
+      this.templateInfo.modalType = type;
       this.service.sendTemplateInfoDataForField(this.templateInfo);
+
+    }else if(type == 3){//复制
+      this.templateInfo = Object.assign({},dataInfo);
+      this.getFieldListCsvtempid(this.templateInfo.csvtempId);
+      this.templateInfo.modalType = type;
+      this.service.sendTemplateInfoData(this.templateInfo);
     }
   }
 
@@ -285,6 +302,24 @@ export class TemplatesetComponent implements OnInit {
             console.error(result.msg);
           }
         });
+    }else if (modalType == 3){
+      if(!this.checkTemplateInfo(templateInfo)){
+        return;
+      }
+      this.checkCsvCustomField(templateInfo);
+      if(this.findCopyEle(templateInfo)){
+        return
+      }
+      templateInfo.csvTemplateDetailDtoList = this.fieldList;
+      this.copyTemplateInfo(templateInfo) .subscribe(result=>{
+        if(result.code == 0){
+          this.isVisible = false;
+        }else if(result.code == 1){
+
+        }else{
+          console.error(result.msg);
+        }
+      });
     }
   }
 

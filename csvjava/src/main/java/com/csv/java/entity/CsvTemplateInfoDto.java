@@ -62,6 +62,9 @@ public class CsvTemplateInfoDto extends BaseDto{
     //模板自定义字段LIST
     private List<CsvCustomFieldDto> csvCustomFieldDtoList;
 
+    //模板字段LIST
+    private List<CsvTemplateDetailDto> csvTemplateDetailDtoList;
+
     public int getCsvtempId() {
         return csvtempId;
     }
@@ -212,5 +215,13 @@ public class CsvTemplateInfoDto extends BaseDto{
 
     public void setCsvCustomFieldDtoList(List<CsvCustomFieldDto> csvCustomFieldDtoList) {
         this.csvCustomFieldDtoList = csvCustomFieldDtoList;
+    }
+
+    public List<CsvTemplateDetailDto> getCsvTemplateDetailDtoList() {
+        return csvTemplateDetailDtoList;
+    }
+
+    public void setCsvTemplateDetailDtoList(List<CsvTemplateDetailDto> csvTemplateDetailDtoList) {
+        this.csvTemplateDetailDtoList = csvTemplateDetailDtoList;
     }
 }

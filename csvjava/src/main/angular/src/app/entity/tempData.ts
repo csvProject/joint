@@ -36,7 +36,12 @@ export class CsvTemplateInfo {
   //供应商名称
   sNm:string;
 
+  //模态框类型
+  modalType:number;
+
   csvCustomFieldDtoList:any;
+
+  csvTemplateDetailDtoList:any;
 
   constructor(){
     this.isUse = 0;

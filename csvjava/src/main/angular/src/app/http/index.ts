@@ -29,6 +29,7 @@ export const url = {
   tempinsert:'csvtempinfo/insert', //插入模板
   tempupdate:'csvtempinfo/updatebyid', //插入模板
   tempdelbyid:'csvtempinfo/delbyid', //删除摸版
+  tempcopy:'csvtempinfo/copy', //复制模板
 
   ptypefindbycondi:'ptype/findbycondi', //产品分类一览
   supplierfindbycondi:'supplier/findbycondi', //供应商一览

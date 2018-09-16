@@ -35,12 +35,12 @@ public class CsvCustomFieldServiceImpl implements CsvCustomFieldService {
         if (indto.getCsvCustomFieldDtoList() !=null) {
             for (CsvCustomFieldDto cvsCustomFieldDto : indto.getCsvCustomFieldDtoList()) {
                 cvsCustomFieldDto.setCsvtempId(indto.getCsvtempId());
+                cvsCustomFieldDto.setLogId(indto.getLogId());
                 csvCustomFieldDao.insertCustomField(cvsCustomFieldDto);
             }
         }
     }
 
-    @Transactional
     public Boolean verifyFormula(String formula){
         Boolean ret = false;
         try{

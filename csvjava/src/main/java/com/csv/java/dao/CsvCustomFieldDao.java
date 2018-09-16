@@ -21,4 +21,7 @@ public interface CsvCustomFieldDao {
 
     //自定义模板字段添加
     public void insertCustomField(CsvCustomFieldDto indto);
+
+    //删除自定义字段
+    public void delCustomFieldById(int csvCustomFieldId);
 }
