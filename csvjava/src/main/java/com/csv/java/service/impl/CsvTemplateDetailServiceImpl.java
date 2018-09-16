@@ -68,8 +68,7 @@ public class CsvTemplateDetailServiceImpl implements CsvTemplateDetailService {
             }
         }
         //----
-        Object a = "a";
-        int b = (int)a;
+
         //更新模板规则表中的csvsql处理----
         Map map = new HashMap<String,String>();
         List<SysCodeDto> l =  sysCodeDao.findSysCodeByTypeCd(1);
