@@ -63,7 +63,8 @@
         <th nzWidth="100px">图片</th>
         <th nzWidth="240px">商品信息</th>
         <th>中文信息</th>
-        <th nzWidth="120px">上架时间</th>
+        <th>价格</th>
+        <th nzWidth="110px">上架时间</th>
       </tr>
       </thead>
       <tbody>
@@ -83,14 +84,16 @@
           <p>sku: {{data.sku}}</p>
           <p>供应商: {{data.sNm}}</p>
           <p class="u-leaveOut p_width_207" title="{{data.pmCn }}">产品类别: {{data.ptypeNm}}</p>
-          <p>成本价格: {{data.basePrice}}</p>
-          <p>重量: {{data.weight}}</p>
         </td>
         <td>
           <p class="u-leaveOut p_width_464" title="{{data.pmCn }}">中文品名: {{data.pmCn }}</p>
           <p class="u-leaveOut p_width_464" title="{{data.setCn }}">中文套组: {{data.setCn }}</p>
         </td>
-        <td>{{data.sjDatetime }}</td>
+        <td>
+          <p>成本: {{data.basePrice}}</p>
+          <p>重量: {{data.weight}}</p>
+        </td>
+        <td >{{data.sjDatetime }}</td>
       </tr>
       </tbody>
     </nz-table>
