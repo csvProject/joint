@@ -26,7 +26,6 @@
     </div>
   </div>
 </ng-template>
-
 <div nz-row>
   <div nz-col nzSpan="24" class="field_table">
     <div nz-col  nzSpan="24" class="field_table_header">
@@ -39,11 +38,21 @@
       <div nz-col  nzSpan="10">
         字段值
       </div>
-      <div nz-col  nzSpan="4" style="">
+      <div nz-col  nzSpan="2" style="">
         <div>
           <button nz-button nzType="primary" (click)="showModel()">
             <i class="anticon anticon-plus"></i></button>
         </div>
+      </div>
+      <div nz-col  nzSpan="2" style="">
+        <nz-upload
+                   [nzShowUploadList] = "false"
+                   [nzBeforeUpload]="false"
+                   (nzChange)="handleChange($event)">
+          <button nz-button  nzShape="circle">
+            <i class="anticon anticon-upload"></i>
+          </button>
+        </nz-upload>
       </div>
     </div>
     <div nz-col  nzSpan="24" class="field_table_body">

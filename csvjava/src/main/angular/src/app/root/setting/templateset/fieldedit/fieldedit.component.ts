@@ -2,6 +2,7 @@ import {AfterViewInit, Component, Input, OnInit, Output, ViewChild} from '@angul
 import {CsvCustomField, CsvTemplateDetail} from "../../../../entity/tempData";
 import {CurrencyUtil} from "../../../../util/currencyUtil";
 import {TemplatesetService} from "../../../../http/templateset.service";
+import {Subject} from "rxjs/index";
 
 @Component({
   selector: 'app-fieldedit',
@@ -200,5 +201,27 @@ export class FieldEditComponent implements OnInit {
     for (let k of map) {
       formatedStr = formatedStr.replaceAll("\\$\\{:"+k['key']+"\\}","%`~"+ k['value']+"^%`~");
     }
+  }
+
+  handleChange(info: any): void {
+
+    let subject = new Subject<string>();
+    if (info.fileList.length > 0){
+      let readerFile = new FileReader();
+      readerFile.readAsText(info.file,'gb2312');
+      readerFile.onload =(e => {
+        let target :any = info.target;
+        let resultList = target.result;
+        subject.next(resultList)
+      })
+    }
+    subject.asObservable().subscribe(resultList => {
+      this.expToFieldList(resultList);//接收读取文件结束后内容
+      info.target.value = '' //清除文件内容
+    })
+  }
+
+  private expToFieldList(src:string ){
+
   }
 }
