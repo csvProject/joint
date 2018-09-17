@@ -205,7 +205,14 @@ export class FieldEditComponent implements OnInit {
 
   handleChange(info: any): void {
 
-    let subject = new Subject<string>();
+    if (info.fileList.length > 0){
+      this.util.readerFile(info.file.originFileObj).catch(ret=>{
+        console.error(ret)
+      }).then(text=>{
+        console.log(text);
+      });
+    }
+  /*  let subject = new Subject<string>();
     if (info.fileList.length > 0){
       let readerFile = new FileReader();
       readerFile.readAsText(info.file,'gb2312');
@@ -218,7 +225,7 @@ export class FieldEditComponent implements OnInit {
     subject.asObservable().subscribe(resultList => {
       this.expToFieldList(resultList);//接收读取文件结束后内容
       info.target.value = '' //清除文件内容
-    })
+    })*/
   }
 
   private expToFieldList(src:string ){

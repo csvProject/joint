@@ -12,6 +12,8 @@
 }
 .field_table_body{
   padding: 5px;
+  height: 310px;
+  overflow-y: auto;
 }
 
 
@@ -63,7 +65,7 @@
 }
 
 .field_div_height{
-  height: 220px;
+  height: 354px;
   overflow-y: auto;
 }
 
@@ -82,7 +84,7 @@
 .list-height-auto{
   border-radius: 4px;
   overflow: auto;
-  max-height: 200px;
+  max-height: 290px;
 }
 
 
