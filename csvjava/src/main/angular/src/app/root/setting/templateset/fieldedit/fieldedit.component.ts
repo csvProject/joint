@@ -205,11 +205,60 @@ export class FieldEditComponent implements OnInit {
   }
 
   handleChange= (file): boolean => {
-      this.util.readerFile(file).catch(ret=>{
+    if (file.fileList.length > 0){
+      this.util.readerFile(file.file.originFileObj).catch(ret=>{
         console.error(ret)
+        file.fileList = [];
       }).then(text=>{
         console.log(text);
+        let tmpsort =0;
+        if ( this.fieldList.length> 0){
+          tmpsort = this.fieldList[this.fieldList.length - 1].fieldSort ;
+        }
+        if (text == ""){
+          this.util.msg.warning("文件内容为空");
+
+        }else if (text.indexOf(",") == -1){
+          let tempList = [];
+          for(let t of this.fieldList){
+            tempList.push(t);
+          };
+
+          let tmp:CsvTemplateDetail = new CsvTemplateDetail();
+          tmpsort = tmpsort +1;
+          tmp.fieldKey = text;
+          tmp.fieldSort = tmpsort;
+          tmp.fieldValue = "";
+          tmp.fieldNm = "";
+          tempList.push(tmp);
+
+          this.fieldList = tempList;
+          this.sendFieldListData(this.fieldList);
+
+        }else{
+          let tempList = [];
+          for(let t of this.fieldList){
+            tempList.push(t);
+          };
+
+          let csvheads = text.split(",");
+
+          for(let csvh of csvheads){
+            tmpsort = tmpsort +1;
+            let tmp:CsvTemplateDetail = new CsvTemplateDetail();
+            tmp.fieldKey = csvh;
+            tmp.fieldSort = tmpsort;
+            tmp.fieldValue = "";
+            tmp.fieldNm = "";
+
+            tempList.push(tmp);
+          }
+          this.fieldList = tempList;
+          this.sendFieldListData(this.fieldList);
+        }
+        file.fileList = [];
       });
+    }
     return false;
 }
  /* handleChange(info: any): void {

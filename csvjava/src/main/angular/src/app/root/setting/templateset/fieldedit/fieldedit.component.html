@@ -45,7 +45,9 @@
         </div>
       </div>
       <div nz-col  nzSpan="2" style="">
-        <nz-upload [nzBeforeUpload]="handleChange">
+        <nz-upload [nzBeforeUpload]="handleChange"
+                   [nzAccept]="'text/csv,text/plain'"
+                   [nzShowUploadList] = "false">
           <button nz-button  nzShape="circle">
             <i class="anticon anticon-upload"></i>
           </button>
