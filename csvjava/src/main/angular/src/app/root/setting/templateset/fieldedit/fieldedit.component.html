@@ -45,10 +45,7 @@
         </div>
       </div>
       <div nz-col  nzSpan="2" style="">
-        <nz-upload
-                   [nzShowUploadList] = "false"
-                   [nzBeforeUpload]="false"
-                   (nzChange)="handleChange($event)">
+        <nz-upload [nzBeforeUpload]="handleChange">
           <button nz-button  nzShape="circle">
             <i class="anticon anticon-upload"></i>
           </button>

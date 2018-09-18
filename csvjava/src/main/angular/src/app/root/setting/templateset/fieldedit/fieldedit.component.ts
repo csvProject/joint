@@ -3,6 +3,7 @@ import {CsvCustomField, CsvTemplateDetail} from "../../../../entity/tempData";
 import {CurrencyUtil} from "../../../../util/currencyUtil";
 import {TemplatesetService} from "../../../../http/templateset.service";
 import {Subject} from "rxjs/index";
+import {UploadFile} from "ng-zorro-antd";
 
 @Component({
   selector: 'app-fieldedit',
@@ -203,7 +204,15 @@ export class FieldEditComponent implements OnInit {
     }
   }
 
-  handleChange(info: any): void {
+  handleChange= (file): boolean => {
+      this.util.readerFile(file).catch(ret=>{
+        console.error(ret)
+      }).then(text=>{
+        console.log(text);
+      });
+    return false;
+}
+ /* handleChange(info: any): void {
 
     if (info.fileList.length > 0){
       this.util.readerFile(info.file.originFileObj).catch(ret=>{
@@ -212,7 +221,7 @@ export class FieldEditComponent implements OnInit {
         console.log(text);
       });
     }
-  /*  let subject = new Subject<string>();
+  /!*  let subject = new Subject<string>();
     if (info.fileList.length > 0){
       let readerFile = new FileReader();
       readerFile.readAsText(info.file,'gb2312');
@@ -225,8 +234,8 @@ export class FieldEditComponent implements OnInit {
     subject.asObservable().subscribe(resultList => {
       this.expToFieldList(resultList);//接收读取文件结束后内容
       info.target.value = '' //清除文件内容
-    })*/
-  }
+    })*!/
+  }*/
 
   private expToFieldList(src:string ){
 
