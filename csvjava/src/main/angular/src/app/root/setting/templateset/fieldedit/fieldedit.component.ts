@@ -203,12 +203,11 @@ export class FieldEditComponent implements OnInit {
       formatedStr = formatedStr.replaceAll("\\$\\{:"+k['key']+"\\}","%`~"+ k['value']+"^%`~");
     }
   }
-
+  fileList = [];
   handleChange= (file): boolean => {
-    if (file.fileList.length > 0){
-      this.util.readerFile(file.file.originFileObj).catch(ret=>{
+      this.util.readerFile(file).catch(ret=>{
         console.error(ret)
-        file.fileList = [];
+        this.fileList = [];
       }).then(text=>{
         console.log(text);
         let tmpsort =0;
@@ -256,37 +255,9 @@ export class FieldEditComponent implements OnInit {
           this.fieldList = tempList;
           this.sendFieldListData(this.fieldList);
         }
-        file.fileList = [];
+        this.fileList = [];
       });
-    }
-    return false;
+      return false;
 }
- /* handleChange(info: any): void {
 
-    if (info.fileList.length > 0){
-      this.util.readerFile(info.file.originFileObj).catch(ret=>{
-        console.error(ret)
-      }).then(text=>{
-        console.log(text);
-      });
-    }
-  /!*  let subject = new Subject<string>();
-    if (info.fileList.length > 0){
-      let readerFile = new FileReader();
-      readerFile.readAsText(info.file,'gb2312');
-      readerFile.onload =(e => {
-        let target :any = info.target;
-        let resultList = target.result;
-        subject.next(resultList)
-      })
-    }
-    subject.asObservable().subscribe(resultList => {
-      this.expToFieldList(resultList);//接收读取文件结束后内容
-      info.target.value = '' //清除文件内容
-    })*!/
-  }*/
-
-  private expToFieldList(src:string ){
-
-  }
 }

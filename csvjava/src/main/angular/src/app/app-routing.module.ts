@@ -1,19 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FirstComponent } from './root/first/first.component';
-import { SecondComponent } from './root/second/second.component';
 import { ErrorComponent } from './root/error/error.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  {
-    path:'first',
-    component:FirstComponent
-  },
-  {
-    path:'second',
-    component:SecondComponent
-  },
   {
     path:'home',
     loadChildren: './root/public/public.module#PublicModule'
