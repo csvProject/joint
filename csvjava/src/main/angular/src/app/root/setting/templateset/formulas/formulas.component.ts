@@ -36,7 +36,7 @@ export class FormulasComponent implements OnInit {
   }
   deleteData(i,data,template){
     if(data.csvtempId!=null){
-      this.service.isDelCustomField().subscribe(result=>{
+      this.service.isDelCustomField(data).subscribe(result=>{
         if(result.code == 0){
           this.massageList = result.data==null?[]:result.data;
           if(this.massageList.length>0){
@@ -48,6 +48,8 @@ export class FormulasComponent implements OnInit {
           this.massageList = [];
         }
       })
+    }else{
+      this.csvCustomFields.splice(i,1);
     }
   }
 
