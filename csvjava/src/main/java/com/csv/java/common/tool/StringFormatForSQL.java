@@ -20,6 +20,16 @@ public class StringFormatForSQL{
                             "%`~"+ arguments.get(k).toString()+"^%`~");
         }
         formatedStr = stripHtml(formatedStr);
+        if(formatedStr.endsWith("\r\n")){
+            formatedStr = formatedStr.substring(0,formatedStr.length() - 4);
+        }else{
+
+        }
+        if(formatedStr.endsWith("\n")){
+            formatedStr = formatedStr.substring(0,formatedStr.length() - 2);
+        }else{
+
+        }
         String[] strings = formatedStr.split("%`~");
 
         String ret = "CONCAT(";
