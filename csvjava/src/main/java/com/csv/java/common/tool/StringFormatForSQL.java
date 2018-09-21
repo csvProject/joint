@@ -30,6 +30,11 @@ public class StringFormatForSQL{
         }else{
 
         }
+        if(formatedStr.endsWith("\r")){
+            formatedStr = formatedStr.substring(0,formatedStr.length() - 2);
+        }else{
+
+        }
         String[] strings = formatedStr.split("%`~");
 
         String ret = "CONCAT(";
