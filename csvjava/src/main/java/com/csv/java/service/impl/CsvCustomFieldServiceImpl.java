@@ -1,14 +1,17 @@
 package com.csv.java.service.impl;
 
 import com.csv.java.dao.CsvCustomFieldDao;
+import com.csv.java.dao.CsvTemplateDetailDao;
 import com.csv.java.dao.CustomDao;
 import com.csv.java.entity.CsvCustomFieldBatDto;
 import com.csv.java.entity.CsvCustomFieldDto;
+import com.csv.java.entity.CsvTemplateDetailDto;
 import com.csv.java.service.CsvCustomFieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,6 +24,9 @@ public class CsvCustomFieldServiceImpl implements CsvCustomFieldService {
 
     @Autowired
     private CustomDao customDao;
+
+    @Autowired
+    private CsvTemplateDetailDao csvTemplateDetailDao;
 
     public List<CsvCustomFieldDto> findCsvCustomField(int csvtempId){
         return csvCustomFieldDao.findCsvCustomField(csvtempId);
@@ -55,6 +61,22 @@ public class CsvCustomFieldServiceImpl implements CsvCustomFieldService {
             ret = false;
         }
         return ret;
+    }
+
+    public  List<CsvTemplateDetailDto> chkDelCustomField(CsvCustomFieldDto indto){
+        List<CsvTemplateDetailDto> csvTemplateDetailDtoList = new ArrayList<>();
+        List<CsvTemplateDetailDto> ret = new ArrayList<>();
+        csvTemplateDetailDtoList = csvTemplateDetailDao.findCsvTempDetailBycsvtempId(indto.getCsvtempId());
+        for (CsvTemplateDetailDto csvTemplateDetailDto : csvTemplateDetailDtoList) {
+            if (csvTemplateDetailDto.getFieldKey() != null ){
+                if (csvTemplateDetailDto.getFieldValue().indexOf(
+                        "t_csvcustom_field."+indto.getCsvCustomFieldId()+"t_csvcustom_field")>=0){
+                    ret.add(csvTemplateDetailDto);
+                }
+            }
+        }
+        return ret;
+
     }
 
 }

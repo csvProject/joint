@@ -21,7 +21,7 @@
       <input nz-input  [(ngModel)]="temp.cfieldNm" disabled="{{ (temp.csvtempId == null?false:true) }}">
     </div>
     <div nz-col nzSpan="18" title="{{temp.cfieldValue}}">
-      <input nz-input  [(ngModel)]="temp.cfieldValue"  disabled="{{ (temp.csvtempId == null?false:true) }}">
+      <input nz-input  [(ngModel)]="temp.cfieldValue"  >
     </div>
     <div nz-col nzSpan="2">
       <button nz-button nzType="primary" nz-popconfirm
@@ -37,11 +37,11 @@
   <div class="ant-notification-notice-content">
     <div class="ant-notification-notice-with-icon">
       <span class="ant-notification-notice-icon"><i class="anticon anticon-exclamation-circle" style="color:  rgba(255, 193, 7, 0.78);"></i></span>
-      <div class="ant-notification-notice-message">正在使用</div>
+      <div class="ant-notification-notice-message">此自定义公式正在被使用，请下记使用处再删除</div>
       <div class="ant-notification-notice-description">
         <div nz-row>
-          <div nz-col class="u-leaveOut padding_0_3" nzSpan="12" *ngFor="let info of massageList;let i =index"
-               title="{{(info.fieldSort+1) + '-'+info.fieldKey}}">{{(info.fieldSort+1) + '-'+info.fieldKey}}</div>
+          <div nz-col class="u-leaveOut padding_0_3" nzSpan="24" *ngFor="let info of massageList;let i =index"
+               title="序号：{{(info.fieldSort+1) + '-'+info.fieldKey}}">序号：{{(info.fieldSort+1) + '；字段：'+info.fieldKey}}</div>
         </div>
       </div>
     </div>

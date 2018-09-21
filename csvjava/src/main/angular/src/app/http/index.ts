@@ -47,7 +47,7 @@ export const url = {
 
   download:'csvfile/download', //下载
 
-  isdelcustomfield:'/', //删除自定义字段校验接口
+  isdelcustomfield:'csvcustomfield/chkdelcustom', //删除自定义字段校验接口
 };
 
 

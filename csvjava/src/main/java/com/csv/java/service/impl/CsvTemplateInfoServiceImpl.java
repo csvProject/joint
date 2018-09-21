@@ -87,10 +87,6 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
         List<CsvCustomFieldDto> oldCsvCfList = new ArrayList<>();
         oldCsvCfList = csvCustomFieldDao.findCsvCustomField(indto.getCsvtempId());
 
-        //获取当前模板下所有定义字段
-        List<CsvTemplateDetailDto> csvTemplateDetailDtoList = new ArrayList<>();
-        csvTemplateDetailDtoList = csvTemplateDetailDao.findCsvTempDetailBycsvtempId(indto.getCsvtempId());
-
         //批量添加模板自定义公式
         if (indto.getCsvCustomFieldDtoList() !=null) {
             for (CsvCustomFieldDto newCvsCustomFieldDto : indto.getCsvCustomFieldDtoList()) {
@@ -100,13 +96,6 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
                     if (oldCsvCf.getCsvCustomFieldId() == newCvsCustomFieldDto.getCsvCustomFieldId()) {
                         newCvsCustomFieldDto.setLogId(indto.getLogId());
                         csvCustomFieldDao.updCustomFieldById(newCvsCustomFieldDto);
-
-                        //更新模板字段中设有自定义公式的名称
-                        csvTemplateDetailDtoList = StringFormatForSQL.CustomReplacement(csvTemplateDetailDtoList,
-                                oldCsvCf.getCsvCustomFieldId(),
-                                oldCsvCf.getCsvCustomFieldId(),
-                                oldCsvCf.getCfieldNm(),
-                                newCvsCustomFieldDto.getCfieldNm());
                         blnHave = true;
                         break;
                     }
@@ -132,16 +121,11 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
                 //不存在则删除
                 if (!blnHave){
                     csvCustomFieldDao.delCustomFieldById(oldCsvCf.getCsvCustomFieldId());
-                    //模板字段中设有自定义公式的,因为自定义公式被删除，则显示红色
-                    csvTemplateDetailDtoList = StringFormatForSQL.CustomReplacement(csvTemplateDetailDtoList,
-                            oldCsvCf.getCsvCustomFieldId(),
-                            -1,
-                            oldCsvCf.getCfieldNm(),
-                            "");
                 }
             }
 
         }
+
         return 0;
     }
 
@@ -217,8 +201,17 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
 
         csvTempBatDto.setCsvTemplateDetailDtoList(indto.getCsvTemplateDetailDtoList());
         csvTemplateDetailService.updCsvTempDetailBat(csvTempBatDto);
+/*
+        //获取当前模板下所有定义字段
+        List<CsvTemplateDetailDto> csvTemplateDetailDtoList = new ArrayList<>();
+        csvTemplateDetailDtoList = csvTemplateDetailDao.findCsvTempDetailBycsvtempId(indto.getCsvtempId());
 
-
+        //更新模板字段中设有自定义公式的名称
+        csvTemplateDetailDtoList = StringFormatForSQL.CustomReplacement(csvTemplateDetailDtoList,
+                oldCsvCf.getCsvCustomFieldId(),
+                oldCsvCf.getCsvCustomFieldId(),
+                oldCsvCf.getCfieldNm(),
+                newCvsCustomFieldDto.getCfieldNm());*/
         return 0;
     }
 }
