@@ -28,21 +28,22 @@ public class CSVUtils {
             }
             csvFile.createNewFile();
             // GB2312使正确读取分隔符","
-            csvWtriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile), "GBK"), 1024);
+            csvWtriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile), "UNICODELITTLE"), 1024);
 
             if(headList != null){
-                int num = headList.size() / 2;
-                StringBuffer buffer = new StringBuffer();
-                for (int i = 0; i < num; i++) {
-                    buffer.append(" ,");
-                }
+
                 // 写入文件头部
                 writeRow(headList, csvWtriter);
+                csvWtriter.newLine();
             }
 
             // 写入文件内容
-            for (List<Object> row : dataList) {
-                writeRow(row, csvWtriter);
+
+            for (int i =0 ;i<dataList.size();i++) {
+                writeRow(dataList.get(i), csvWtriter);
+                if (i != dataList.size() -1){
+                    csvWtriter.newLine();
+                }
             }
             csvWtriter.flush();
         } catch (Exception e) {
@@ -63,11 +64,17 @@ public class CSVUtils {
      * @throws IOException
      */
     private static void writeRow(List<Object> row, BufferedWriter csvWriter) throws IOException {
-        for (Object data : row) {
+        for (int i =0 ;i<row.size();i++) {
             StringBuffer sb = new StringBuffer();
-            String rowStr = sb.append("\"").append(data).append("\",").toString();
+            String rowStr = "";
+            if (i == row.size() -1){
+                rowStr = sb.append("\"").append(row.get(i).toString()).append("\"").toString();
+            }else{
+                rowStr = sb.append("\"").append(row.get(i).toString()).append("\",").toString();
+            }
+
             csvWriter.write(rowStr);
         }
-        csvWriter.newLine();
+
     }
 }
