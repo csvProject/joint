@@ -17,17 +17,33 @@
     </div>
   </div>
   <div *ngFor="let temp of csvCustomFields;let i=index" nz-col nzSpan="24">
-    <div nz-col nzSpan="4">
-      <input nz-input  [(ngModel)]="temp.cfieldNm">
+    <div nz-col nzSpan="4" title="{{temp.cfieldNm}}">
+      <input nz-input  [(ngModel)]="temp.cfieldNm" disabled="{{ (temp.csvtempId == null?false:true) }}">
     </div>
-    <div nz-col nzSpan="18">
-      <input nz-input  [(ngModel)]="temp.cfieldValue">
+    <div nz-col nzSpan="18" title="{{temp.cfieldValue}}">
+      <input nz-input  [(ngModel)]="temp.cfieldValue"  disabled="{{ (temp.csvtempId == null?false:true) }}">
     </div>
     <div nz-col nzSpan="2">
       <button nz-button nzType="primary" nz-popconfirm
               nzTitle="确认删除" nzOkText="确认" nzCancelText="取消"
-              (nzOnConfirm)="deleteData(i,temp)"
+              (nzOnConfirm)="deleteData(i,temp,tp2)"
       ><i class="anticon anticon-delete"></i></button>
     </div>
   </div>
 </div>
+
+
+<ng-template #tp2>
+  <div class="ant-notification-notice-content">
+    <div class="ant-notification-notice-with-icon">
+      <span class="ant-notification-notice-icon"><i class="anticon anticon-exclamation-circle" style="color:  rgba(255, 193, 7, 0.78);"></i></span>
+      <div class="ant-notification-notice-message">正在使用</div>
+      <div class="ant-notification-notice-description">
+        <div nz-row>
+          <div nz-col class="u-leaveOut padding_0_3" nzSpan="12" *ngFor="let info of massageList;let i =index"
+               title="{{(info.fieldSort+1) + '-'+info.fieldKey}}">{{(info.fieldSort+1) + '-'+info.fieldKey}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -46,6 +46,8 @@ export const url = {
   exportCSV:'productcsv/export', //导出
 
   download:'csvfile/download', //下载
+
+  isdelcustomfield:'/', //删除自定义字段校验接口
 };
 
 

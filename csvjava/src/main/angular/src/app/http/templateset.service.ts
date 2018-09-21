@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseApiResponseModel, url} from './index';
 import {Observable, Subject} from 'rxjs/index';
-import {CsvTempBat, CsvTemplateInfo} from '../entity/tempData';
+import {CsvCustomField, CsvTempBat, CsvTemplateInfo} from '../entity/tempData';
 
 @Injectable()
 export class TemplatesetService {
@@ -107,5 +107,10 @@ export class TemplatesetService {
   }
   getTemplateInfoDataForField(){
     return this.templateInfoForField.asObservable();
+  }
+
+
+  isDelCustomField(csvCustomField?:CsvCustomField): Observable<BaseApiResponseModel> {
+    return this.http.post<BaseApiResponseModel>(url.isdelcustomfield,csvCustomField);
   }
 }
