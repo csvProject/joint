@@ -20,11 +20,11 @@ public class StringFormatForSQL{
                     formatedStr.replaceAll(
                             regex,
                             "%`~"+ arguments.get(k).toString()+"^%`~");
-            String regex1 = "<span class=\"stop-propagation1\" contenteditable=\"false\" inval=\""+arguments.get(k).toString()+"\">"+k;
+            /*String regex1 = "<span class=\"stop-propagation1\" contenteditable=\"false\" inval=\""+arguments.get(k).toString()+"\">"+k;
             formatedStr =
                     formatedStr.replaceAll(
                             regex1,
-                            "%`~"+ arguments.get(k).toString()+"^%`~");
+                            "%`~"+ arguments.get(k).toString()+"^%`~");*/
         }
         formatedStr = stripHtml(formatedStr);
         if(formatedStr.endsWith("\r\n")){
@@ -133,10 +133,10 @@ public class StringFormatForSQL{
             return null;
         }
         ReplacementSrc fields = new ReplacementSrc();
-        fields.setField1("t_csvcustom_field."+oldId+"t_csvcustom_field");
-        fields.setField2("t_csvcustom_field."+newId+"t_csvcustom_field");
-        fields.setField3(oldKey+"");
-        fields.setField4(newKey+"");
+        fields.setField1("t_csvcustom_field."+oldId.toString()+"t_csvcustom_field");
+        fields.setField2("t_csvcustom_field."+newId.toString()+"t_csvcustom_field");
+        fields.setField3(oldKey);
+        fields.setField4(newKey);
         List<ReplacementSrc> fieldList = new ArrayList<>();
         fieldList.add(fields);
         for(CsvTemplateDetailDto csvTemplateDetailDto: dtoList){
@@ -151,7 +151,7 @@ public class StringFormatForSQL{
             src =src.replaceAll(regex0,res0);
             if ("-1".equals(fields.getField2())){
                 String regex1 = "<span class=\"stop-propagation\" contenteditable=\"false\" inval=\""+fields.getField1().toString()+"\">"+fields.getField3().toString();
-                String res1 = "<span class=\"stop-propagation1\" contenteditable=\"false\" inval=\""+fields.getField2().toString()+"\">"+fields.getField4().toString();
+                String res1 = "<span class=\"stop-propagation1\" contenteditable=\"false\" inval=\""+fields.getField2().toString()+"\">"+fields.getField3().toString();
                 src =src.replaceAll(regex1,res1);
             }
         }
