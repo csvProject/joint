@@ -163,7 +163,13 @@ export class FieldEditComponent implements OnInit {
     this.util.insertContent(htmlSrc,this.lastRange);//指定位置插入内容
     // this.util.insertContent(`<span contenteditable="true"></span>`,this.lastRange);//指定位置插入内容
     let insertSpanList:any = document.getElementsByClassName('stop-propagation');
+    let insertSpanList1:any = document.getElementsByClassName('stop-propagation1');
     for(let span of insertSpanList){
+      span.addEventListener('click',function(e){
+        e.stopPropagation();//阻止事件广播
+      },false);
+    }
+    for(let span of insertSpanList1){
       span.addEventListener('click',function(e){
         e.stopPropagation();//阻止事件广播
       },false);

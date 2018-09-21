@@ -3,6 +3,7 @@ package com.csv.java.common.tool;
 import com.csv.java.entity.CsvTemplateDetailDto;
 import com.csv.java.entity.ReplacementSrc;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,11 @@ public class StringFormatForSQL{
             formatedStr =
                     formatedStr.replaceAll(
                             regex,
+                            "%`~"+ arguments.get(k).toString()+"^%`~");
+            String regex1 = "<span class=\"stop-propagation1\" contenteditable=\"false\" inval=\""+arguments.get(k).toString()+"\">"+k;
+            formatedStr =
+                    formatedStr.replaceAll(
+                            regex1,
                             "%`~"+ arguments.get(k).toString()+"^%`~");
         }
         formatedStr = stripHtml(formatedStr);
@@ -124,22 +130,28 @@ public class StringFormatForSQL{
     /* 复制操作 */
     public List<CsvTemplateDetailDto> CustomReplacement(List<CsvTemplateDetailDto> dtoList,int oldId ,int newId,String oldKey,String newKey){
         ReplacementSrc fields = new ReplacementSrc();
-        fields.setField1(oldId+"");
-        fields.setField2(newId+"");
-        fields.setField3(newKey+"");
-        for(CsvTemplateDetailDto csvTemplateDetailDto: dtoList){
 
+        fields.setField1("t_csvcustom_field."+oldId+"t_csvcustom_field");
+        fields.setField2("t_csvcustom_field."+newId+"t_csvcustom_field");
+        fields.setField3(oldKey+"");
+        fields.setField4(newKey+"");
+        List<ReplacementSrc> fieldList = new ArrayList<>();
+        fieldList.add(fields);
+        for(CsvTemplateDetailDto csvTemplateDetailDto: dtoList){
+            csvTemplateDetailDto.setFieldValue(SrcReplacement(csvTemplateDetailDto.getFieldValue(),fieldList));
         }
         return dtoList;
     }
     private String SrcReplacement(String src,List<ReplacementSrc> fieldList){
         for (ReplacementSrc fields : fieldList) {
-            String regex = "<span class=\"stop-propagation\" contenteditable=\"false\" inval=\""+fields.getField1().toString()+"\">"+fields.getField1().toString();
-            src =
-                    src.replaceAll(
-                            regex,
-                            "%`~"+ fields.getField1().toString()+"^%`~");
+            String regex0 = "<span class=\"stop-propagation\" contenteditable=\"false\" inval=\""+fields.getField1().toString()+"\">"+fields.getField3().toString();
+            String res0 = "<span class=\"stop-propagation\" contenteditable=\"false\" inval=\""+fields.getField2().toString()+"\">"+fields.getField4().toString();
+            src =src.replaceAll(regex0,res0);
+            String regex1 = "<span class=\"stop-propagation1\" contenteditable=\"false\" inval=\""+fields.getField1().toString()+"\">"+fields.getField3().toString();
+            String res1 = "<span class=\"stop-propagation1\" contenteditable=\"false\" inval=\""+fields.getField2().toString()+"\">"+fields.getField4().toString();
+            src =src.replaceAll(regex1,res1);
         }
+
         return src;
     }
 }

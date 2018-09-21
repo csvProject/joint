@@ -8,7 +8,13 @@
 }
 
 .stop-propagation{
-  color: red;
+  color: #009fffb0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: inline-block;
+  background-color: #ccc6;
+  padding: 0 5px;
+  margin: 0 3px 3px 3px;
 }
 
 .padding_0_3{
