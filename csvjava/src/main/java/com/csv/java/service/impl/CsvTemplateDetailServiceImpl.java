@@ -70,7 +70,7 @@ public class CsvTemplateDetailServiceImpl implements CsvTemplateDetailService {
         //----
 
         //更新模板规则表中的csvsql处理----
-        Map map = new HashMap<String,String>();
+        /*Map map = new HashMap<String,String>();
         List<SysCodeDto> l =  sysCodeDao.findSysCodeByTypeCd(1);
         List<CsvCustomFieldDto> l2 =  csvCustomFieldDao.findCsvCustomField(indto.getCsvtempId());
         for (SysCodeDto s: l) {
@@ -86,8 +86,10 @@ public class CsvTemplateDetailServiceImpl implements CsvTemplateDetailService {
             map.put(s.getCfieldNm(),"t_csvcustom_field."+s.getCsvCustomFieldId()+"t_csvcustom_field");
         }
         String csvSql="";
-        csvSql = StringFormatForSQL.fieldListFormat(indto.getCsvTemplateDetailDtoList(),map);
-
+        csvSql = StringFormatForSQL.fieldListFormat(indto.getCsvTemplateDetailDtoList(),map);*/
+        String csvSql="";
+        csvSql = StringFormatForSQL.structCsvRuleSql(indto.getCsvtempId(), indto.getCsvTemplateDetailDtoList(),
+                sysCodeDao,csvCustomFieldDao);
         System.out.println(csvSql);
 
         CsvTemplateRuleDto csvTemplateRuleDto =new CsvTemplateRuleDto();

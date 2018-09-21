@@ -1,9 +1,14 @@
 package com.csv.java.common.tool;
 
+import com.csv.java.dao.CsvCustomFieldDao;
+import com.csv.java.dao.SysCodeDao;
+import com.csv.java.entity.CsvCustomFieldDto;
 import com.csv.java.entity.CsvTemplateDetailDto;
 import com.csv.java.entity.ReplacementSrc;
+import com.csv.java.entity.SysCodeDto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,6 +66,28 @@ public class StringFormatForSQL{
             ret = ret + ") AS @'"+key+"@'";
         }
         return ret;
+    }
+
+    public static String structCsvRuleSql(int csvtempId,List<CsvTemplateDetailDto> list,SysCodeDao sysCodeDao,CsvCustomFieldDao csvCustomFieldDao){
+        Map map = new HashMap<String,String>();
+        List<SysCodeDto> l =  sysCodeDao.findSysCodeByTypeCd(1);
+        List<CsvCustomFieldDto> l2 =  csvCustomFieldDao.findCsvCustomField(csvtempId);
+        for (SysCodeDto s: l) {
+            if(s.getSysCd() == null){
+                s.setSysCd("");
+            }
+            map.put(s.getSysNm(),s.getSysCd());
+        }
+        for (CsvCustomFieldDto s: l2) {
+            if(s.getCfieldValue() == null){
+                s.setCfieldValue("");
+            }
+            map.put(s.getCfieldNm(),"t_csvcustom_field."+s.getCsvCustomFieldId()+"t_csvcustom_field");
+        }
+        String csvSql="";
+        csvSql = StringFormatForSQL.fieldListFormat(list,map);
+
+        return csvSql;
     }
 
     public static String fieldListFormat(List<CsvTemplateDetailDto> list,Map<String,String> arguments){
