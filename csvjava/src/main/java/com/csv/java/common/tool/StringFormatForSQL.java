@@ -128,9 +128,11 @@ public class StringFormatForSQL{
 
 
     /* 复制操作 */
-    public List<CsvTemplateDetailDto> CustomReplacement(List<CsvTemplateDetailDto> dtoList,int oldId ,int newId,String oldKey,String newKey){
+    public static List<CsvTemplateDetailDto> CustomReplacement(List<CsvTemplateDetailDto> dtoList,Integer oldId ,Integer newId,String oldKey,String newKey){
+        if(dtoList == null || dtoList.size()<=0){
+            return null;
+        }
         ReplacementSrc fields = new ReplacementSrc();
-
         fields.setField1("t_csvcustom_field."+oldId+"t_csvcustom_field");
         fields.setField2("t_csvcustom_field."+newId+"t_csvcustom_field");
         fields.setField3(oldKey+"");
@@ -142,16 +144,17 @@ public class StringFormatForSQL{
         }
         return dtoList;
     }
-    private String SrcReplacement(String src,List<ReplacementSrc> fieldList){
+    public static String SrcReplacement(String src,List<ReplacementSrc> fieldList){
         for (ReplacementSrc fields : fieldList) {
             String regex0 = "<span class=\"stop-propagation\" contenteditable=\"false\" inval=\""+fields.getField1().toString()+"\">"+fields.getField3().toString();
             String res0 = "<span class=\"stop-propagation\" contenteditable=\"false\" inval=\""+fields.getField2().toString()+"\">"+fields.getField4().toString();
             src =src.replaceAll(regex0,res0);
-            String regex1 = "<span class=\"stop-propagation1\" contenteditable=\"false\" inval=\""+fields.getField1().toString()+"\">"+fields.getField3().toString();
-            String res1 = "<span class=\"stop-propagation1\" contenteditable=\"false\" inval=\""+fields.getField2().toString()+"\">"+fields.getField4().toString();
-            src =src.replaceAll(regex1,res1);
+            if ("-1".equals(fields.getField2())){
+                String regex1 = "<span class=\"stop-propagation\" contenteditable=\"false\" inval=\""+fields.getField1().toString()+"\">"+fields.getField3().toString();
+                String res1 = "<span class=\"stop-propagation1\" contenteditable=\"false\" inval=\""+fields.getField2().toString()+"\">"+fields.getField4().toString();
+                src =src.replaceAll(regex1,res1);
+            }
         }
-
         return src;
     }
 }
