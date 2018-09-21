@@ -119,5 +119,10 @@ public class StringFormatForSQL{
         return ret;
     }
 
+
+    public List<CsvTemplateDetailDto> CustomReplacement(List<CsvTemplateDetailDto> dtoList,int oldId ,int newId,String newKey){
+      
+        return dtoList;
+    }
 }
 
