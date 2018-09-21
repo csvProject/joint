@@ -37,7 +37,7 @@
         t_csvcustom_field  WHERE  CSVCUSTOM_FIELD_ID = #{csvCustomFieldId,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insertCustomField" parameterType="CsvCustomFieldDto">
+    <insert id="insertCustomField" parameterType="CsvCustomFieldDto" useGeneratedKeys="true" keyProperty="csvCustomFieldId">
 
         insert into t_csvcustom_field
         (

@@ -12,6 +12,7 @@ import {NzNotificationService} from "ng-zorro-antd";
 })
 export class FormulasComponent implements OnInit {
   @Input() csvCustomFields :CsvCustomField[];
+  @Input() modalType ;
   massageList = []; //消息弹出集合
 
   constructor(private notification: NzNotificationService,private util:CurrencyUtil,private service:TemplatesetService) { }

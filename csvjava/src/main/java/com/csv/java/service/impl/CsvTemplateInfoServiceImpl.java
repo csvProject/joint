@@ -132,6 +132,39 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
     @Transactional
     public int insertCsvTempInfo(CsvTemplateInfoDto indto){
 
+        return this.doCsvTempInfoForCopyorInsert(indto,1);
+
+    }
+
+    @Transactional
+    public int copyCsvTempInfo(CsvTemplateInfoDto indto){
+        int ret ;
+        ret = this.doCsvTempInfoForCopyorInsert(indto,2);
+        if (ret <0) {
+            return ret;
+        }
+        CsvTempBatDto csvTempBatDto = new CsvTempBatDto();
+        csvTempBatDto.setCsvtempId(indto.getCsvtempId());
+        csvTempBatDto.setLogId(indto.getLogId());
+
+        csvTempBatDto.setCsvTemplateDetailDtoList(indto.getCsvTemplateDetailDtoList());
+        csvTemplateDetailService.updCsvTempDetailBat(csvTempBatDto);
+/*
+        //获取当前模板下所有定义字段
+        List<CsvTemplateDetailDto> csvTemplateDetailDtoList = new ArrayList<>();
+        csvTemplateDetailDtoList = csvTemplateDetailDao.findCsvTempDetailBycsvtempId(indto.getCsvtempId());
+
+        //更新模板字段中设有自定义公式的名称
+        csvTemplateDetailDtoList = StringFormatForSQL.CustomReplacement(csvTemplateDetailDtoList,
+                oldCsvCf.getCsvCustomFieldId(),
+                oldCsvCf.getCsvCustomFieldId(),
+                oldCsvCf.getCfieldNm(),
+                newCvsCustomFieldDto.getCfieldNm());*/
+        return 0;
+    }
+
+    //处理新增或复制
+    private int doCsvTempInfoForCopyorInsert(CsvTemplateInfoDto indto,int flag){
         //判断模板名称是否已存在
         int temponly  = csvTemplateInfoDao.chkAddCsvTempNmOnly(indto.getCsvtempNm());
         if (temponly > 0) {
@@ -174,7 +207,18 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
             for (CsvCustomFieldDto cvsCustomFieldDto : indto.getCsvCustomFieldDtoList()) {
                 cvsCustomFieldDto.setCsvtempId(indto.getCsvtempId());
                 cvsCustomFieldDto.setLogId(indto.getLogId());
+                int oldCsvCustomFieldId = cvsCustomFieldDto.getCsvCustomFieldId();
                 csvCustomFieldDao.insertCustomField(cvsCustomFieldDto);
+
+                if (flag == 2){//如果是复制，需要把复制来的模板字段里已有的自定义公式ID更新为新的自定义公式的ID
+                    //更新模板字段中设有自定义公式的ID和名称
+                    indto.setCsvTemplateDetailDtoList(StringFormatForSQL.CustomReplacement(
+                            indto.getCsvTemplateDetailDtoList(),
+                            oldCsvCustomFieldId,
+                            cvsCustomFieldDto.getCsvCustomFieldId(),
+                            cvsCustomFieldDto.getCfieldNm(),
+                            cvsCustomFieldDto.getCfieldNm()));
+                }
             }
         }
 
@@ -185,33 +229,6 @@ public class CsvTemplateInfoServiceImpl implements CsvTemplateInfoService {
         csvTemplateInfoDto.setLogId(indto.getLogId());
         csvTemplateRuleDao.insertCsvTempRule(csvTemplateInfoDto);
 
-        return 0;
-    }
-
-    @Transactional
-    public int copyCsvTempInfo(CsvTemplateInfoDto indto){
-        int ret ;
-        ret = this.insertCsvTempInfo(indto);
-        if (ret <0) {
-            return ret;
-        }
-        CsvTempBatDto csvTempBatDto = new CsvTempBatDto();
-        csvTempBatDto.setCsvtempId(indto.getCsvtempId());
-        csvTempBatDto.setLogId(indto.getLogId());
-
-        csvTempBatDto.setCsvTemplateDetailDtoList(indto.getCsvTemplateDetailDtoList());
-        csvTemplateDetailService.updCsvTempDetailBat(csvTempBatDto);
-/*
-        //获取当前模板下所有定义字段
-        List<CsvTemplateDetailDto> csvTemplateDetailDtoList = new ArrayList<>();
-        csvTemplateDetailDtoList = csvTemplateDetailDao.findCsvTempDetailBycsvtempId(indto.getCsvtempId());
-
-        //更新模板字段中设有自定义公式的名称
-        csvTemplateDetailDtoList = StringFormatForSQL.CustomReplacement(csvTemplateDetailDtoList,
-                oldCsvCf.getCsvCustomFieldId(),
-                oldCsvCf.getCsvCustomFieldId(),
-                oldCsvCf.getCfieldNm(),
-                newCvsCustomFieldDto.getCfieldNm());*/
         return 0;
     }
 }
