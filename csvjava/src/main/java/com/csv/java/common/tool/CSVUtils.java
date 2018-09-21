@@ -27,8 +27,9 @@ public class CSVUtils {
                 parent.mkdirs();
             }
             csvFile.createNewFile();
-            // GB2312使正确读取分隔符","
-            csvWtriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile), "UNICODELITTLE"), 1024);
+            // GB2312使正确读取分隔符","UNICODELITTLE
+            FileOutputStream fos = new FileOutputStream(csvFile);
+            csvWtriter = new BufferedWriter(new OutputStreamWriter(fos, "GBK"));
 
             if(headList != null){
 
@@ -67,10 +68,12 @@ public class CSVUtils {
         for (int i =0 ;i<row.size();i++) {
             StringBuffer sb = new StringBuffer();
             String rowStr = "";
+            //特殊日文字符处理
+            String tmp = row.get(i).toString().replace("・","·");
             if (i == row.size() -1){
-                rowStr = sb.append("\"").append(row.get(i).toString()).append("\"").toString();
+                rowStr = sb.append("\"").append(tmp).append("\"").toString();
             }else{
-                rowStr = sb.append("\"").append(row.get(i).toString()).append("\",").toString();
+                rowStr = sb.append("\"").append(tmp).append("\",").toString();
             }
 
             csvWriter.write(rowStr);
