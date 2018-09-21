@@ -138,12 +138,13 @@ public class ProductCsvServiceImpl implements ProductCsvService {
 
         List noCsvTempList = new ArrayList(); //没有模板商品集合
 
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS"); //精确到毫秒
-        String suffix = fmt.format(new Date());
-
         //String zipFileName = getUUID();
-        String tmpfiename = csvExportInDto.getPlatformNm()+"_"+csvExportInDto.getPfaccountNm()+"_"+suffix;
-        String zipFileName = tmpfiename;
+        String tmpfiename = csvExportInDto.getPlatformNm()+"_"+csvExportInDto.getPfaccountNm();
+
+        SimpleDateFormat fmtzip = new SimpleDateFormat("yyyyMMddHHmmssSSS"); //精确到毫秒
+        String suffixzip = fmtzip.format(new Date());
+        String zipFileName = tmpfiename + "_" + suffixzip;
+
         List<String> filePaths = new ArrayList<String>();
 
         //生成csv
@@ -199,7 +200,10 @@ public class ProductCsvServiceImpl implements ProductCsvService {
                         dataList.add(rowList);
                     }
                     //String fileName = getUUID()+ ".CSV";
-                    String fileName = tmpfiename+ ".CSV";
+                    SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS"); //精确到毫秒
+                    String suffix = fmt.format(new Date());
+                    String fileName = tmpfiename + "_" + suffix + ".CSV";
+
                     productGroupOutDto.setCsvFileName(fileName);
                     if(0 == productGroupOutDto.getHeadShow()){
                         CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);

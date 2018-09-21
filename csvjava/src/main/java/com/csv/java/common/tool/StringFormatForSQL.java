@@ -21,17 +21,17 @@ public class StringFormatForSQL{
         }
         formatedStr = stripHtml(formatedStr);
         if(formatedStr.endsWith("\r\n")){
-            formatedStr = formatedStr.substring(0,formatedStr.length() - 4);
+            formatedStr = formatedStr.substring(0,formatedStr.length() - 2);
         }else{
 
         }
         if(formatedStr.endsWith("\n")){
-            formatedStr = formatedStr.substring(0,formatedStr.length() - 2);
+            formatedStr = formatedStr.substring(0,formatedStr.length() - 1);
         }else{
 
         }
         if(formatedStr.endsWith("\r")){
-            formatedStr = formatedStr.substring(0,formatedStr.length() - 2);
+            formatedStr = formatedStr.substring(0,formatedStr.length() - 1);
         }else{
 
         }

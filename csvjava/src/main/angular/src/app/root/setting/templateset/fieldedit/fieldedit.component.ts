@@ -38,6 +38,7 @@ export class FieldEditComponent implements OnInit {
     arr.splice(i,1);
     console.log(arr);
     this.fieldList = arr;
+    this.sendFieldListData(this.fieldList);
   }
   objToArr(arr:any[]){
     return new Array(arr);
