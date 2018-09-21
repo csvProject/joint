@@ -1,6 +1,7 @@
 package com.csv.java.common.tool;
 
 import com.csv.java.entity.CsvTemplateDetailDto;
+import com.csv.java.entity.ReplacementSrc;
 
 import java.util.List;
 import java.util.Map;
@@ -120,9 +121,26 @@ public class StringFormatForSQL{
     }
 
 
-    public List<CsvTemplateDetailDto> CustomReplacement(List<CsvTemplateDetailDto> dtoList,int oldId ,int newId,String newKey){
-      
+    /* 复制操作 */
+    public List<CsvTemplateDetailDto> CustomReplacement(List<CsvTemplateDetailDto> dtoList,int oldId ,int newId,String oldKey,String newKey){
+        ReplacementSrc fields = new ReplacementSrc();
+        fields.setField1(oldId+"");
+        fields.setField2(newId+"");
+        fields.setField3(newKey+"");
+        for(CsvTemplateDetailDto csvTemplateDetailDto: dtoList){
+
+        }
         return dtoList;
+    }
+    private String SrcReplacement(String src,List<ReplacementSrc> fieldList){
+        for (ReplacementSrc fields : fieldList) {
+            String regex = "<span class=\"stop-propagation\" contenteditable=\"false\" inval=\""+fields.getField1().toString()+"\">"+fields.getField1().toString();
+            src =
+                    src.replaceAll(
+                            regex,
+                            "%`~"+ fields.getField1().toString()+"^%`~");
+        }
+        return src;
     }
 }
 
