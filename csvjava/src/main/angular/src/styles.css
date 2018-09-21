@@ -14,7 +14,16 @@
   display: inline-block;
   background-color: #ccc6;
   padding: 0 5px;
-  margin: 0 3px 3px 3px;
+  margin: 2px 3px 3px 3px;
+}
+.stop-propagation1{
+  color: #ff0000b0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: inline-block;
+  background-color: #ccc6;
+  padding: 0 5px;
+  margin: 2px 3px 3px 3px;
 }
 
 .padding_0_3{
