@@ -11,6 +11,11 @@ export class CsvexportService {
     return this.http.post<BaseApiResponseModel>(url.findproductList,body);
   }
 
+  findExportSearchedList(body): Observable<BaseApiResponseModel> {
+    return this.http.post<BaseApiResponseModel>(url.findExportSearchedList,body);
+  }
+
+
   exportCSV(body): Observable<BaseApiResponseModel> {
     return this.http.post<BaseApiResponseModel>(url.exportCSV,body);
   }

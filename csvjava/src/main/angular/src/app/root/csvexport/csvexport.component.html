@@ -29,16 +29,21 @@
 </div>
 
 
-<div  nz-col  nzSpan="24">
+<div  nz-col  nzSpan="36">
   <div style="margin-bottom: 16px;">
     <button nz-button style=" margin-right: 20px;"
             [nzType]="'primary'"
             (click)="selectData()">
       搜索
     </button>
-    <button nz-button [disabled]="disabledButton"
+    <button nz-button style=" margin-right: 20px;" [disabled]="pageset.count == 0?true:false"
             [nzType]="'primary'"
-            (click)="operateData()">
+            (click)="operateData(2)">
+      导出所有
+    </button>
+    <button  nz-button [disabled]="disabledButton"
+            [nzType]="'primary'"
+            (click)="operateData(1)">
       导出
     </button>
     <span style="margin-left: 8px;" *ngIf="checkedNumber">已选择 {{checkedNumber}} 件商品</span>

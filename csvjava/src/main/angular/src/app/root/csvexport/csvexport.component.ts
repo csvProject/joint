@@ -14,6 +14,7 @@ import { PublicService } from '../../http/public.service';
 })
 export class CsvexportComponent implements OnInit {
 
+  buttontype ;
   isVisible = false;
   constructor(private notification: NzNotificationService,private service:CsvexportService,private util:CurrencyUtil,private fileService:PublicService) { }
   private get msg(){
@@ -24,7 +25,7 @@ export class CsvexportComponent implements OnInit {
   productListSel = [];
 
   //页面page设定
-  pageset={pageSize:10,pageIndex:1,count:1};
+  pageset={pageSize:30,pageIndex:1,count:0};
 
   //查询条件
   condi = {
@@ -133,8 +134,9 @@ export class CsvexportComponent implements OnInit {
     this.refreshStatus();
   }
 
-  operateData(): void {
+  operateData(bt): void {
     this.isVisible = true;
+    this.buttontype = bt;
   }
 
   getCheckedData(){
@@ -161,19 +163,42 @@ export class CsvexportComponent implements OnInit {
     this.isVisible = false;
   }
   handleOk(template){
-    let body = {
-      platformId:this.platformNm.platformId,//平台ID
-      platformNm:this.platformNm.platformNm,
-      pfaccountId:this.pfaccountNm.pfaccountId,//平台账号ID
-      pfaccountNm:this.pfaccountNm.pfaccountNm,
-      //productDtoList:this.dataSet.filter(value => value.checked)
-      productDtoList:this.productListSel
+    if (this.buttontype == 1){//导出所选
+      let body = {
+        platformId:this.platformNm.platformId,//平台ID
+        platformNm:this.platformNm.platformNm,
+        pfaccountId:this.pfaccountNm.pfaccountId,//平台账号ID
+        pfaccountNm:this.pfaccountNm.pfaccountNm,
+        //productDtoList:this.dataSet.filter(value => value.checked)
+        productDtoList:this.productListSel
 
-    };
-    if(this.checkTemplateInfo(body)){
-      this.exportCSV(body,template);
-      this.isVisible = false;
+      };
+      if(this.checkTemplateInfo(body)){
+        this.exportCSV(body,template);
+        this.isVisible = false;
+      }
     }
+    if (this.buttontype == 2){//导出查询所有
+      this.service.findExportSearchedList(this.condi).subscribe(result=>{
+        if(result.code == 0){
+          let body = {
+            platformId:this.platformNm.platformId,//平台ID
+            platformNm:this.platformNm.platformNm,
+            pfaccountId:this.pfaccountNm.pfaccountId,//平台账号ID
+            pfaccountNm:this.pfaccountNm.pfaccountNm,
+            productDtoList:result.data
+          };
+          if(this.checkTemplateInfo(body)){
+            this.exportCSV(body,template);
+            this.isVisible = false;
+          }
+
+        }else {
+          console.error(result.msg);
+        }
+      })
+    }
+
   }
   private checkTemplateInfo(body):boolean{
     let num = 0;

@@ -11,6 +11,8 @@ import java.util.Map;
 public interface ProductCsvService {
     Map<String, Object> findProductByCondi(ProductCondiInDto indto);
 
+    Map<String, Object> findProductByCondiNoPage(ProductCondiInDto indto);
+
     ProductDto findProductById(int productId);
 
     Map<String,Object> exportProductCsv(CsvExportInDto csvExportInDto );

@@ -57,6 +57,17 @@ public class ProductCsvServiceImpl implements ProductCsvService {
         return map;
     }
 
+    public Map<String, Object> findProductByCondiNoPage(ProductCondiInDto indto){
+        List<ProductDto> productDtoList = new ArrayList();
+
+        productDtoList = productDao.findProductByCondi(indto);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("list", productDtoList);
+        map.put("count", productDtoList.size());
+        return map;
+    }
+
     public ProductDto findProductById(int productId){
         return productDao.findProductById(productId);
     }

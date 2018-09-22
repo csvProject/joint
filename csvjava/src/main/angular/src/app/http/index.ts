@@ -43,6 +43,7 @@ export const url = {
 
 
   findproductList:'productcsv/findListbycondi', //查询匹配字段
+  findExportSearchedList:'productcsv/findListbycondinopage', //查询匹配字段
   exportCSV:'productcsv/export', //导出
 
   download:'csvfile/download', //下载
