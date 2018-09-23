@@ -41,9 +41,6 @@ export class CsvexportComponent implements OnInit {
     pageStart:1
   };
 
-  //加载状态flag
-  loading = false;
-
   ngOnInit(): void {
 
     this.loadingBaseSelectData();
@@ -53,9 +50,9 @@ export class CsvexportComponent implements OnInit {
   }
 
   private findProductList(body,doit){
-    this.loading = true;
+    this.fileService.sendLoading(true);
     this.service.findProductList(body).subscribe(result=>{
-      this.loading = false;
+      this.fileService.sendLoading(false);
       console.log(result);
       if(result.code == 0){
         this.pageset.count = result.count;
@@ -167,6 +164,7 @@ export class CsvexportComponent implements OnInit {
     this.isVisible = false;
   }
   handleOk(template){
+    this.fileService.sendLoading(true);
     if (this.buttontype == 1){//导出所选
       let body = {
         platformId:this.platformNm.platformId,//平台ID
@@ -340,6 +338,7 @@ export class CsvexportComponent implements OnInit {
   noCsvTempList:any = []; //无模板商品信息
   private exportCSV(body,template){
     this.service.exportCSV(body).subscribe(result=>{
+      this.fileService.sendLoading(false);
       if(result.code == 0){
 
         this.zipFileName = result.data.zipFileName+'.zip';

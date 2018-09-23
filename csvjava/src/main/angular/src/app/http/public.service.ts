@@ -21,12 +21,12 @@ export class PublicService {
     URL.revokeObjectURL(getUrl);
   }
 
-  productListSel:any = [];
+  loading = new Subject();
 
-  setProductListSel(data){
-    this.productListSel = data
+  sendLoading(state){
+    this.loading.next(state);
   }
-  getProductListSel():any[]{
-    return this.productListSel;
+  getLoading(){
+    return this.loading.asObservable();
   }
 }

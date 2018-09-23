@@ -11,7 +11,19 @@
         <!--<nz-breadcrumb-item>App</nz-breadcrumb-item>-->
       <!--</nz-breadcrumb>-->
       <nz-content style="background:#fff; padding: 24px; min-height: calc(100vh - 112px);">
-        <router-outlet></router-outlet>
+        <router-outlet>
+
+        </router-outlet>
+        <div *ngIf="loading" id="loading" class="init-loading" >
+          <!--<img src="./assets/img/loading.gif"/>-->
+
+          <div id="loading-center">
+
+          </div>
+          <div id="loading-center-absolute">
+              <nz-spin [nzSpinning]="loading" [nzSize]="'large'"></nz-spin >
+          </div>
+        </div>
       </nz-content>
     </nz-layout>
   </nz-layout>
