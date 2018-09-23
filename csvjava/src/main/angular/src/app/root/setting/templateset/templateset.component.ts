@@ -26,13 +26,21 @@ export class TemplatesetComponent implements OnInit {
   selectTemplateInfo = new CsvTemplateInfo();
 
   operating = false;
+  //取出后的原始数据
   dataSet = [];
+  //画面显示用集合（筛选或排序后）
+  displayData = [];
 
   platSearchChange$ = new BehaviorSubject('');
+  //平台集合
   platList = [];
+  //平台账号集合
   accountList = [];
+  //供应商集合
   supplierList = [];
+  //产品类型集合
   pTypeList = [];
+  //下拉框自查询时加载状态
   platIsLoading = false;
   onSearchByPlat(pfnm: string): void {
     this.platIsLoading = true;
@@ -126,6 +134,7 @@ export class TemplatesetComponent implements OnInit {
       this.operating?this.operating = false:null;
       if(result.code == 0){
         this.dataSet = result.data == null?[]:result.data;
+        this.displayData = [ ...this.dataSet ];
       }else if(result.code == 1){
 
       }else{
@@ -191,7 +200,7 @@ export class TemplatesetComponent implements OnInit {
 
 
   titleList=['新增模板','编辑模板','编辑字段','复制模板'];
-  modalType;
+  modalType;//打开画面类型（'新增模板','编辑模板','编辑字段','复制模板'）
   isVisible = false;
 
   delete(type,data){
@@ -390,5 +399,30 @@ export class TemplatesetComponent implements OnInit {
     this.isVisible = false;
     this.getTemplateInfo(this.selectTemplateInfo);
   }
+
+  //排序筛选处理-----------------------
+  sortName = null;//排序用变量
+  sortValue = null;//排序用变量
+  //表头排序
+  sort(sort: { key: string, value: string }): void {
+    this.sortName = sort.key;
+    this.sortValue = sort.value;
+    this.search();
+  }
+
+  //排序后筛选
+  search(): void {
+    /** filter data **/
+    const filterFunc = item => (true);
+    const data = this.dataSet.filter(item => filterFunc(item));
+    /** sort data **/
+    if (this.sortName && this.sortValue) {
+      this.displayData = data.sort((a, b) =>
+        (this.sortValue === 'ascend') ? (a[ this.sortName ] > b[ this.sortName ] ? 1 : -1) : (b[ this.sortName ] > a[ this.sortName ] ? 1 : -1));
+    } else {
+      this.displayData = data;
+    }
+  }
+  //排序筛选处理-end------------
 
 }

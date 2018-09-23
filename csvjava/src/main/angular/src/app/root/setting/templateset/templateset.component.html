@@ -52,15 +52,15 @@
 <nz-table
   #rowSelectionTable
   nzBordered
-  [nzData]="dataSet"
+  [nzData]="displayData"
   [nzTitle]="'模板列表'"
-  [nzPageSize]="5"
+  [nzPageSize]="20"
   (nzCurrentPageDataChange)="currentPageDataChange($event)">
-  <thead>
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
   <tr>
     <th>模板名称</th>
-    <th>平台名称</th>
-    <th>平台账号</th>
+    <th nzShowSort nzSortKey="platformNm">平台名称</th>
+    <th nzShowSort nzSortKey="pfaccountNm">平台账号</th>
     <th>产品分类名称</th>
     <th>供应商名称</th>
     <th>加入时间</th>

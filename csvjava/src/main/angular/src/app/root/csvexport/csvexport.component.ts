@@ -14,7 +14,8 @@ import { PublicService } from '../../http/public.service';
 })
 export class CsvexportComponent implements OnInit {
 
-  buttontype ;
+
+  buttontype ;//点击导出或导出所有按钮flag
   isVisible = false;
   constructor(private notification: NzNotificationService,private service:CsvexportService,private util:CurrencyUtil,private fileService:PublicService) { }
   private get msg(){
@@ -38,6 +39,7 @@ export class CsvexportComponent implements OnInit {
     pageStart:1
   };
 
+  //加载状态flag
   loading = false;
 
   ngOnInit(): void {
@@ -76,12 +78,12 @@ export class CsvexportComponent implements OnInit {
       }
     })
   }
-  allChecked = false;
-  disabledButton = true;
-  checkedNumber = 0;
-  displayData= [];
-  dataSet = [];
-  indeterminate = false;
+  allChecked = false;//checkbox所有选中flag
+  disabledButton = true;//导出按钮是否可操作flag
+  checkedNumber = 0;//选中数量
+  displayData= [];//画面显示数据集合
+  dataSet = [];//查询结果集合
+  indeterminate = false;//全选或选中图标
 
   currentPageDataChange($event): void {
     this.displayData = $event;

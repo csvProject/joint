@@ -13,12 +13,12 @@ export class TempeditComponent implements OnInit {
   @Input() supplierList = [];
   @Input() pTypeList = [];
 
-  platformNm ;
-  pfaccountNm ;
-  ptypeNm ;
-  sNm ;
+  platformNm ;//画面平台下拉控件选中值
+  pfaccountNm ;//画面平台账号下拉控件选中值
+  ptypeNm ;//画面产品类型下拉控件选中值
+  sNm ;//画面供应商下拉控件选中值
 
-  accountList = [];
+  accountList = [];//画面平台账号下拉内容集合
 
 
   constructor(private service:TemplatesetService) { }
@@ -103,7 +103,7 @@ export class TempeditComponent implements OnInit {
     }
   }
 
-  csvCustomFields = [];
+  csvCustomFields = [];//模板自定义公式内容集合
   private getCsvCustomField(csvtempid){
     this.service.getCsvCustomField(csvtempid).subscribe(result=>{
       if(result.code == 0){
