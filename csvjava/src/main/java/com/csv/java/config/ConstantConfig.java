@@ -30,14 +30,18 @@ public class ConstantConfig {
     /*删除CSV压缩文件时间*/
     public static Integer DELETE_ZIP_FILE_DAY;
 
+    /*导出数据行数限制*/
+    public static Integer EXPORT_CSV_PRODUCT_LIMITCOUNT;
+
     @PostConstruct
     public void initialization() {
         Origins = _environment.getProperty("cors.mappings.origins")==null?"*".split(","):_environment.getProperty("cors.mappings.origins").split(",");
         FIELD_MATCHING_TABLE = _environment.getProperty("field.matching.table");
         CSV_FILE_TEMP_PATH = _environment.getProperty("csv.file.temp.path");
         CSV_ZIP_FILE_TEMP_PATH = _environment.getProperty("csv.zip.file.temp.path");
-        DELETE_ZIP_FILE_DAY = Integer.getInteger(_environment.getProperty("delete.zip.file.day"));
+        DELETE_ZIP_FILE_DAY = Integer.parseInt(_environment.getProperty("delete.zip.file.day"));
 
+        EXPORT_CSV_PRODUCT_LIMITCOUNT = Integer.parseInt(_environment.getProperty("export.csv.product.limitcount"));
         initDeleteZipFile();
     }
 

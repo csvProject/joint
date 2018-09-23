@@ -16,6 +16,8 @@ export class CsvexportComponent implements OnInit {
 
 
   buttontype ;//点击导出或导出所有按钮flag
+  isOutLimit;//导出是否有超出限制数
+  outLimit;//导出限制数
   isVisible = false;
   constructor(private notification: NzNotificationService,private service:CsvexportService,private util:CurrencyUtil,private fileService:PublicService) { }
   private get msg(){
@@ -339,10 +341,14 @@ export class CsvexportComponent implements OnInit {
   private exportCSV(body,template){
     this.service.exportCSV(body).subscribe(result=>{
       if(result.code == 0){
+
         this.zipFileName = result.data.zipFileName+'.zip';
         this.noCsvTempList = result.data.noCsvTempList == null?[]:result.data.noCsvTempList;
+        this.isOutLimit = result.data.isOutLimit == null?false:result.data.isOutLimit;
+        this.outLimit = result.data.outLimit == null?"":result.data.outLimit;
+
         this.fileService.downloadFile(this.zipFileName);
-        if(this.noCsvTempList.length !=  0){
+        if(this.noCsvTempList.length !=  0 ||  this.isOutLimit){
           this.createBasicNotification(template);
         }
         //this.dataSet.forEach(value => value.checked = false);

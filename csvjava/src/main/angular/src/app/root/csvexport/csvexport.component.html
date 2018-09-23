@@ -109,14 +109,20 @@
 <ng-template #tpl>
   <div class="ant-notification-notice-content">
     <div class="ant-notification-notice-with-icon">
-      <span class="ant-notification-notice-icon"><i class="anticon anticon-exclamation-circle" style="color:  rgba(255, 193, 7, 0.78);"></i></span>
-      <div class="ant-notification-notice-message">导出失败商品</div>
-      <div class="ant-notification-notice-description">
-        <div nz-row>
-          <div nz-col class="u-leaveOut padding_0_3" nzSpan="12" *ngFor="let info of noCsvTempList;let i =index"
-               title="{{info.sku + ' - '+info.pmCn}}">{{info.sku + ' - '+info.pmCn}}</div>
-        </div>
+      <div *ngIf="isOutLimit">
+        <span class="ant-notification-notice-icon"><i class="anticon anticon-exclamation-circle" style="color:  rgba(255, 193, 7, 0.78);"></i></span>
+        <div class="ant-notification-notice-message" >可导出数据超出导出限制条数（{{outLimit}}），部分数据没有被导出</div><br>
       </div>
+      <div *ngIf="noCsvTempList.length !=  0">
+        <span class="ant-notification-notice-icon"><i class="anticon anticon-exclamation-circle" style="color:  rgba(255, 193, 7, 0.78);"></i></span>
+        <div class="ant-notification-notice-message" >导出失败商品</div>
+          <div class="ant-notification-notice-description">
+            <div nz-row>
+              <div nz-col class="u-leaveOut padding_0_3" nzSpan="12" *ngFor="let info of noCsvTempList;let i =index"
+                   title="{{info.sku + ' - '+info.pmCn}}">{{info.sku + ' - '+info.pmCn}}</div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 </ng-template>

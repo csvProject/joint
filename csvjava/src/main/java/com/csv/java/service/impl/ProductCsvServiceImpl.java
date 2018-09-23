@@ -3,6 +3,7 @@ package com.csv.java.service.impl;
 import com.csv.java.common.tool.CSVUtils;
 import com.csv.java.common.tool.DeleteFileUtil;
 import com.csv.java.common.tool.ServiceUtil;
+import com.csv.java.config.ConstantConfig;
 import com.csv.java.dao.CsvCustomFieldDao;
 import com.csv.java.dao.CsvTemplateRuleDao;
 import com.csv.java.dao.CustomDao;
@@ -23,6 +24,7 @@ import static com.csv.java.common.tool.UUIDUtil.getUUID;
 import static com.csv.java.common.tool.ZipFileUtils.zipPath;
 import static com.csv.java.config.ConstantConfig.CSV_FILE_TEMP_PATH;
 import static com.csv.java.config.ConstantConfig.CSV_ZIP_FILE_TEMP_PATH;
+import static com.csv.java.config.ConstantConfig.EXPORT_CSV_PRODUCT_LIMITCOUNT;
 import static com.csv.java.config.ScheduledComponent.ZIP_FILES;
 
 @Service(value = "productCsvService")
@@ -76,7 +78,9 @@ public class ProductCsvServiceImpl implements ProductCsvService {
     public Map<String,Object> exportProductCsv(CsvExportInDto csvExportInDto){
         Map<String,Object>  ret= new HashMap<>();
         List <ProductGroupOutDto> productGroupOutDtoList = new ArrayList();
-
+        //能导出的数据合计
+        int exportCount = 0;
+        Boolean isOutLimit = false;
         //根据产品类型与供应商分组
         for ( ProductDto productDto:csvExportInDto.getProductDtoList()) {
 
@@ -217,18 +221,23 @@ public class ProductCsvServiceImpl implements ProductCsvService {
 
                     productGroupOutDto.setCsvFileName(fileName);
                     if(0 == productGroupOutDto.getHeadShow()){
-                        CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);
+                        CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH,EXPORT_CSV_PRODUCT_LIMITCOUNT);
                     }else{
-                        CSVUtils.createCSV(null,dataList,fileName,CSV_FILE_TEMP_PATH);
+                        CSVUtils.createCSV(null,dataList,fileName,CSV_FILE_TEMP_PATH,EXPORT_CSV_PRODUCT_LIMITCOUNT);
                     }
                     filePaths.add(CSV_FILE_TEMP_PATH + fileName);
+                    if (!isOutLimit &&  dataList.size() > EXPORT_CSV_PRODUCT_LIMITCOUNT) {
+                        isOutLimit = true;
+                    }
                 }
             }
         }
         String noCsvTempFileName = "";
+
         try {
-            if (noCsvTempList != null && noCsvTempList.size()>0) {
-                noCsvTempFileName = noCsvFile(zipFileName, noCsvTempList);
+            //存在无模板数据导出则生成一份无模板产品列表
+            if ((noCsvTempList != null && noCsvTempList.size()>0) || isOutLimit) {
+                noCsvTempFileName = noCsvFile(zipFileName, noCsvTempList,isOutLimit,EXPORT_CSV_PRODUCT_LIMITCOUNT);
                 filePaths.add(CSV_FILE_TEMP_PATH + noCsvTempFileName);
             }
             zipPath(CSV_ZIP_FILE_TEMP_PATH + zipFileName+".zip",filePaths);
@@ -250,28 +259,41 @@ public class ProductCsvServiceImpl implements ProductCsvService {
         ret.put("zipFileName",zipFileName);
         ret.put("noCsvTempFileName",noCsvTempFileName);
         ret.put("noCsvTempList",noCsvTempList); //无模板商品信息
+        ret.put("isOutLimit",isOutLimit); //导出是否有超出限制数的
+        ret.put("outLimit",EXPORT_CSV_PRODUCT_LIMITCOUNT); //导出限制数
         return ret;
     }
 
     /* 生成无模板csv文件 */
-    private String noCsvFile(String zipFileName,List<ProductDto> noCsvTempList){
-        //csv文件头
-        List<Object> heads = new ArrayList<>();
-        heads.add("原因:未定义模板");
-        //数据
+    private String noCsvFile(String zipFileName, List<ProductDto> noCsvTempList,
+                             Boolean isOutLimit,int limitCount){
         List<List<Object>> dataList = new ArrayList<List<Object>>();
-        String sku = "sku:";
-        for(ProductDto productDtos: noCsvTempList ){
-            String tmp = productDtos.getSku()==null?"":productDtos.getSku()+"";
-            sku = sku  + tmp + ",";
+
+        if (isOutLimit){
+            List<Object> rowList3 = new ArrayList<>();
+            rowList3.add("原因：可导出数据超出导出限制条数（"+limitCount + "），部分数据没有被导出");
+            dataList.add(rowList3);
+        }
+        if (noCsvTempList.size() > 0 ) {
+            //数据
+            List<Object> rowList1 = new ArrayList<>();
+            rowList1.add("原因：未定义模板");
+            dataList.add(rowList1);
+
+            String sku = "sku:";
+            for (ProductDto productDtos : noCsvTempList) {
+                String tmp = productDtos.getSku() == null ? "" : productDtos.getSku() + "";
+                sku = sku + tmp + ",";
+
+            }
+            List<Object> rowList2 = new ArrayList<>();
+            rowList2.add(sku);
+            dataList.add(rowList2);
+
 
         }
-        List<Object> rowList = new ArrayList<>();
-        rowList.add(sku);
-        dataList.add(rowList);
-
         String fileName = "ERROR_"+zipFileName+".CSV";
-        CSVUtils.createCSV(heads,dataList,fileName,CSV_FILE_TEMP_PATH);
+        CSVUtils.createCSV(null,dataList,fileName,CSV_FILE_TEMP_PATH,EXPORT_CSV_PRODUCT_LIMITCOUNT);
         return  fileName;
     }
 }

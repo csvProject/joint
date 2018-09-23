@@ -16,7 +16,8 @@ public class CSVUtils {
     /**
      * 创建CSV文件
      */
-    public static void createCSV( List<Object> headList ,List<List<Object>> dataList,String fileName,String filePath) {
+    public static void createCSV( List<Object> headList ,List<List<Object>> dataList,String fileName,
+                                  String filePath,int limitCount) {
 
         File csvFile = null;
         BufferedWriter csvWtriter = null;
@@ -39,8 +40,14 @@ public class CSVUtils {
             }
 
             // 写入文件内容
-
-            for (int i =0 ;i<dataList.size();i++) {
+            int count  = 0 ;
+            //导出数大于限制数，则只导出限制数，多余不导出
+            if (dataList.size() > limitCount) {
+                count = limitCount;
+            }else{
+                count = dataList.size();
+            }
+            for (int i =0 ;i<count;i++) {
                 writeRow(dataList.get(i), csvWtriter);
                 if (i != dataList.size() -1){
                     csvWtriter.newLine();
