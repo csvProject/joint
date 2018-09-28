@@ -18,7 +18,7 @@
   </div>
   <div *ngFor="let temp of csvCustomFields;let i=index" nz-col nzSpan="24">
     <div nz-col nzSpan="4" title="{{temp.cfieldNm}}">
-      <input nz-input  [(ngModel)]="temp.cfieldNm" disabled="{{ (modalType == 0?false:true) }}">
+      <input nz-input  [(ngModel)]="temp.cfieldNm" disabled="{{ (temp.isNew == true?false:true) }}">
     </div>
     <div nz-col nzSpan="18" title="{{temp.cfieldValue}}">
       <input nz-input  [(ngModel)]="temp.cfieldValue"  >

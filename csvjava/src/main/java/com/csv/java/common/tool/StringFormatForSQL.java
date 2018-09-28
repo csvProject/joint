@@ -68,7 +68,7 @@ public class StringFormatForSQL{
         return ret;
     }
 
-    public static String structCsvRuleSql(int csvtempId,List<CsvTemplateDetailDto> list,SysCodeDao sysCodeDao,CsvCustomFieldDao csvCustomFieldDao){
+    /*public static String structCsvRuleSql(int csvtempId,List<CsvTemplateDetailDto> list,SysCodeDao sysCodeDao,CsvCustomFieldDao csvCustomFieldDao){
         Map map = new HashMap<String,String>();
         List<SysCodeDto> l =  sysCodeDao.findSysCodeByTypeCd(1);
         List<CsvCustomFieldDto> l2 =  csvCustomFieldDao.findCsvCustomField(csvtempId);
@@ -88,9 +88,12 @@ public class StringFormatForSQL{
         csvSql = StringFormatForSQL.fieldListFormat(list,map);
 
         return csvSql;
-    }
+    }*/
 
     public static String fieldListFormat(List<CsvTemplateDetailDto> list,Map<String,String> arguments){
+        if (list == null){
+            return "";
+        }
         String ret = "SELECT \n  ";
         for(int i=0;i<list.size();i++){
             CsvTemplateDetailDto c = list.get(i);

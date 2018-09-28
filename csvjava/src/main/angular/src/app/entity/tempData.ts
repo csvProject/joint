@@ -89,4 +89,9 @@ export class CsvCustomField{
   cfieldNm;
   //自定义字段内容
   cfieldValue;
+  //是否新增
+  isNew;
+  constructor(){
+    this.isNew = false;
+  }
 }

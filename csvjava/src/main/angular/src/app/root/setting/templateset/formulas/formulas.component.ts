@@ -24,15 +24,25 @@ export class FormulasComponent implements OnInit {
     if(this.csvCustomFields ==null){
       this.csvCustomFields = [];
     }else{
-      if(this.csvCustomFields.length == 0){
-        this.csvCustomFields.push(new CsvCustomField());
+      let tmp = new CsvCustomField();
+      tmp.isNew = true;
+      this.csvCustomFields.push(tmp);
+      /*if(this.csvCustomFields.length == 0){
+        let tmp = new CsvCustomField();
+        tmp.isNew = true;
+        this.csvCustomFields.push(tmp);
       }else{
         if(this.util.isEmpty(this.csvCustomFields[this.csvCustomFields.length-1].cfieldNm)){
-          this.csvCustomFields.push(new CsvCustomField());
+          let tmp = new CsvCustomField();
+          tmp.isNew = true;
+          this.csvCustomFields.push(tmp);
         }else{
+          let tmp = new CsvCustomField();
+          tmp.isNew = true;
+          this.csvCustomFields.push(tmp);
           return;
         }
-      }
+      }*/
     }
   }
   deleteData(i,data,template){
