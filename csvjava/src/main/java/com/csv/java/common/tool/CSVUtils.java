@@ -30,7 +30,7 @@ public class CSVUtils {
             csvFile.createNewFile();
             // GB2312使正确读取分隔符","UNICODELITTLE
             FileOutputStream fos = new FileOutputStream(csvFile);
-            csvWtriter = new BufferedWriter(new OutputStreamWriter(fos, "GBK"));
+            csvWtriter = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
 
             if(headList != null){
 
