@@ -33,6 +33,9 @@ public class ConstantConfig {
     /*导出数据行数限制*/
     public static Integer EXPORT_CSV_PRODUCT_LIMITCOUNT;
 
+    /*magento 网址*/
+    public static String MAGENTO_HOST;
+
     @PostConstruct
     public void initialization() {
         Origins = _environment.getProperty("cors.mappings.origins")==null?"*".split(","):_environment.getProperty("cors.mappings.origins").split(",");
@@ -40,6 +43,7 @@ public class ConstantConfig {
         CSV_FILE_TEMP_PATH = _environment.getProperty("csv.file.temp.path");
         CSV_ZIP_FILE_TEMP_PATH = _environment.getProperty("csv.zip.file.temp.path");
         DELETE_ZIP_FILE_DAY = Integer.parseInt(_environment.getProperty("delete.zip.file.day"));
+        MAGENTO_HOST = _environment.getProperty("magento.host");
 
         EXPORT_CSV_PRODUCT_LIMITCOUNT = Integer.parseInt(_environment.getProperty("export.csv.product.limitcount"));
         initDeleteZipFile();

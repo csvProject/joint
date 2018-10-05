@@ -32,7 +32,7 @@ public class CustomControllerAdvice {
       */
      @ModelAttribute
      public void addAttributes(Model model) {
-//         model.addAttribute("author", "Magical Sam");
+//         magentomodel.addAttribute("author", "Magical Sam");
      }
 
      /**
