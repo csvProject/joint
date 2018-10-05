@@ -1,7 +1,7 @@
 package com.csv.java;
 
 import com.csv.java.common.tool.http.HttpsUtils;
-import com.csv.java.service.magento.imp.MagentoAuthServiceImp;
+import com.csv.java.cnv.magento.serivce.imp.MagentoAuthServiceImp;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;

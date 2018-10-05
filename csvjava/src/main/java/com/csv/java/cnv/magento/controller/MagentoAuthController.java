@@ -1,9 +1,9 @@
-package com.csv.java.controller.magento;
+package com.csv.java.cnv.magento.controller;
 
 import com.csv.java.common.result.Result;
 import com.csv.java.common.result.ResultUtil;
-import com.csv.java.service.magento.MagentoAuthService;
-import com.csv.java.entity.magento.ApiTokenInDto;
+import com.csv.java.cnv.magento.serivce.MagentoAuthService;
+import com.csv.java.cnv.magento.model.ApiTokenInDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
