@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csv.java.dao.OrderDao" >
+    <select id="findOrderNulPay" parameterType="java.lang.Integer"  resultType="OrderDto">
+        SELECT
+                id orderId,
+                websiteorderno,
+                paymentid
+                /*DATE_FORMAT(dhrq,'%Y-%m-%d') dhrq,
+                webuserid,
+                DATE_FORMAT(xdrq,'%Y-%m-%d') xdrq,
+                DATE_FORMAT(zdrq,'%Y-%m-%d') zdrq,
+                DATE_FORMAT(ydrq,'%Y-%m-%d') ydrq,
+                orderstatus,
+                sqr_bak_old,
+                sqr,
+                jiaming,
+                zipcode,
+                address,
+                address2,
+                deliverytime,
+                email,
+                totalprice,
+                websiteid,
+                DATE_FORMAT(wcrq,'%Y-%m-%d') wcrq,
+                gjdq,
+                phone,
+                currency,
+                contents,
+                isfh,
+                DATE_FORMAT(fhdate,'%Y-%m-%d') fhdate,
+                tracknumber,
+                countryid,
+                trackurl,
+                DATE_FORMAT(joindate,'%Y-%m-%d %H:%i:%s') joindate,
+                mgrid,
+                detflag,
+                modifyflag*/
+        FROM t_order
+        WHERE  websiteid = #{websiteid,jdbcType=INTEGER}
+        and paymentid in (2,6)
+        and orderstatus = 6
+    </select>
+
+    <select id="getLastWebsiteorderno" parameterType="java.lang.Integer"  resultType="java.lang.Integer">
+        SELECT
+          max(websiteorderno)
+        FROM t_order
+        WHERE  websiteid = #{websiteid,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insertOrderInfo" useGeneratedKeys="true" keyProperty="orderId" parameterType="OrderDto">
+
+        insert into t_order
+            (
+                dhrq,
+                websiteorderno,
+                webuserid,
+                xdrq,
+                zdrq,
+                ydrq,
+                orderstatus,
+                sqr_bak_old,
+                sqr,
+                jiaming,
+                zipcode,
+                address,
+                address2,
+                deliverytime,
+                email,
+                totalprice,
+                websiteid,
+                paymentid,
+                wcrq,
+                gjdq,
+                phone,
+                currency,
+                contents,
+                isfh,
+                fhdate,
+                tracknumber,
+                countryid,
+                trackurl,
+                joindate,
+                mgrid,
+                detflag,
+                modifyflag
+            )
+        VALUES(
+                str_to_date(#{dhrq,jdbcType=VARCHAR},'%Y-%m-%d'),
+                #{websiteorderno,jdbcType=VARCHAR},
+                #{webuserid,jdbcType=VARCHAR},
+                str_to_date(#{xdrq,jdbcType=VARCHAR},'%Y-%m-%d'),
+                str_to_date(#{zdrq,jdbcType=VARCHAR},'%Y-%m-%d'),
+                str_to_date(#{ydrq,jdbcType=VARCHAR},'%Y-%m-%d'),
+                #{orderstatus,jdbcType=INTEGER},
+                #{sqr_bak_old,jdbcType=VARCHAR},
+                #{sqr,jdbcType=VARCHAR},
+                #{jiaming,jdbcType=VARCHAR},
+                #{zipcode,jdbcType=VARCHAR},
+                #{address,jdbcType=VARCHAR},
+                #{address2,jdbcType=VARCHAR},
+                #{deliverytime,jdbcType=VARCHAR},
+                #{email,jdbcType=VARCHAR},
+                #{totalprice,jdbcType=DECIMAL},
+                #{websiteid,jdbcType=INTEGER},
+                #{paymentid,jdbcType=INTEGER},
+                str_to_date(#{wcrq,jdbcType=VARCHAR},'%Y-%m-%d'),
+                #{gjdq,jdbcType=VARCHAR},
+                #{phone,jdbcType=VARCHAR},
+                #{currency,jdbcType=VARCHAR},
+                #{contents,jdbcType=VARCHAR},
+                #{isfh,jdbcType=TINYINT},
+                str_to_date(#{fhdate,jdbcType=VARCHAR},'%Y-%m-%d'),
+                #{tracknumber,jdbcType=VARCHAR},
+                #{countryid,jdbcType=INTEGER},
+                #{trackurl,jdbcType=VARCHAR},
+                str_to_date(#{joindate,jdbcType=VARCHAR},'%Y-%m-%d %H'),
+                #{mgrid,jdbcType=INTEGER},
+                #{detflag,jdbcType=TINYINT},
+                #{modifyflag,jdbcType=TINYINT}
+                )
+
+    </insert>
+
+    <update id="updOrderstatusByWebsiteorderno" parameterType="OrderDto">
+        update t_order
+        set orderstatus =  #{orderstatus,jdbcType=INTEGER}
+        where id = #{orderId,jdbcType=INTEGER}
+    </update>
+
+</mapper>
