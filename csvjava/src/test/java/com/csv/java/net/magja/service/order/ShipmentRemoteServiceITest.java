@@ -55,7 +55,7 @@ public class ShipmentRemoteServiceITest {
 
   @Test
   public void testGetById() throws ServiceException {
-    Shipment shipment = service.getById(100000005);
+    Shipment shipment = service.getById(4410);
     log.debug("Shipment: {}", shipment);
   }
 

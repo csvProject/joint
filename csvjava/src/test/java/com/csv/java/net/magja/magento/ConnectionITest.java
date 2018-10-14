@@ -22,11 +22,16 @@ public class ConnectionITest {
   public void testProductType() throws Exception {
     ConnectionMock conn = new ConnectionMock();
     SoapClient client = conn.getClient();
-    List<Map<String, Object>> productList = (List<Map<String, Object>>) client.callSingle(ResourcePath.ProductTypeList, "");
+    /*List<Map<String, Object>> productList = (List<Map<String, Object>>) client.callSingle(ResourcePath.SalesOrderList, "");
+
+
 
     for (Map<String, Object> map : productList) {
       System.out.println(map.toString());
-    }
+    }*/
+
+    Object productList =  client.callSingle(ResourcePath.SalesOrderInfo, "510002207");
+    System.out.println(productList.toString());
   }
 
   @Test

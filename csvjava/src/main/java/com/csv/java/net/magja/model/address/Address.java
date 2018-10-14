@@ -38,6 +38,8 @@ public abstract class Address<S> extends BaseMagentoModel<S> {
 
 	protected String countryCode;
 
+	protected String addressType;
+
 	public static Address fromAttributes(Address address,
 			Map<String, Object> attrs) {
 		if (address == null)
@@ -244,6 +246,14 @@ public abstract class Address<S> extends BaseMagentoModel<S> {
 		this.countryCode = countryCode;
 	}
 
+	public String getAddressType() {
+		return addressType;
+	}
+
+	public void setAddressType(String addressType) {
+		this.addressType = addressType;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -272,6 +282,8 @@ public abstract class Address<S> extends BaseMagentoModel<S> {
 		result = prime * result + ((suffix == null) ? 0 : suffix.hashCode());
 		result = prime * result
 				+ ((telephone == null) ? 0 : telephone.hashCode());
+		result = prime * result
+				+ ((addressType == null) ? 0 : addressType.hashCode());
 		return result;
 	}
 
@@ -354,6 +366,11 @@ public abstract class Address<S> extends BaseMagentoModel<S> {
 				return false;
 		} else if (!telephone.equals(other.telephone))
 			return false;
+		if (addressType == null) {
+			if (other.addressType != null)
+				return false;
+		} else if (!addressType.equals(other.addressType))
+			return false;
 		return true;
 	}
 
@@ -370,6 +387,8 @@ public abstract class Address<S> extends BaseMagentoModel<S> {
 				+ ", middleName=" + middleName + ", postCode=" + postCode
 				+ ", prefix=" + prefix + ", region=" + region + ", street="
 				+ street + ", suffix=" + suffix + ", telephone=" + telephone
-				+ ", id=" + id + ", properties=" + properties + "]";
+				+ ", id=" + id + ", properties=" + properties
+				+ ", addressType=" + addressType +
+				"]";
 	}
 }

@@ -1,14 +1,21 @@
 package com.csv.java;
 
+import com.csv.java.OnlineDataService.OrderDataService;
+import com.csv.java.OnlineDataService.impl.OrderDataServiceImpl;
 import com.csv.java.common.tool.http.HttpsUtils;
 import com.csv.java.cnv.magento.serivce.imp.MagentoAuthServiceImp;
 import com.csv.java.net.magja.soap.SoapClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import sun.misc.BASE64Encoder;
 
 import javax.crypto.Mac;
@@ -19,11 +26,17 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = JavaApplication.class)
 public class JavaApplicationTests {
+
+    @Autowired
+    private OrderDataService orderDataService;
+
     @Test
     public void testsoap() {
 
+        orderDataService.GenenateOrderDataFromMagento();
     }
 
     @Test

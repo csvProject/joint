@@ -74,6 +74,11 @@ public class Order extends BaseMagentoModel {
 
 	private List<OrderItem> items = new ArrayList<OrderItem>();
 
+	private String createdAt;
+
+	private Double baseGrandTotal;
+
+	private String baseCurrencyCode;
 	/*
 	 * (non-Javadoc)
 	 *
@@ -528,7 +533,31 @@ public class Order extends BaseMagentoModel {
         this.parentOrderId = parentOrderId;
     }
 
-    @Override
+	public String getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Double getBaseGrandTotal() {
+		return baseGrandTotal;
+	}
+
+	public void setBaseGrandTotal(Double baseGrandTotal) {
+		this.baseGrandTotal = baseGrandTotal;
+	}
+
+	public String getBaseCurrencyCode() {
+		return baseCurrencyCode;
+	}
+
+	public void setBaseCurrencyCode(String baseCurrencyCode) {
+		this.baseCurrencyCode = baseCurrencyCode;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Order)) return false;
@@ -586,8 +615,11 @@ public class Order extends BaseMagentoModel {
         if (totalRefunded != null ? !totalRefunded.equals(order.totalRefunded) : order.totalRefunded != null)
             return false;
         if (weight != null ? !weight.equals(order.weight) : order.weight != null) return false;
+		if (createdAt != null ? !createdAt.equals(order.createdAt) : order.createdAt != null) return false;
+		if (baseGrandTotal != null ? !baseGrandTotal.equals(order.baseGrandTotal) : order.baseGrandTotal != null) return false;
+		if (baseCurrencyCode != null ? !baseCurrencyCode.equals(order.baseCurrencyCode) : order.baseCurrencyCode != null) return false;
 
-        return true;
+		return true;
     }public String toString() {
     return "Order{" +
             "orderNumber='" + orderNumber + '\'' +
@@ -621,6 +653,9 @@ public class Order extends BaseMagentoModel {
 			", orderPayment=" + orderPayment +
             ", shippingAddress=" + shippingAddress +
             ", items=" + items +
+			", createdAt=" + createdAt +
+			", baseGrandTotal=" + baseGrandTotal +
+			", baseCurrencyCode=" + baseCurrencyCode +
             '}';
 }
 

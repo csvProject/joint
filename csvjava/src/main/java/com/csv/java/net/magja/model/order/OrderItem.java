@@ -46,6 +46,8 @@ public class OrderItem extends BaseMagentoModel {
 
 	private Double rowWeight;
 
+	private String createdAt;
+
 	/* (non-Javadoc)
 	 * @see net.magja.magja.model.BaseMagentoModel#serializeToApi()
 	 */
@@ -306,6 +308,14 @@ public class OrderItem extends BaseMagentoModel {
 		this.rowWeight = rowWeight;
 	}
 
+	public String getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -347,6 +357,7 @@ public class OrderItem extends BaseMagentoModel {
 				+ ((rowWeight == null) ? 0 : rowWeight.hashCode());
 		result = prime * result + ((sku == null) ? 0 : sku.hashCode());
 		result = prime * result + ((weight == null) ? 0 : weight.hashCode());
+		result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
 		return result;
 	}
 
@@ -452,6 +463,11 @@ public class OrderItem extends BaseMagentoModel {
 				return false;
 		} else if (!weight.equals(other.weight))
 			return false;
+		if (createdAt == null) {
+			if (other.createdAt != null)
+				return false;
+		} else if (!createdAt.equals(other.createdAt))
+			return false;
 		return true;
 	}
 
@@ -470,6 +486,6 @@ public class OrderItem extends BaseMagentoModel {
 				+ ", qtyOrdered=" + qtyOrdered + ", rowInvoiced=" + rowInvoiced
 				+ ", rowTotal=" + rowTotal + ", rowWeight=" + rowWeight
 				+ ", sku=" + sku + ", weight=" + weight + ", id=" + id
-				+ ", properties=" + properties + "]";
+				+ ", properties=" + properties + ", createdAt=" + createdAt + "]";
 	}
 }
