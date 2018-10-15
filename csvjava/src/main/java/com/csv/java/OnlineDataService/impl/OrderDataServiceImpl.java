@@ -52,7 +52,7 @@ public class OrderDataServiceImpl implements OrderDataService {
         sysCodeDto.setSysCd("1");
         SysCodeDto forIncrementId = sysCodeDao.findSysCodeBySysCd(sysCodeDto);
         Filter filter = new Filter();
-        filter.getItems().add(new FilterItem("increment_id", ">", forIncrementId.getSysNm()+""));
+        filter.getItems().add(new FilterItem("increment_id", "gt", forIncrementId.getSysNm()+""));
 
         try{
             List<Order> newOrderList = service.list(filter);

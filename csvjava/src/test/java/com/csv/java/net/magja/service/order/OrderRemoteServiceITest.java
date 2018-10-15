@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.csv.java.common.tool.PHPSerializeUtil;
 import com.csv.java.net.magja.model.address.BasicAddress;
 import com.csv.java.net.magja.model.order.*;
 import com.csv.java.net.magja.service.RemoteServiceFactory;
@@ -66,7 +67,7 @@ public class OrderRemoteServiceITest {
 
   @Test
   public void getById() throws ServiceException {
-    final Order order = service.getById(100000081);
+    final Order order = service.getById(510002459);
     log.info("Order {}: {}", order);
     assertNotNull(order);
 
@@ -75,6 +76,10 @@ public class OrderRemoteServiceITest {
     // System.out.println(order.getBillingAddress().toString());
 
     for (final OrderItem item : order.getItems()) {
+      String productOptions = item.getProductOptions();
+      productOptions = productOptions==null?"":productOptions;
+      List<String> reusltList = PHPSerializeUtil.unserializePHParray(productOptions);
+      productOptions = reusltList.toString();
       log.info("Item #{}: {}", item.getId(), item);
     }
   }
@@ -101,7 +106,9 @@ public class OrderRemoteServiceITest {
 
   @Test
   public void testList() throws ServiceException {
-    List<Order> list = service.list(null);
+    Filter filter1 = new Filter();
+    filter1.getItems().add(new FilterItem("increment_id", "gt", "510002000"));
+    List<Order> list = service.list(filter1);
     for (Order order : list)
       System.out.println(order.toString());
 

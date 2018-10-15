@@ -163,6 +163,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- 反php序列化 -->
+        <dependency>
+            <groupId>org.sction</groupId>
+            <artifactId>phprpc</artifactId>
+            <version>3.0.2</version>
+        </dependency>
     </dependencies>
 
     <!-- 运行环境 -->

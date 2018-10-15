@@ -5,6 +5,7 @@ package com.csv.java.OnlineDataService.impl;
 
 
 import com.csv.java.OnlineDataService.OrderDataMakeService;
+import com.csv.java.common.tool.PHPSerializeUtil;
 import com.csv.java.dao.GenenateErrorDao;
 import com.csv.java.dao.OrderDao;
 import com.csv.java.dao.OrderDetailDao;
@@ -161,6 +162,8 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             //客户要求
             String productOptions = newItem.getProductOptions();
             productOptions = productOptions==null?"":productOptions;
+            List<String> reusltList = PHPSerializeUtil.unserializePHParray(productOptions);
+            productOptions = reusltList.toString();
             orderDetailDto.setCustomerRequest(productOptions);
             //明细订单状态
             orderDetailDto.setdOrderStatus(Integer.parseInt(orderStatus));
