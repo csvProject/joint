@@ -71,6 +71,9 @@ public class OrderDto extends BaseDto{
 
         private int modifyflag=0;
 
+        //系统入库类型
+        private int systype;
+
         public int getOrderId() {
                 return orderId;
         }
@@ -333,5 +336,13 @@ public class OrderDto extends BaseDto{
 
         public void setModifyflag(int modifyflag) {
                 this.modifyflag = modifyflag;
+        }
+
+        public int getSystype() {
+                return systype;
+        }
+
+        public void setSystype(int systype) {
+                this.systype = systype;
         }
 }

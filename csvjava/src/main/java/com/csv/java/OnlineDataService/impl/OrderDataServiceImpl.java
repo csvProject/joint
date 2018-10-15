@@ -4,36 +4,39 @@ package com.csv.java.OnlineDataService.impl;
 
 
 
-import com.csv.java.OnlineDataService.ConstantDataService;
+import com.csv.java.OnlineDataService.GenenateErrorService;
+import com.csv.java.OnlineDataService.OrderDataMakeService;
 import com.csv.java.OnlineDataService.OrderDataService;
-import com.csv.java.dao.OrderDao;
-import com.csv.java.dao.OrderDetailDao;
-import com.csv.java.entity.OrderDetailDto;
-import com.csv.java.entity.OrderDto;
+import com.csv.java.dao.GenenateErrorDao;
+import com.csv.java.dao.SysCodeDao;
+import com.csv.java.entity.GenenateErrorDto;
+import com.csv.java.entity.SysCodeDto;
 import com.csv.java.net.magja.model.order.Filter;
 import com.csv.java.net.magja.model.order.FilterItem;
 import com.csv.java.net.magja.model.order.Order;
-import com.csv.java.net.magja.model.order.OrderItem;
 import com.csv.java.net.magja.service.RemoteServiceFactory;
 import com.csv.java.net.magja.service.ServiceException;
 import com.csv.java.net.magja.service.order.OrderRemoteService;
 import com.csv.java.net.magja.soap.MagentoSoapClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static com.csv.java.OnlineDataService.ConstantDataService.*;
 
 @Service(value = "orderDataService")
 public class OrderDataServiceImpl implements OrderDataService {
 
     @Autowired
-    private OrderDao  orderDao;
+    private GenenateErrorService genenateErrorService;
 
     @Autowired
-    private OrderDetailDao orderDetailDao;
+    private OrderDataMakeService orderDataMakeService;
+
+    @Autowired
+    private SysCodeDao sysCodeDao;
+
+    @Autowired
+    private GenenateErrorDao genenateErrorDao;
 
     private OrderRemoteService service;
 
@@ -44,151 +47,64 @@ public class OrderDataServiceImpl implements OrderDataService {
         service = remoteServiceFactory.getOrderRemoteService();
 
         //获取新的订单添加到库
-        int lastIncrementId = orderDao.getLastWebsiteorderno(3);
+        SysCodeDto sysCodeDto = new SysCodeDto();
+        sysCodeDto.setSysTypeCd(3);
+        sysCodeDto.setSysCd("1");
+        SysCodeDto forIncrementId = sysCodeDao.findSysCodeBySysCd(sysCodeDto);
         Filter filter = new Filter();
-        filter.getItems().add(new FilterItem("increment_id", ">", lastIncrementId+""));
+        filter.getItems().add(new FilterItem("increment_id", ">", forIncrementId.getSysNm()+""));
 
         try{
             List<Order> newOrderList = service.list(filter);
             for (Order newOrder : newOrderList) {
-                this.makeOrderInfo(newOrder);
+                String err ="";
+                //数据同步
+                try {
+                    orderDataMakeService.makeOrderInfo(service, newOrder.getOrderNumber(), 1);
+                }catch (Exception e){
+                    err = toString();
+                }
+                if (!"".equals(err)){
+                    /*数据失败则添加此数据到网站失败订单记录表中
+                    * 如果添加到记录表失败，则后续所有数据同步处理不进行，以防记录表单没有记录上，在下回数据同步时，
+                    * 此条订单不会被同步。这样，字典表配置的id是能够记录到失败记录情况下的，最后一次的订单号，那么，
+                    * 在下次数据同步时，仍可以根据字典表配置的网站订单id开始同步*/
+                    genenateErrorService.addGenenateError(newOrder.getOrderNumber(),err);
+                }
             }
         }catch (ServiceException e){
             System.out.println(e.toString());
         }
 
+        //之前同步失败的网站订单在每次继续检查同步
+        List<GenenateErrorDto> genenateErrorDtoList = genenateErrorDao.findErrOrderNo(3);
+        for (GenenateErrorDto genenateErrorDto : genenateErrorDtoList) {
+            orderDataMakeService.makeOrderInfo(service,genenateErrorDto.getWebsiteOrderNo(),2);
+        }
     }
 
-    //生成order信息和orderdetail信息
-    @Transactional
-    public void makeOrderInfo(Order newOrder){
+    public void testTransactional(){
+
         try{
-            //获取订单详情
-            Order newOrderDetail = service.getById(newOrder.getOrderNumber());
-
-            OrderDto orderDto = new OrderDto();
-
-            //网站订单号
-            orderDto.setWebsiteorderno(newOrderDetail.getOrderNumber());
-            //订货日期
-            orderDto.setDhrq(newOrderDetail.getCreatedAt());
-
-            //支付类型
-            String payMethod = newOrderDetail.getOrderPayment().getMethod();
-            payMethod = payMethod==null?"":payMethod;
-            //paypal支付
-            if (payMethod.equals(PayMethodEnum.PAYPAL_STANDARD.toString())){
-                orderDto.setPaymentid(Integer.parseInt(PaymentidEnum.PAYPAL.toString()));
-            }
-            //银行入金
-            if (payMethod.equals(PayMethodEnum.CHECKMO.toString())){
-                orderDto.setPaymentid(Integer.parseInt(PaymentidEnum.Bank.toString()));
-            }
-            //信用卡
-            if (payMethod.equals(PayMethodEnum.MASAPAY_PAYMENT.toString())){
-                orderDto.setPaymentid(Integer.parseInt(PaymentidEnum.CREDIT_CARD.toString()));
-            }
-
-            //订单状态
-            String status = newOrder.getStatus()==null?"":newOrder.getStatus();
-
-            if (status.equals(StatusEnum.CANCELED.toString()) ) {
-                //是canceled状态，无论哪种付费方式，都为-1
-                orderDto.setOrderstatus(Integer.parseInt(OrderStatusEnum.CANCELED.toString()));
-            }else {
-                if (orderDto.getPaymentid() == Integer.parseInt(PaymentidEnum.Bank.toString())) {
-                    //银行入金付费完成由订单系统去更新，从销售库过来直接对应6
-                    orderDto.setOrderstatus(Integer.parseInt(OrderStatusEnum.UNPAID.toString()));
-                } else {
-                    //信用卡或paypal的时候，如果是processing订单库对应1 其他都是6
-                    if (status.equals(StatusEnum.PROCESSING.toString())) {
-                        orderDto.setOrderstatus(Integer.parseInt(OrderStatusEnum.PAID.toString()));
-                    } else {
-                        orderDto.setOrderstatus(Integer.parseInt(OrderStatusEnum.UNPAID.toString()));
-                    }
+            for (int i =1000; i<1007;i++) {
+                String err ="";
+                try {
+                    orderDataMakeService.maked(i);
+                }catch (Exception e){
+                    err = e.toString();
                 }
-            }
+                if (!"".equals(err)){
 
-            //电商地址
-            String addressType = newOrderDetail.getShippingAddress().getAddressType();
-            addressType  = addressType==null?"":addressType;
-
-            String street = newOrderDetail.getShippingAddress().getStreet();
-            street = street==null?"":street;
-            String city = newOrderDetail.getShippingAddress().getCity();
-            city = city==null?"":city;
-            orderDto.setAddress(addressType + " " + street + " " + city);
-
-            //收件人客户名
-            orderDto.setSqr(newOrderDetail.getShippingAddress().getFirstName() + " "+newOrderDetail.getShippingAddress().getLastName());
-
-            //email或者客户ID
-            orderDto.setEmail(newOrderDetail.getCustomerEmail()==null?"":newOrderDetail.getCustomerEmail());
-
-            //邮政编码
-            String postCode = newOrderDetail.getShippingAddress().getPostCode();
-            postCode = postCode ==null?"":postCode;
-            orderDto.setZipcode(postCode);
-
-            //订单价格
-            orderDto.setTotalprice(newOrderDetail.getBaseGrandTotal());
-
-            //币种
-            orderDto.setCurrency(newOrderDetail.getBaseCurrencyCode());
-
-            //网站ID
-            orderDto.setWebsiteid(3);
-
-            //备注
-
-            //国家ID
-            orderDto.setCountryid(2);
-
-            //管理ID
-            orderDto.setMgrid(2);
-
-            //添加订单
-            orderDao.insertOrderInfo(orderDto);
-
-            for ( int i =0,len = newOrderDetail.getItems().size();i < len;i++) {
-                OrderItem newItem = newOrderDetail.getItems().get(i);
-                OrderDetailDto orderDetailDto = new OrderDetailDto();
-                //订单号
-                orderDetailDto.setOrderId(orderDto.getOrderId());
-                //订单编号
-                if (len == 1){
-                    orderDetailDto.setdOrderNo("D03-" + orderDto.getOrderId());
-                }else{
-                    String strN = String.format("%02d", i+1);
-                    orderDetailDto.setdOrderNo("D03-" + orderDto.getOrderId() + "-" + strN);
+                    genenateErrorService.adde(i,err);
                 }
-                //SKU
-                orderDetailDto.setSku(newItem.getSku()==null?"":newItem.getSku());
-                //尺寸ID
-                orderDetailDto.setSizeId(0);
-                //录入日期
-                orderDetailDto.setJoinDate(newItem.getCreatedAt());
-                //数量
-                int qty = newItem.getQtyOrdered()==null?0:Integer.parseInt(newItem.getQtyOrdered().toString());
-                orderDetailDto.setQty(qty);
-                //客户要求
-                String productOptions = newItem.getProductOptions();
-                productOptions = productOptions==null?"":productOptions;
-                orderDetailDto.setCustomerRequest(productOptions);
-                //明细订单状态
-                orderDetailDto.setdOrderStatus(1);
-                //紧急状态ID
-                orderDetailDto.setPropertyId(4);
-                //管理ID
-                orderDetailDto.setMgrId(2);
-                //仓库出库标识
-                orderDetailDto.setWhw(0);
-                //订单明细添加
-                orderDetailDao.insertOrderDetailInfo(orderDetailDto);
+
             }
-        }catch (ServiceException e){
+
+        }catch (Exception e){
             System.out.println(e.toString());
         }
+        orderDataMakeService.maked(3001);
+        orderDataMakeService.maked(1003);
 
     }
 }

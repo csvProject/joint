@@ -23,6 +23,13 @@
             SYS_DESC sysDesc
         FROM t_sys_code
         WHERE SYS_TYPE_CD = #{sysTypeCd,jdbcType=INTEGER}
-        and SYS_CD = #{sysCd,jdbcType=INTEGER}
+        and SYS_CD = #{sysCd,jdbcType=VARCHAR}
     </select>
+
+    <update id="updSysNm" parameterType="SysCodeDto">
+        update t_sys_code
+        set SYS_NM =  #{sysNm,jdbcType=VARCHAR}
+        WHERE SYS_TYPE_CD = #{sysTypeCd,jdbcType=INTEGER}
+        and SYS_CD = #{sysCd,jdbcType=VARCHAR}
+    </update>
 </mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csv.java.dao.GenenateErrorDao" >
+
+
+    <select id="findErrOrderNo" parameterType="java.lang.Integer"  resultType="GenenateErrorDto">
+        SELECT
+            Genenate_Error_Id genenateErrorId,
+            WEBSITE_ORDER_NO websiteOrderNo,
+            WEBSITE_ID websiteId,
+            Error_Info errorInfo
+        FROM T_Genenate_Error
+        WHERE WEBSITE_ID = #{websiteId,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insertGenenateError" parameterType="GenenateErrorDto">
+
+        insert into T_Genenate_Error
+        (
+            WEBSITE_ORDER_NO ,
+            WEBSITE_ID ,
+            Error_Info,
+            UPDT_BY,
+            UPDT_TS
+        )
+        VALUES(
+            #{websiteOrderNo,jdbcType=VARCHAR},
+            #{websiteId,jdbcType=INTEGER},
+            #{errorInfo,jdbcType=VARCHAR},
+            2,
+            CURRENT_TIMESTAMP()
+        )
+    </insert>
+
+    <delete id="delGenenateError" parameterType="GenenateErrorDto">
+        delete from
+        T_Genenate_Error  WHERE  WEBSITE_ID = #{websiteId,jdbcType=INTEGER}
+        and WEBSITE_ORDER_NO = #{websiteOrderNo,jdbcType=VARCHAR}
+    </delete>
+</mapper>

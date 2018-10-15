@@ -38,15 +38,16 @@
                 modifyflag*/
         FROM t_order
         WHERE  websiteid = #{websiteid,jdbcType=INTEGER}
-        and paymentid in (2,6)
-        and orderstatus = 6
+        /*由于信用卡状态为caceled在销售系统有可能是未付状态，所以信用卡支付方式的包含未付与canceled数据*/
+        and ((paymentid = 6 and orderstatus = 6) or (paymentid = 2 and orderstatus in (6,-1)))
+        and systype = 1
     </select>
 
     <select id="getLastWebsiteorderno" parameterType="java.lang.Integer"  resultType="java.lang.Integer">
         SELECT
           max(websiteorderno)
         FROM t_order
-        WHERE  websiteid = #{websiteid,jdbcType=INTEGER}
+        WHERE  websiteid = #{websiteid,jdbcType=INTEGER} and systype = 1
     </select>
 
     <insert id="insertOrderInfo" useGeneratedKeys="true" keyProperty="orderId" parameterType="OrderDto">
@@ -84,7 +85,8 @@
                 joindate,
                 mgrid,
                 detflag,
-                modifyflag
+                modifyflag,
+                systype
             )
         VALUES(
                 str_to_date(#{dhrq,jdbcType=VARCHAR},'%Y-%m-%d'),
@@ -118,7 +120,8 @@
                 str_to_date(#{joindate,jdbcType=VARCHAR},'%Y-%m-%d %H'),
                 #{mgrid,jdbcType=INTEGER},
                 #{detflag,jdbcType=TINYINT},
-                #{modifyflag,jdbcType=TINYINT}
+                #{modifyflag,jdbcType=TINYINT},
+                1
                 )
 
     </insert>

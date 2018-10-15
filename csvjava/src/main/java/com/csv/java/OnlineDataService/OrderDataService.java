@@ -10,4 +10,6 @@ public interface OrderDataService {
 
     public void GenenateOrderDataFromMagento();
 
+    public void testTransactional();
+
 }

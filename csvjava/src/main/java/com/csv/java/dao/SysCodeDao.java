@@ -15,4 +15,7 @@ public interface SysCodeDao {
 
     //根据分类code、代码code查询
     SysCodeDto findSysCodeBySysCd(SysCodeDto into);
+
+    //更新sysnm
+    public void updSysNm(SysCodeDto indto);
 }
