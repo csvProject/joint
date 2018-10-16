@@ -9,4 +9,7 @@ public interface OrderDetailDao {
 
     //订单明细添加
     public void insertOrderDetailInfo(OrderDetailDto indto);
+
+    //更新订单状态
+    public void updOrderstatusById(OrderDetailDto indto);
 }

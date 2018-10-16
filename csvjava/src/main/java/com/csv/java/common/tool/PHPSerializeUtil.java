@@ -19,7 +19,7 @@ public class PHPSerializeUtil {
         if (list == null){
             return ret;
         }
-        if (list.getArray("options") == null){
+        if (list.get("options") == null){
             return ret;
         }
         MixedArray options = list.getArray("options");

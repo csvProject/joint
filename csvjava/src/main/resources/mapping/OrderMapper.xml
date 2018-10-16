@@ -43,13 +43,6 @@
         and systype = 1
     </select>
 
-    <select id="getLastWebsiteorderno" parameterType="java.lang.Integer"  resultType="java.lang.Integer">
-        SELECT
-          max(websiteorderno)
-        FROM t_order
-        WHERE  websiteid = #{websiteid,jdbcType=INTEGER} and systype = 1
-    </select>
-
     <insert id="insertOrderInfo" useGeneratedKeys="true" keyProperty="orderId" parameterType="OrderDto">
 
         insert into t_order
@@ -126,7 +119,7 @@
 
     </insert>
 
-    <update id="updOrderstatusByWebsiteorderno" parameterType="OrderDto">
+    <update id="updOrderstatusById" parameterType="OrderDto">
         update t_order
         set orderstatus =  #{orderstatus,jdbcType=INTEGER}
         where id = #{orderId,jdbcType=INTEGER}

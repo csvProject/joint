@@ -21,6 +21,7 @@ import com.csv.java.net.magja.soap.MagentoSoapClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service(value = "orderDataService")
@@ -43,8 +44,12 @@ public class OrderDataServiceImpl implements OrderDataService {
     //获取新的订单及更新已有未付款订单的状态
     public void GenenateOrderDataFromMagento(){
 
+        System.out.println("定时数据同步开始++++++++++++++++++++");
         final RemoteServiceFactory remoteServiceFactory = new RemoteServiceFactory(MagentoSoapClient.getInstance());
         service = remoteServiceFactory.getOrderRemoteService();
+
+        //本次处理产生的失败订单号
+        List<String> errOrderList = new ArrayList();
 
         //获取新的订单添加到库
         SysCodeDto sysCodeDto = new SysCodeDto();
@@ -72,9 +77,11 @@ public class OrderDataServiceImpl implements OrderDataService {
                     err =e.toString();
                 }
                 if (!"".equals(err)){
-
+                    System.out.println("订单（"+ newOrder.getOrderNumber() +"）同步失败，开始登记到同步错误记录表");
                     //同步错误的销售订单记录到同步错误记录表中
                     genenateErrorService.addGenenateError(newOrder.getOrderNumber(),err);
+                    System.out.println("成功登记到同步错误记录表");
+                    errOrderList.add(newOrder.getOrderNumber());
                 }
             }
         }catch (ServiceException e){
@@ -84,18 +91,32 @@ public class OrderDataServiceImpl implements OrderDataService {
         //之前同步失败的同步错误记录表中订单在每次继续检查同步
         List<GenenateErrorDto> genenateErrorDtoList = genenateErrorDao.findErrOrderNo(3);
         for (GenenateErrorDto genenateErrorDto : genenateErrorDtoList) {
-            try {
-                orderDataMakeService.makeOrderInfo(service, genenateErrorDto.getWebsiteOrderNo(), 2);
+            boolean hav = false;
+            //本次处理产生失败订单不需要进行再同步
+            for (String errOrder : errOrderList){
+                if (errOrder.equals(genenateErrorDto.getWebsiteOrderNo())){
+                    hav = true;
+                    break;
+                }
             }
-            catch (Exception e){
-
+            if (!hav) {
+                try {
+                    orderDataMakeService.makeOrderInfo(service, genenateErrorDto.getWebsiteOrderNo(), 2);
+                } catch (Exception e) {
+                    System.out.println("同步错误记录表订单（"+ genenateErrorDto.getWebsiteOrderNo() +"）再同步失败");
+                    System.out.println(e.toString());
+                }
             }
         }
+        System.out.println("定时数据同步结束++++++++++++++++++++");
 
+        System.out.println("定时订单状态更新开始#################");
         /* 订单状态更新
         1.获取订单系统中所有未付款的订单
         2.查询对应销售订单，更新订单系统订单状态
          */
+
+        System.out.println("定时订单状态更新结束#################");
     }
 
     public void testTransactional(){

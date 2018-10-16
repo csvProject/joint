@@ -94,4 +94,9 @@
 
     </insert>
 
+    <update id="updOrderstatusByOrderId" parameterType="OrderDto">
+        update t_order_detail
+        set dorderstatus =  #{orderStatus,jdbcType=INTEGER}
+        where orderid = #{orderId,jdbcType=INTEGER}
+    </update>
 </mapper>

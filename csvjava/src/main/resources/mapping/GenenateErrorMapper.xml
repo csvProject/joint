@@ -11,6 +11,7 @@
             Error_Info errorInfo
         FROM T_Genenate_Error
         WHERE WEBSITE_ID = #{websiteId,jdbcType=INTEGER}
+        and    del_flag = 0
     </select>
 
     <insert id="insertGenenateError" parameterType="GenenateErrorDto">
@@ -20,6 +21,7 @@
             WEBSITE_ORDER_NO ,
             WEBSITE_ID ,
             Error_Info,
+            del_flag,
             UPDT_BY,
             UPDT_TS
         )
@@ -27,6 +29,7 @@
             #{websiteOrderNo,jdbcType=VARCHAR},
             #{websiteId,jdbcType=INTEGER},
             #{errorInfo,jdbcType=VARCHAR},
+            0,
             2,
             CURRENT_TIMESTAMP()
         )
@@ -37,4 +40,10 @@
         T_Genenate_Error  WHERE  WEBSITE_ID = #{websiteId,jdbcType=INTEGER}
         and WEBSITE_ORDER_NO = #{websiteOrderNo,jdbcType=VARCHAR}
     </delete>
+
+    <update id="updDelFlag" parameterType="GenenateErrorDto">
+        update  T_Genenate_Error
+          set    del_flag = 1
+          WHERE  Genenate_Error_Id = #{genenateErrorId,jdbcType=INTEGER}
+    </update>
 </mapper>

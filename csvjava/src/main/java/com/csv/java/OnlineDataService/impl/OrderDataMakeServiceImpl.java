@@ -49,7 +49,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
     @Transactional
     public void makeOrderInfo(OrderRemoteService service,String orderNumber ,int doFlag){
 
-            //获取订单详情
+        //获取订单详情
         Order newOrderDetail = new Order();
         try {
             newOrderDetail = service.getById(orderNumber);
@@ -204,6 +204,40 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
 
 
     }
+
+    //更新订单库中订单状态
+    @Transactional
+    public void updOrderInfo(OrderRemoteService service,String orderNumber ) {
+        //获取订单详情
+        Order newOrderDetail = new Order();
+        try {
+            newOrderDetail = service.getById(orderNumber);
+        }catch (ServiceException e){
+
+        }
+        OrderDto orderDto = new OrderDto();
+        //订单状态
+        String status = newOrderDetail.getStatus()==null?"":newOrderDetail.getStatus();
+        String orderStatus = "";
+        if (status.equals(StatusEnum.CANCELED.toString()) ) {
+            //是canceled状态，无论哪种付费方式，都为-1
+            orderStatus = OrderStatusEnum.CANCELED.toString();
+        }else {
+            if (orderDto.getPaymentid() == Integer.parseInt(PaymentidEnum.Bank.toString())) {
+                //银行入金付费完成由订单系统去更新，从销售库过来直接对应6
+                orderStatus = OrderStatusEnum.UNPAID.toString();
+            } else {
+                //信用卡或paypal的时候，如果是processing订单库对应1 其他都是6
+                if (status.equals(StatusEnum.PROCESSING.toString())) {
+                    orderStatus = OrderStatusEnum.PAID.toString();
+                } else {
+                    orderStatus = OrderStatusEnum.UNPAID.toString();
+                }
+            }
+        }
+
+    }
+
 
     //子事务test
     @Transactional

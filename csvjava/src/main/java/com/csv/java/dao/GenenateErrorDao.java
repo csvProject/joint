@@ -18,4 +18,7 @@ public interface GenenateErrorDao {
 
     //删除
     public void delGenenateError(GenenateErrorDto indto);
+
+    //逻辑删除
+    public void updDelFlag(GenenateErrorDto indto);
 }
