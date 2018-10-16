@@ -7,10 +7,8 @@ import com.csv.java.entity.CsvTemplateDetailDto;
 import com.csv.java.entity.ReplacementSrc;
 import com.csv.java.entity.SysCodeDto;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static com.csv.java.common.tool.MYSQLEncoder.encode;
 import static com.csv.java.config.ConstantConfig.FIELD_MATCHING_TABLE;
@@ -67,28 +65,6 @@ public class StringFormatForSQL{
         }
         return ret;
     }
-
-    /*public static String structCsvRuleSql(int csvtempId,List<CsvTemplateDetailDto> list,SysCodeDao sysCodeDao,CsvCustomFieldDao csvCustomFieldDao){
-        Map map = new HashMap<String,String>();
-        List<SysCodeDto> l =  sysCodeDao.findSysCodeByTypeCd(1);
-        List<CsvCustomFieldDto> l2 =  csvCustomFieldDao.findCsvCustomField(csvtempId);
-        for (SysCodeDto s: l) {
-            if(s.getSysCd() == null){
-                s.setSysCd("");
-            }
-            map.put(s.getSysNm(),s.getSysCd());
-        }
-        for (CsvCustomFieldDto s: l2) {
-            if(s.getCfieldValue() == null){
-                s.setCfieldValue("");
-            }
-            map.put(s.getCfieldNm(),"t_csvcustom_field."+s.getCsvCustomFieldId()+"t_csvcustom_field");
-        }
-        String csvSql="";
-        csvSql = StringFormatForSQL.fieldListFormat(list,map);
-
-        return csvSql;
-    }*/
 
     public static String fieldListFormat(List<CsvTemplateDetailDto> list,Map<String,String> arguments){
         if (list == null){
@@ -186,6 +162,23 @@ public class StringFormatForSQL{
             }
         }
         return src;
+    }
+
+    /**
+     * 数据库入库日期 约定的格式：yyyy-MM-dd   yyyy-MM-dd HH:mm:ss
+     * @param geShi
+     * @return
+     */
+    public static String changeDateFmt(String str,String startGeShi,String geShi){
+        SimpleDateFormat formatter = new SimpleDateFormat(startGeShi);
+        try {
+            formatter.setLenient(false);
+            Date newDate = formatter.parse(str);
+            formatter = new SimpleDateFormat(geShi);
+            return formatter.format(newDate);
+        }catch (Exception e){
+            return "0000-00-00";
+        }
     }
 }
 

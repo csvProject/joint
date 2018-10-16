@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csv.java.dao.OrderDetailDao" >
 
-    <insert id="insertOrderInfo"  parameterType="OrderDetailDto">
+    <insert id="insertOrderDetailInfo"  parameterType="OrderDetailDto">
 
         insert into t_order_detail
             (
@@ -49,6 +49,7 @@
                 arrive_mgrid
             )
         VALUES(
+            #{orderId,jdbcType=INTEGER},
             #{dOrderNo,jdbcType=VARCHAR},
             str_to_date(#{confirmDate,jdbcType=VARCHAR},'%Y-%m-%d'),
             #{sku,jdbcType=VARCHAR},

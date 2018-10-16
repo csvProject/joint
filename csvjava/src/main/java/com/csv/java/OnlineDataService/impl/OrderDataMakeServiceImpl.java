@@ -6,6 +6,7 @@ package com.csv.java.OnlineDataService.impl;
 
 import com.csv.java.OnlineDataService.OrderDataMakeService;
 import com.csv.java.common.tool.PHPSerializeUtil;
+import com.csv.java.common.tool.StringFormatForSQL;
 import com.csv.java.dao.GenenateErrorDao;
 import com.csv.java.dao.OrderDao;
 import com.csv.java.dao.OrderDetailDao;
@@ -22,6 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static com.csv.java.OnlineDataService.ConstantDataService.*;
@@ -58,7 +61,8 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         //网站订单号
         orderDto.setWebsiteorderno(newOrderDetail.getOrderNumber());
         //订货日期
-        orderDto.setDhrq(newOrderDetail.getCreatedAt());
+        String createAt = StringFormatForSQL.changeDateFmt(newOrderDetail.getCreatedAt(),"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd");
+        orderDto.setDhrq(createAt);
 
         //支付类型
         String payMethod = newOrderDetail.getOrderPayment().getMethod();
@@ -113,6 +117,11 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         //email或者客户ID
         orderDto.setEmail(newOrderDetail.getCustomerEmail()==null?"":newOrderDetail.getCustomerEmail());
 
+        //电话
+        String phone = newOrderDetail.getShippingAddress().getTelephone();
+        phone = phone==null?"":phone;
+        orderDto.setPhone(phone);
+
         //邮政编码
         String postCode = newOrderDetail.getShippingAddress().getPostCode();
         postCode = postCode ==null?"":postCode;
@@ -155,9 +164,10 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             //尺寸ID
             orderDetailDto.setSizeId(0);
             //录入日期
-            orderDetailDto.setJoinDate(newItem.getCreatedAt());
+            String itemCreateAt = StringFormatForSQL.changeDateFmt(newItem.getCreatedAt(),"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd");
+            orderDetailDto.setJoinDate(itemCreateAt);
             //数量
-            int qty = newItem.getQtyOrdered()==null?0:Integer.parseInt(newItem.getQtyOrdered().toString());
+            int qty = newItem.getQtyOrdered()==null?0:(int)Double.parseDouble(newItem.getQtyOrdered().toString());
             orderDetailDto.setQty(qty);
             //客户要求
             String productOptions = newItem.getProductOptions();
@@ -211,8 +221,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         genenateErrorDto2.setWebsiteOrderNo("B"+orderNumber);
         genenateErrorDto2.setErrorInfo("OK"+orderNumber);
         if (orderNumber == 1003 || orderNumber == 1005) {
-            String a = "aa";
-            int b = Integer.parseInt(a);
+            int qty = Integer.parseInt("1.0");
         }
         genenateErrorDao.insertGenenateError(genenateErrorDto2);
 
