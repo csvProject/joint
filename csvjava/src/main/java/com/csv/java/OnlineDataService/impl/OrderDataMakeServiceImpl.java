@@ -161,9 +161,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             orderDetailDto.setQty(qty);
             //客户要求
             String productOptions = newItem.getProductOptions();
-            productOptions = productOptions==null?"":productOptions;
-            List<String> reusltList = PHPSerializeUtil.unserializePHParray(productOptions);
-            productOptions = reusltList.toString();
+            productOptions = productOptions==null?"":PHPSerializeUtil.getProductOptions(productOptions);
             orderDetailDto.setCustomerRequest(productOptions);
             //明细订单状态
             orderDetailDto.setdOrderStatus(Integer.parseInt(orderStatus));

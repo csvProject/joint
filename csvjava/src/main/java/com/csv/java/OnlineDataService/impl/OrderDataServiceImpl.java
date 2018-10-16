@@ -54,21 +54,26 @@ public class OrderDataServiceImpl implements OrderDataService {
         Filter filter = new Filter();
         filter.getItems().add(new FilterItem("increment_id", "gt", forIncrementId.getSysNm()+""));
 
+        /* 数据同步策略，下记每一点为一个事务
+         * 1.把销售订单同步到订单系统，再记下最后同步成功的销售订单号，下一次同步时，同步销售订单条件为 大于 最后同步成功的销售订单号
+         * 2.销售订单同步时，每条销售订单的同步处理为单独一个事务，当条销售订单同步报错，记录销售订单号及错误信息到同步错误记录表中，
+         * 继续下一个销售订单号的同步；如果记录到错误记录表时出错，则后面所有的销售订单不同步
+         * 3.扫描错误记录表，把表中的销售订单进行再同步
+         * 4.订单状态更新中每条订单的处理为单独事务*/
         try{
             List<Order> newOrderList = service.list(filter);
             for (Order newOrder : newOrderList) {
                 String err ="";
-                //数据同步
+
                 try {
+                    //销售订单同步到订单系统
                     orderDataMakeService.makeOrderInfo(service, newOrder.getOrderNumber(), 1);
                 }catch (Exception e){
-                    err = toString();
+                    err =e.toString();
                 }
                 if (!"".equals(err)){
-                    /*数据失败则添加此数据到网站失败订单记录表中
-                    * 如果添加到记录表失败，则后续所有数据同步处理不进行，以防记录表单没有记录上，在下回数据同步时，
-                    * 此条订单不会被同步。这样，字典表配置的id是能够记录到失败记录情况下的，最后一次的订单号，那么，
-                    * 在下次数据同步时，仍可以根据字典表配置的网站订单id开始同步*/
+
+                    //同步错误的销售订单记录到同步错误记录表中
                     genenateErrorService.addGenenateError(newOrder.getOrderNumber(),err);
                 }
             }
@@ -76,11 +81,21 @@ public class OrderDataServiceImpl implements OrderDataService {
             System.out.println(e.toString());
         }
 
-        //之前同步失败的网站订单在每次继续检查同步
+        //之前同步失败的同步错误记录表中订单在每次继续检查同步
         List<GenenateErrorDto> genenateErrorDtoList = genenateErrorDao.findErrOrderNo(3);
         for (GenenateErrorDto genenateErrorDto : genenateErrorDtoList) {
-            orderDataMakeService.makeOrderInfo(service,genenateErrorDto.getWebsiteOrderNo(),2);
+            try {
+                orderDataMakeService.makeOrderInfo(service, genenateErrorDto.getWebsiteOrderNo(), 2);
+            }
+            catch (Exception e){
+
+            }
         }
+
+        /* 订单状态更新
+        1.获取订单系统中所有未付款的订单
+        2.查询对应销售订单，更新订单系统订单状态
+         */
     }
 
     public void testTransactional(){

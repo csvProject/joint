@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.csv.java.common.tool.PHPSerializeUtil;
@@ -13,6 +14,9 @@ import com.csv.java.net.magja.model.order.*;
 import com.csv.java.net.magja.service.RemoteServiceFactory;
 import com.csv.java.net.magja.service.ServiceException;
 import com.csv.java.net.magja.soap.MagentoSoapClient;
+import de.ailis.pherialize.Mixed;
+import de.ailis.pherialize.MixedArray;
+import de.ailis.pherialize.Pherialize;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -67,7 +71,7 @@ public class OrderRemoteServiceITest {
 
   @Test
   public void getById() throws ServiceException {
-    final Order order = service.getById(510002459);
+    final Order order = service.getById(510002460);
     log.info("Order {}: {}", order);
     assertNotNull(order);
 
@@ -76,10 +80,29 @@ public class OrderRemoteServiceITest {
     // System.out.println(order.getBillingAddress().toString());
 
     for (final OrderItem item : order.getItems()) {
+
+
       String productOptions = item.getProductOptions();
+
       productOptions = productOptions==null?"":productOptions;
-      List<String> reusltList = PHPSerializeUtil.unserializePHParray(productOptions);
-      productOptions = reusltList.toString();
+      MixedArray list;
+
+
+      list = Pherialize.unserialize(productOptions).toArray();
+      String tmp = "";
+      if (list !=null){
+        tmp = "";
+      }
+      int aa = list.getArray("options").values().size();
+      for (int i =0 ;i < aa ;i++){
+        MixedArray hash = list.getArray("options").getArray(i);
+
+        String v =hash.get("label").toString();
+      }
+      list.getArray("options").getArray(0).get("label");
+
+
+
       log.info("Item #{}: {}", item.getId(), item);
     }
   }
