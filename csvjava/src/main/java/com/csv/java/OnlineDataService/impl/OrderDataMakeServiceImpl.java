@@ -51,7 +51,8 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         try {
             newOrderDetail = service.getById(orderNumber);
         }catch (ServiceException e){
-
+            String errS = "销售订单（"+ orderNumber +"）soap order.info接口数据获取失败";
+            throw new RuntimeException(errS);
         }
         OrderDto orderDto = new OrderDto();
 
@@ -172,39 +173,23 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         genenateErrorDao.delGenenateError(genenateErrorDto);
         //生成数据成功------end
 
-
     }
 
     //更新订单库中订单状态
     @Transactional
-    public void updOrderInfo(OrderRemoteService service,String orderNumber ) {
+    public void updOrderInfo(OrderRemoteService service,OrderDto orderDto ) {
         //获取订单详情
         Order newOrderDetail = new Order();
         try {
-            newOrderDetail = service.getById(orderNumber);
+            newOrderDetail = service.getById(orderDto.getWebsiteorderno());
         }catch (ServiceException e){
-
+            String errS = "销售订单（"+ orderDto.getWebsiteorderno() +"）soap order.info接口数据获取失败";
+            throw new RuntimeException(errS);
         }
-        OrderDto orderDto = new OrderDto();
         //订单状态
         String status = newOrderDetail.getStatus()==null?"":newOrderDetail.getStatus();
         String orderStatus = "";
-        if (status.equals(StatusEnum.CANCELED.toString()) ) {
-            //是canceled状态，无论哪种付费方式，都为-1
-            orderStatus = OrderStatusEnum.CANCELED.toString();
-        }else {
-            if (orderDto.getPaymentid() == Integer.parseInt(PaymentidEnum.Bank.toString())) {
-                //银行入金付费完成由订单系统去更新，从销售库过来直接对应6
-                orderStatus = OrderStatusEnum.UNPAID.toString();
-            } else {
-                //信用卡或paypal的时候，如果是processing订单库对应1 其他都是6
-                if (status.equals(StatusEnum.PROCESSING.toString())) {
-                    orderStatus = OrderStatusEnum.PAID.toString();
-                } else {
-                    orderStatus = OrderStatusEnum.UNPAID.toString();
-                }
-            }
-        }
+
 
     }
 

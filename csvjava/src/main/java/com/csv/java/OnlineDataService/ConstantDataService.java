@@ -5,7 +5,9 @@ public interface ConstantDataService {
 
     //销售系统订单状态
     enum StatusEnum {
-        CANCELED("canceled", 1), PENDING("pending", 2), PROCESSING("processing", 3);
+        CANCELED("canceled", 1),
+        PENDING("pending", 2),
+        PROCESSING("processing", 3);
         // 成员变量
         private String name;
         private int index;
@@ -24,7 +26,9 @@ public interface ConstantDataService {
 
     //销售系统支付种类
     enum PayMethodEnum {
-        PAYPAL_STANDARD("paypal_standard", 1), MASAPAY_PAYMENT("masapay_payment", 2), CHECKMO("checkmo", 3);
+        PAYPAL_STANDARD("paypal_standard", 1),
+        MASAPAY_PAYMENT("masapay_payment", 2),
+        CHECKMO("checkmo", 3);
         // 成员变量
         private String name;
         private int index;
@@ -43,7 +47,9 @@ public interface ConstantDataService {
 
     //订单系统支付种类idpaymentid
     enum PaymentidEnum {
-        Bank("1", 1), CREDIT_CARD("2", 2), PAYPAL("6", 3);
+        Bank("1", 1),
+        CREDIT_CARD("2", 2),
+        PAYPAL("6", 3);
         // 成员变量
         private String value;
         private int index;
@@ -62,7 +68,9 @@ public interface ConstantDataService {
 
     //订单系统订单状态
     enum OrderStatusEnum {
-        UNPAID("6", 1), PAID("1", 2),CANCELED("-1",3);
+        UNPAID("6", 1),
+        PAID("1", 2),
+        CANCELED("-1",3);
         // 成员变量
         private String value;
         private int index;

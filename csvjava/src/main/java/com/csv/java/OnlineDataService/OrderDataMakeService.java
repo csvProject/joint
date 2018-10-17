@@ -1,6 +1,7 @@
 package com.csv.java.OnlineDataService;
 
 
+import com.csv.java.entity.OrderDto;
 import com.csv.java.net.magja.service.order.OrderRemoteService;
 
 public interface OrderDataMakeService {
@@ -9,7 +10,7 @@ public interface OrderDataMakeService {
     public void makeOrderInfo(OrderRemoteService service, String orderNumber , int doFlag);
 
     //更新订单库中订单状态
-    public void updOrderInfo(OrderRemoteService service, String orderNumber);
+    public void updOrderInfo(OrderRemoteService service, OrderDto orderDto);
 
     public void maked(int orderNumber);
 

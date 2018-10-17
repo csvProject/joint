@@ -8,8 +8,11 @@ import com.csv.java.OnlineDataService.GenenateErrorService;
 import com.csv.java.OnlineDataService.OrderDataMakeService;
 import com.csv.java.OnlineDataService.OrderDataService;
 import com.csv.java.dao.GenenateErrorDao;
+import com.csv.java.dao.OrderDao;
 import com.csv.java.dao.SysCodeDao;
 import com.csv.java.entity.GenenateErrorDto;
+import com.csv.java.entity.OrderCondiInDto;
+import com.csv.java.entity.OrderDto;
 import com.csv.java.entity.SysCodeDto;
 import com.csv.java.net.magja.model.order.Filter;
 import com.csv.java.net.magja.model.order.FilterItem;
@@ -39,6 +42,9 @@ public class OrderDataServiceImpl implements OrderDataService {
     @Autowired
     private GenenateErrorDao genenateErrorDao;
 
+    @Autowired
+    private OrderDao orderDao;
+
     private OrderRemoteService service;
 
     //获取新的订单及更新已有未付款订单的状态
@@ -66,7 +72,13 @@ public class OrderDataServiceImpl implements OrderDataService {
          * 3.扫描错误记录表，把表中的销售订单进行再同步
          * 4.订单状态更新中每条订单的处理为单独事务*/
         try{
-            List<Order> newOrderList = service.list(filter);
+            List<Order> newOrderList = new ArrayList<Order>();
+            try {
+                newOrderList = service.list(filter);
+            }catch (ServiceException e){
+                throw new RuntimeException("订单（销售订单号 > "+ forIncrementId.getSysNm() +"）soap order.list接口数据获取失败");
+            }
+
             for (Order newOrder : newOrderList) {
                 String err ="";
 
@@ -74,17 +86,18 @@ public class OrderDataServiceImpl implements OrderDataService {
                     //销售订单同步到订单系统
                     orderDataMakeService.makeOrderInfo(service, newOrder.getOrderNumber(), 1);
                 }catch (Exception e){
+                    System.out.println(e.toString());
                     err =e.toString();
                 }
                 if (!"".equals(err)){
-                    System.out.println("订单（"+ newOrder.getOrderNumber() +"）同步失败，开始登记到同步错误记录表");
+                    System.out.println("订单（"+ newOrder.getOrderNumber() +"）同步失败，登记到同步错误记录表");
                     //同步错误的销售订单记录到同步错误记录表中
                     genenateErrorService.addGenenateError(newOrder.getOrderNumber(),err);
-                    System.out.println("成功登记到同步错误记录表");
                     errOrderList.add(newOrder.getOrderNumber());
                 }
             }
-        }catch (ServiceException e){
+        }catch (Exception e){
+            System.out.println("同步数据处理异常中断！");
             System.out.println(e.toString());
         }
 
@@ -103,20 +116,32 @@ public class OrderDataServiceImpl implements OrderDataService {
                 try {
                     orderDataMakeService.makeOrderInfo(service, genenateErrorDto.getWebsiteOrderNo(), 2);
                 } catch (Exception e) {
-                    System.out.println("同步错误记录表订单（"+ genenateErrorDto.getWebsiteOrderNo() +"）再同步失败");
+                    System.out.println("同步错误记录表的销售订单（"+ genenateErrorDto.getWebsiteOrderNo() +"）再同步失败");
                     System.out.println(e.toString());
                 }
             }
         }
         System.out.println("定时数据同步结束++++++++++++++++++++");
 
-        System.out.println("定时订单状态更新开始#################");
+        System.out.println("定时订单支付状态更新开始#################");
         /* 订单状态更新
         1.获取订单系统中所有未付款的订单
         2.查询对应销售订单，更新订单系统订单状态
          */
-
-        System.out.println("定时订单状态更新结束#################");
+        OrderCondiInDto indto = new OrderCondiInDto();
+        List<OrderDto> orderDtoList = orderDao.findOrderNulPay(indto);
+        if (orderDtoList != null){
+            for (OrderDto orderDto : orderDtoList ){
+                try {
+                    orderDataMakeService.updOrderInfo(service, orderDto);
+                }
+                catch (Exception e){
+                    System.out.println("订单（"+ orderDto.getWebsiteorderno() +"）更新支付状态失败");
+                    System.out.println(e.toString());
+                }
+            }
+        }
+        System.out.println("定时订单支付状态更新结束#################");
     }
 
     public void testTransactional(){

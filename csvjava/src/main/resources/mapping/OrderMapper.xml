@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csv.java.dao.OrderDao" >
-    <select id="findOrderNulPay" parameterType="java.lang.Integer"  resultType="OrderDto">
+    <sql id="queryFrom">
+        <if test="dhStartDt !=null and dhStartDt !=''">
+            AND sj_datetime &gt;=str_to_date(#{dhStartDt,jdbcType=VARCHAR},'%Y-%m-%d')
+        </if>
+        <if test="dhEndDt !=null and dhEndDt !=''">
+            AND t.sj_datetime &lt;=str_to_date(#{dhEndDt,jdbcType=VARCHAR},'%Y-%m-%d')
+        </if>
+    </sql>
+    <select id="findOrderNulPay" parameterType="OrderCondiInDto"  resultType="OrderDto">
         SELECT
                 id orderId,
                 websiteorderno,
@@ -41,6 +49,7 @@
         /*由于信用卡状态为caceled在销售系统有可能是未付状态，所以信用卡支付方式的包含未付与canceled数据*/
         and ((paymentid = 6 and orderstatus = 6) or (paymentid = 2 and orderstatus in (6,-1)))
         and systype = 1
+        <include refid="queryFrom"></include>
     </select>
 
     <insert id="insertOrderInfo" useGeneratedKeys="true" keyProperty="orderId" parameterType="OrderDto">
