@@ -188,9 +188,14 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         }
         //订单状态
         String status = newOrderDetail.getStatus()==null?"":newOrderDetail.getStatus();
-        String orderStatus = "";
+        int orderStatus = DataTranceFormService.transformStatus(orderDto.getPaymentid(),status);
 
-
+        //付费状态为已付费才更新
+        if (orderStatus == Integer.parseInt(OrderStatusEnum.PAID.toString())) {
+            orderDto.setOrderstatus(orderStatus);
+            orderDao.updOrderstatusById(orderDto);
+            orderDetailDao.updOrderstatusByOrderId(orderDto);
+        }
     }
 
 

@@ -2,6 +2,7 @@ package com.csv.java.dao;
 
 
 import com.csv.java.entity.OrderDetailDto;
+import com.csv.java.entity.OrderDto;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ public interface OrderDetailDao {
     public void insertOrderDetailInfo(OrderDetailDto indto);
 
     //更新订单状态
-    public void updOrderstatusById(OrderDetailDto indto);
+    public void updOrderstatusByOrderId(OrderDto indto);
 }

@@ -3,10 +3,10 @@
 <mapper namespace="com.csv.java.dao.OrderDao" >
     <sql id="queryFrom">
         <if test="dhStartDt !=null and dhStartDt !=''">
-            AND sj_datetime &gt;=str_to_date(#{dhStartDt,jdbcType=VARCHAR},'%Y-%m-%d')
+            AND dhrq &gt;=str_to_date(#{dhStartDt,jdbcType=VARCHAR},'%Y-%m-%d')
         </if>
         <if test="dhEndDt !=null and dhEndDt !=''">
-            AND t.sj_datetime &lt;=str_to_date(#{dhEndDt,jdbcType=VARCHAR},'%Y-%m-%d')
+            AND dhrq &lt;= str_to_date(#{dhEndDt,jdbcType=VARCHAR},'%Y-%m-%d')
         </if>
     </sql>
     <select id="findOrderNulPay" parameterType="OrderCondiInDto"  resultType="OrderDto">

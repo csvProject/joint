@@ -36,6 +36,9 @@ public class ConstantConfig {
     /*magento 网址*/
     public static String MAGENTO_HOST;
 
+    //订单支付状态时所查询订单范围（n天内）
+    public static int ORDERDATA_INTERVAL_NDAY;
+
     @PostConstruct
     public void initialization() {
         Origins = _environment.getProperty("cors.mappings.origins")==null?"*".split(","):_environment.getProperty("cors.mappings.origins").split(",");
@@ -46,6 +49,8 @@ public class ConstantConfig {
         MAGENTO_HOST = _environment.getProperty("magento.host");
 
         EXPORT_CSV_PRODUCT_LIMITCOUNT = Integer.parseInt(_environment.getProperty("export.csv.product.limitcount"));
+        ORDERDATA_INTERVAL_NDAY = Integer.parseInt(_environment.getProperty("orderdata.interval.nday"));
+
         initDeleteZipFile();
     }
 

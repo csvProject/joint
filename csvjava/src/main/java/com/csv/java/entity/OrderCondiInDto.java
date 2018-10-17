@@ -10,7 +10,7 @@ public class OrderCondiInDto extends BaseDto{
     private String dhEndDt;
 
     //网站订单号
-    private String websiteid;
+    private int websiteid;
 
     public String getDhStartDt() {
         return dhStartDt;
@@ -28,11 +28,11 @@ public class OrderCondiInDto extends BaseDto{
         this.dhEndDt = dhEndDt;
     }
 
-    public String getWebsiteid() {
+    public int getWebsiteid() {
         return websiteid;
     }
 
-    public void setWebsiteid(String websiteid) {
+    public void setWebsiteid(int websiteid) {
         this.websiteid = websiteid;
     }
 }

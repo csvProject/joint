@@ -7,6 +7,7 @@ package com.csv.java.OnlineDataService.impl;
 import com.csv.java.OnlineDataService.GenenateErrorService;
 import com.csv.java.OnlineDataService.OrderDataMakeService;
 import com.csv.java.OnlineDataService.OrderDataService;
+import com.csv.java.common.tool.DateUtil;
 import com.csv.java.dao.GenenateErrorDao;
 import com.csv.java.dao.OrderDao;
 import com.csv.java.dao.SysCodeDao;
@@ -25,7 +26,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import static com.csv.java.config.ConstantConfig.ORDERDATA_INTERVAL_NDAY;
 
 @Service(value = "orderDataService")
 public class OrderDataServiceImpl implements OrderDataService {
@@ -90,7 +95,7 @@ public class OrderDataServiceImpl implements OrderDataService {
                     err =e.toString();
                 }
                 if (!"".equals(err)){
-                    System.out.println("订单（"+ newOrder.getOrderNumber() +"）同步失败，登记到同步错误记录表");
+                    System.out.println("销售订单（"+ newOrder.getOrderNumber() +"）同步失败，登记到同步错误记录表");
                     //同步错误的销售订单记录到同步错误记录表中
                     genenateErrorService.addGenenateError(newOrder.getOrderNumber(),err);
                     errOrderList.add(newOrder.getOrderNumber());
@@ -105,7 +110,7 @@ public class OrderDataServiceImpl implements OrderDataService {
         List<GenenateErrorDto> genenateErrorDtoList = genenateErrorDao.findErrOrderNo(3);
         for (GenenateErrorDto genenateErrorDto : genenateErrorDtoList) {
             boolean hav = false;
-            //本次处理产生失败订单不需要进行再同步
+            //本次同步处理产生失败订单不需要进行再同步
             for (String errOrder : errOrderList){
                 if (errOrder.equals(genenateErrorDto.getWebsiteOrderNo())){
                     hav = true;
@@ -129,15 +134,38 @@ public class OrderDataServiceImpl implements OrderDataService {
         2.查询对应销售订单，更新订单系统订单状态
          */
         OrderCondiInDto indto = new OrderCondiInDto();
+
+
+        int ndate = ORDERDATA_INTERVAL_NDAY;
+
+        Calendar cal = Calendar.getInstance();
+        Date edate = new Date();
+        cal.setTime(edate);
+        cal.add(Calendar.DATE,-1 * ndate);
+        String endDate = DateUtil.date2String(edate,"yyyy-MM-dd");
+        String startDate = DateUtil.date2String(cal.getTime(),"yyyy-MM-dd");
+
+        indto.setWebsiteid(3);
+        indto.setDhStartDt(startDate);
+        indto.setDhEndDt(endDate);
         List<OrderDto> orderDtoList = orderDao.findOrderNulPay(indto);
         if (orderDtoList != null){
             for (OrderDto orderDto : orderDtoList ){
-                try {
-                    orderDataMakeService.updOrderInfo(service, orderDto);
+                boolean hav = false;
+                //本次同步产生的订单不需要进行状态更新
+                for (String errOrder : errOrderList){
+                    if (errOrder.equals(orderDto.getWebsiteorderno())){
+                        hav = true;
+                        break;
+                    }
                 }
-                catch (Exception e){
-                    System.out.println("订单（"+ orderDto.getWebsiteorderno() +"）更新支付状态失败");
-                    System.out.println(e.toString());
+                if (!hav) {
+                    try {
+                        orderDataMakeService.updOrderInfo(service, orderDto);
+                    } catch (Exception e) {
+                        System.out.println("销售订单（" + orderDto.getWebsiteorderno() + "）更新支付状态失败");
+                        System.out.println(e.toString());
+                    }
                 }
             }
         }
