@@ -4,6 +4,7 @@ package com.csv.java.OnlineDataService.impl;
 
 
 
+import com.csv.java.OnlineDataService.DataTranceFormService;
 import com.csv.java.OnlineDataService.OrderDataMakeService;
 import com.csv.java.common.tool.PHPSerializeUtil;
 import com.csv.java.common.tool.StringFormatForSQL;
@@ -22,10 +23,6 @@ import com.csv.java.net.magja.service.order.OrderRemoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 import static com.csv.java.OnlineDataService.ConstantDataService.*;
 
@@ -67,39 +64,12 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         //支付类型
         String payMethod = newOrderDetail.getOrderPayment().getMethod();
         payMethod = payMethod==null?"":payMethod;
-        //paypal支付
-        if (payMethod.equals(PayMethodEnum.PAYPAL_STANDARD.toString())){
-            orderDto.setPaymentid(Integer.parseInt(PaymentidEnum.PAYPAL.toString()));
-        }
-        //银行入金
-        if (payMethod.equals(PayMethodEnum.CHECKMO.toString())){
-            orderDto.setPaymentid(Integer.parseInt(PaymentidEnum.Bank.toString()));
-        }
-        //信用卡
-        if (payMethod.equals(PayMethodEnum.MASAPAY_PAYMENT.toString())){
-            orderDto.setPaymentid(Integer.parseInt(PaymentidEnum.CREDIT_CARD.toString()));
-        }
+        orderDto.setPaymentid(DataTranceFormService.transformPayMethod(payMethod));
 
         //订单状态
         String status = newOrderDetail.getStatus()==null?"":newOrderDetail.getStatus();
-        String orderStatus = "";
-        if (status.equals(StatusEnum.CANCELED.toString()) ) {
-            //是canceled状态，无论哪种付费方式，都为-1
-            orderStatus = OrderStatusEnum.CANCELED.toString();
-        }else {
-            if (orderDto.getPaymentid() == Integer.parseInt(PaymentidEnum.Bank.toString())) {
-                //银行入金付费完成由订单系统去更新，从销售库过来直接对应6
-                orderStatus = OrderStatusEnum.UNPAID.toString();
-            } else {
-                //信用卡或paypal的时候，如果是processing订单库对应1 其他都是6
-                if (status.equals(StatusEnum.PROCESSING.toString())) {
-                    orderStatus = OrderStatusEnum.PAID.toString();
-                } else {
-                    orderStatus = OrderStatusEnum.UNPAID.toString();
-                }
-            }
-        }
-        orderDto.setOrderstatus(Integer.parseInt(orderStatus));
+        int orderStatus = DataTranceFormService.transformStatus(orderDto.getPaymentid(),status);
+        orderDto.setOrderstatus(orderStatus);
 
         //电商地址
         String addressType = newOrderDetail.getShippingAddress().getAddressType();
@@ -174,7 +144,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             productOptions = productOptions==null?"":PHPSerializeUtil.getProductOptions(productOptions);
             orderDetailDto.setCustomerRequest(productOptions);
             //明细订单状态
-            orderDetailDto.setdOrderStatus(Integer.parseInt(orderStatus));
+            orderDetailDto.setdOrderStatus(orderStatus);
             //紧急状态ID
             orderDetailDto.setPropertyId(4);
             //管理ID
