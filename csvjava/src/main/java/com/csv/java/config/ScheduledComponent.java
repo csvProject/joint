@@ -1,6 +1,8 @@
 package com.csv.java.config;
 
+import com.csv.java.OnlineDataService.OrderDataService;
 import com.csv.java.entity.FileDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,10 @@ import static com.csv.java.config.ConstantConfig.DELETE_ZIP_FILE_DAY;
 @Component
 public class ScheduledComponent {
     public static List<FileDto> ZIP_FILES = new ArrayList<>();
+
+    @Autowired
+    private OrderDataService orderDataService;
+
     @Scheduled(cron = "0 0 2 ? * 1")  //表示每个星期一凌晨2点
     public void pushDataScheduled() {
         Iterator<FileDto> it = ZIP_FILES.iterator();
@@ -28,5 +34,10 @@ public class ScheduledComponent {
                 it.remove();
             }
         }
+    }
+
+    @Scheduled(cron = "0 0/30 * * * ? ")
+    public void GenenateOrderDataFromMagento(){
+        orderDataService.GenenateOrderDataFromMagento();
     }
 }
