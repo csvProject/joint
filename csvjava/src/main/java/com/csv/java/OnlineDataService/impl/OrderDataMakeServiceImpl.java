@@ -20,6 +20,7 @@ import com.csv.java.net.magja.model.order.Order;
 import com.csv.java.net.magja.model.order.OrderItem;
 import com.csv.java.net.magja.service.ServiceException;
 import com.csv.java.net.magja.service.order.OrderRemoteService;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +52,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         try {
             newOrderDetail = service.getById(orderNumber);
         }catch (ServiceException e){
-            String errS = "销售订单（"+ orderNumber +"）soap order.info接口数据获取失败";
+            String errS = "销售订单（"+ orderNumber +"）soap order.info接口数据获取失败:" + e.toString();
             throw new RuntimeException(errS);
         }
         OrderDto orderDto = new OrderDto();
@@ -80,7 +81,9 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         street = street==null?"":street;
         String city = newOrderDetail.getShippingAddress().getCity();
         city = city==null?"":city;
-        orderDto.setAddress(addressType + " " + street + " " + city);
+        String address = addressType + " " + street + " " + city;
+        address = Base64.encodeBase64URLSafeString(address.getBytes());
+        orderDto.setAddress(address);
 
         //收件人客户名
         orderDto.setSqr(newOrderDetail.getShippingAddress().getFirstName() + " "+newOrderDetail.getShippingAddress().getLastName());
@@ -143,6 +146,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             //客户要求
             String productOptions = newItem.getProductOptions();
             productOptions = productOptions==null?"":PHPSerializeUtil.getProductOptions(productOptions);
+            productOptions = Base64.encodeBase64URLSafeString(productOptions.getBytes());
             orderDetailDto.setCustomerRequest(productOptions);
             //明细订单状态
             orderDetailDto.setdOrderStatus(orderStatus);
@@ -183,7 +187,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         try {
             newOrderDetail = service.getById(orderDto.getWebsiteorderno());
         }catch (ServiceException e){
-            String errS = "销售订单（"+ orderDto.getWebsiteorderno() +"）soap order.info接口数据获取失败";
+            String errS = "销售订单（"+ orderDto.getWebsiteorderno() +"）soap order.info接口数据获取失败:" + e.toString();
             throw new RuntimeException(errS);
         }
         //订单状态

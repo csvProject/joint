@@ -81,7 +81,7 @@ public class OrderDataServiceImpl implements OrderDataService {
             try {
                 newOrderList = service.list(filter);
             }catch (ServiceException e){
-                throw new RuntimeException("订单（销售订单号 > "+ forIncrementId.getSysNm() +"）soap order.list接口数据获取失败");
+                throw new RuntimeException("订单（销售订单号 > "+ forIncrementId.getSysNm() +"）soap order.list接口数据获取失败:" + e.toString());
             }
 
             for (Order newOrder : newOrderList) {
