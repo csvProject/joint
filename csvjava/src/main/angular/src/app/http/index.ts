@@ -49,6 +49,11 @@ export const url = {
   download:'csvfile/download', //下载
 
   isdelcustomfield:'csvcustomfield/chkdelcustom', //删除自定义字段校验接口
+
+  /*同步错误订单表*/
+  findErrOrderNo:'generateerror/finderrorderno',//查询
+
+  updDelFlag:'generateerror/upddelflag',//更新del_flag
 };
 
 

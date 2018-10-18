@@ -107,7 +107,9 @@ public class OrderDataServiceImpl implements OrderDataService {
         }
 
         //之前同步失败的同步错误记录表中订单在每次继续检查同步
-        List<GenerateErrorDto> generateErrorDtoList = generateErrorDao.findErrOrderNo(3);
+        GenerateErrorDto condi = new GenerateErrorDto();
+        condi.setWebsiteId(3);
+        List<GenerateErrorDto> generateErrorDtoList = generateErrorDao.findErrOrderNo(condi);
         for (GenerateErrorDto generateErrorDto : generateErrorDtoList) {
             boolean hav = false;
             //本次同步处理产生失败订单不需要进行再同步

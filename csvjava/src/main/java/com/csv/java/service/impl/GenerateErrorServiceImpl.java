@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service(value = "generateServiceImpl")
 public class GenerateErrorServiceImpl implements GenerateErrorService {
 
@@ -49,5 +51,13 @@ public class GenerateErrorServiceImpl implements GenerateErrorService {
         generateErrorDao.insertGenerateError(generateErrorDto);
     }
 
+    //更新delflag
+    public void updDelFlag(int generateErrorId){
+        generateErrorDao.updDelFlag(generateErrorId);
+    }
 
+    //查询同步失败表数据
+    public List<GenerateErrorDto> findErrOrderNo(GenerateErrorDto indto){
+        return generateErrorDao.findErrOrderNo(indto);
+    }
 }

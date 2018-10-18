@@ -15,6 +15,7 @@ import { FieldEditComponent } from './templateset/fieldedit/fieldedit.component'
 import { SortableModule } from 'ngx-bootstrap';
 import { FormulasComponent } from './templateset/formulas/formulas.component';
 import { GenerateerrorComponent } from './generateerror/generateerror.component';
+import {GenerateerrorService} from "../../http/generateerror.service";
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { GenerateerrorComponent } from './generateerror/generateerror.component'
   declarations: [SettingComponent,DatePipe, PlatformacctsetComponent, TemplatesetComponent, TempeditComponent, FieldEditComponent, FormulasComponent, GenerateerrorComponent],
   providers:[
     TemplatesetService,
-    PlatformacctService
+    PlatformacctService,
+    GenerateerrorService
   ]
 })
 export class SettingModule { }

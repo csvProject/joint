@@ -5,11 +5,12 @@
       <span>商品一览</span>
     </span>
   </li>
-  <li nz-submenu [nzOpen]="selected == 1 || selected == 2">
+  <li nz-submenu [nzOpen]="selected == 1 || selected == 2 || selected == 3">
     <span title><i class="anticon anticon-laptop"></i>设置</span>
     <ul>
       <li nz-menu-item [routerLink]="['setting/templateset']" [nzSelected]="selected == 1">模板设置</li>
       <li nz-menu-item [routerLink]="['setting/platformacctset']" [nzSelected]="selected == 2">平台设置</li>
+      <li nz-menu-item [routerLink]="['setting/generateerror']" [nzSelected]="selected == 3">同步错误日志</li>
     </ul>
   </li>
 </ul>

@@ -2,16 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csv.java.dao.GenerateErrorDao" >
 
-
-    <select id="findErrOrderNo" parameterType="java.lang.Integer"  resultType="GenerateErrorDto">
+    <sql id="queryFrom">
+        <if test="websiteOrderNo !=null and websiteOrderNo !=''">
+            AND WEBSITE_ORDER_NO like CONCAT('%', #{websiteOrderNo,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="websiteId !=null and websiteId !=''">
+            AND WEBSITE_ID =#{websiteId,jdbcType=INTEGER}
+        </if>
+    </sql>
+    <select id="findErrOrderNo" parameterType="GenerateErrorDto"  resultType="GenerateErrorDto">
         SELECT
             Generate_Error_Id generateErrorId,
             WEBSITE_ORDER_NO websiteOrderNo,
+            Error_Info errorInfo,
             WEBSITE_ID websiteId,
-            Error_Info errorInfo
+            DATE_FORMAT(UPDT_TS,'%Y-%m-%d %H:%i:%S') updtTs
         FROM T_Generate_Error
-        WHERE WEBSITE_ID = #{websiteId,jdbcType=INTEGER}
-        and    del_flag = 0
+        WHERE del_flag = 0
+        <include refid="queryFrom"></include>
     </select>
 
     <insert id="insertGenerateError" parameterType="GenerateErrorDto">
@@ -41,7 +49,7 @@
         and WEBSITE_ORDER_NO = #{websiteOrderNo,jdbcType=VARCHAR}
     </delete>
 
-    <update id="updDelFlag" parameterType="GenerateErrorDto">
+    <update id="updDelFlag" parameterType="java.lang.Integer">
         update  T_Generate_Error
           set    del_flag = 1
           WHERE  Generate_Error_Id = #{generateErrorId,jdbcType=INTEGER}

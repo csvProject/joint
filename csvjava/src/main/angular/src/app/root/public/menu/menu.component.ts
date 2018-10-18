@@ -18,6 +18,8 @@ export class MenuComponent implements OnInit {
       this.selected = 1;
     }else if(hash.indexOf("platformacctset")>=0){
       this.selected = 2;
+    }else if(hash.indexOf("generateerror")>=0){
+      this.selected = 3;
     }
 
   }

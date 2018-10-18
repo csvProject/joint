@@ -10,6 +10,8 @@ public class GenerateErrorDto extends BaseDto{
     private int websiteId;
     //错误信息
     private String errorInfo;
+    //更新时间
+    private String updtTs;
 
     public int getGenerateErrorId() {
         return generateErrorId;
@@ -41,5 +43,13 @@ public class GenerateErrorDto extends BaseDto{
 
     public void setErrorInfo(String errorInfo) {
         this.errorInfo = errorInfo;
+    }
+
+    public String getUpdtTs() {
+        return updtTs;
+    }
+
+    public void setUpdtTs(String updtTs) {
+        this.updtTs = updtTs;
     }
 }

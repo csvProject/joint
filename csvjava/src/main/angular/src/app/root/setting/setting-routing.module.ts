@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SettingComponent } from './setting.component';
 import { TemplatesetComponent } from './templateset/templateset.component';
 import { PlatformacctsetComponent } from './platformacctset/platformacctset.component';
+import {GenerateerrorComponent} from "./generateerror/generateerror.component";
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path:'platformacctset',
         component:PlatformacctsetComponent
+      },
+      {
+        path:'generateerror',
+        component:GenerateerrorComponent
       }
     ]
   }

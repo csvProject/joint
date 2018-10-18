@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {debounceTime, map, switchMap} from "rxjs/internal/operators";
 import {BehaviorSubject, Observable} from "rxjs/index";
-import {CsvTemplateInfo} from "../../../entity/tempData";
 import {PublicService} from "../../../http/public.service";
+import {GenerateerrorService} from "../../../http/generateerror.service";
 
 @Component({
   selector: 'app-generateerror',
@@ -11,7 +11,7 @@ import {PublicService} from "../../../http/public.service";
 })
 export class GenerateerrorComponent implements OnInit {
 
-  constructor(private publicService:PublicService,private service ) { }
+  constructor(private publicService:PublicService,private service : GenerateerrorService ) { }
 
   displayData= [];//画面显示数据集合
   dataSet = [];//查询结果集合
@@ -31,19 +31,18 @@ export class GenerateerrorComponent implements OnInit {
   }
 
   selectData(){
-
     //初始化变量
     this.displayData= [];
     this.dataSet = [];
 
     this.condi.websiteOrderNo = this.websiteOrderNo;
-    this.findGenerateerrorList(this.condi);
+    this.findErrOrderNo(this.condi);
 
 
   }
 
-  private updDelFlag(csvtempid){
-    return this.service.updDelFlag(csvtempid).pipe(map(data=>{
+  private updDelFlag(generateErrorId){
+    return this.service.updDelFlag(generateErrorId).pipe(map(data=>{
       this.selectData();
       return data
     }));
@@ -51,7 +50,7 @@ export class GenerateerrorComponent implements OnInit {
 
 
   delete(data){
-    this.updDelFlag(data.genen).subscribe(result=>{
+    this.updDelFlag(data.generateErrorId).subscribe(result=>{
       if(result.code == 0){
 
       }else if(result.code == 1){
@@ -62,9 +61,9 @@ export class GenerateerrorComponent implements OnInit {
     });
   }
 
-  private findGenerateerrorList(body){
+  private findErrOrderNo(body){
     this.publicService.sendLoading(true);
-    this.service.findGenerateerrorList(body).subscribe(result=>{
+    this.service.findErrOrderNo(body).subscribe(result=>{
       this.publicService.sendLoading(false);
       console.log(result);
       if(result.code == 0){
