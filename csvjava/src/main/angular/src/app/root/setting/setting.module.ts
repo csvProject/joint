@@ -14,6 +14,7 @@ import { TempeditComponent } from './templateset/tempedit/tempedit.component';
 import { FieldEditComponent } from './templateset/fieldedit/fieldedit.component';
 import { SortableModule } from 'ngx-bootstrap';
 import { FormulasComponent } from './templateset/formulas/formulas.component';
+import { GenerateerrorComponent } from './generateerror/generateerror.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,7 @@ import { FormulasComponent } from './templateset/formulas/formulas.component';
     FormsModule,
     NgZorroAntdModule
   ],
-  declarations: [SettingComponent,DatePipe, PlatformacctsetComponent, TemplatesetComponent, TempeditComponent, FieldEditComponent, FormulasComponent],
+  declarations: [SettingComponent,DatePipe, PlatformacctsetComponent, TemplatesetComponent, TempeditComponent, FieldEditComponent, FormulasComponent, GenerateerrorComponent],
   providers:[
     TemplatesetService,
     PlatformacctService

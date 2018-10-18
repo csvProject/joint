@@ -8,11 +8,11 @@ import com.csv.java.OnlineDataService.DataTranceFormService;
 import com.csv.java.OnlineDataService.OrderDataMakeService;
 import com.csv.java.common.tool.PHPSerializeUtil;
 import com.csv.java.common.tool.StringFormatForSQL;
-import com.csv.java.dao.GenenateErrorDao;
+import com.csv.java.dao.GenerateErrorDao;
 import com.csv.java.dao.OrderDao;
 import com.csv.java.dao.OrderDetailDao;
 import com.csv.java.dao.SysCodeDao;
-import com.csv.java.entity.GenenateErrorDto;
+import com.csv.java.entity.GenerateErrorDto;
 import com.csv.java.entity.OrderDetailDto;
 import com.csv.java.entity.OrderDto;
 import com.csv.java.entity.SysCodeDto;
@@ -39,7 +39,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
     private SysCodeDao sysCodeDao;
 
     @Autowired
-    private GenenateErrorDao genenateErrorDao;
+    private GenerateErrorDao generateErrorDao;
 
 
     //生成order信息和orderdetail信息
@@ -167,10 +167,10 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             sysCodeDao.updSysNm(sysCodeDto);
         }
         //删除同步失败的网站订单记录表中记录
-        GenenateErrorDto genenateErrorDto =new GenenateErrorDto();
-        genenateErrorDto.setWebsiteId(3);
-        genenateErrorDto.setWebsiteOrderNo(orderNumber);
-        genenateErrorDao.delGenenateError(genenateErrorDto);
+        GenerateErrorDto generateErrorDto =new GenerateErrorDto();
+        generateErrorDto.setWebsiteId(3);
+        generateErrorDto.setWebsiteOrderNo(orderNumber);
+        generateErrorDao.delGenerateError(generateErrorDto);
         //生成数据成功------end
 
     }
@@ -203,21 +203,21 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
     @Transactional
     public void maked(int orderNumber){
         //添加此数据到同步失败的网站订单记录表中
-        GenenateErrorDto genenateErrorDto =new GenenateErrorDto();
-        genenateErrorDto.setWebsiteId(3);
-        genenateErrorDto.setWebsiteOrderNo("A"+orderNumber);
-        genenateErrorDto.setErrorInfo("OK"+orderNumber);
+        GenerateErrorDto generateErrorDto =new GenerateErrorDto();
+        generateErrorDto.setWebsiteId(3);
+        generateErrorDto.setWebsiteOrderNo("A"+orderNumber);
+        generateErrorDto.setErrorInfo("OK"+orderNumber);
 
-        genenateErrorDao.insertGenenateError(genenateErrorDto);
+        generateErrorDao.insertGenerateError(generateErrorDto);
 
-        GenenateErrorDto genenateErrorDto2 =new GenenateErrorDto();
-        genenateErrorDto2.setWebsiteId(3);
-        genenateErrorDto2.setWebsiteOrderNo("B"+orderNumber);
-        genenateErrorDto2.setErrorInfo("OK"+orderNumber);
+        GenerateErrorDto generateErrorDto2 =new GenerateErrorDto();
+        generateErrorDto2.setWebsiteId(3);
+        generateErrorDto2.setWebsiteOrderNo("B"+orderNumber);
+        generateErrorDto2.setErrorInfo("OK"+orderNumber);
         if (orderNumber == 1003 || orderNumber == 1005) {
             int qty = Integer.parseInt("1.0");
         }
-        genenateErrorDao.insertGenenateError(genenateErrorDto2);
+        generateErrorDao.insertGenerateError(generateErrorDto2);
 
     }
 }

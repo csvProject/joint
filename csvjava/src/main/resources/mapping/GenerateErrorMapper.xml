@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.csv.java.dao.GenenateErrorDao" >
+<mapper namespace="com.csv.java.dao.GenerateErrorDao" >
 
 
-    <select id="findErrOrderNo" parameterType="java.lang.Integer"  resultType="GenenateErrorDto">
+    <select id="findErrOrderNo" parameterType="java.lang.Integer"  resultType="GenerateErrorDto">
         SELECT
-            Genenate_Error_Id genenateErrorId,
+            Generate_Error_Id generateErrorId,
             WEBSITE_ORDER_NO websiteOrderNo,
             WEBSITE_ID websiteId,
             Error_Info errorInfo
-        FROM T_Genenate_Error
+        FROM T_Generate_Error
         WHERE WEBSITE_ID = #{websiteId,jdbcType=INTEGER}
         and    del_flag = 0
     </select>
 
-    <insert id="insertGenenateError" parameterType="GenenateErrorDto">
+    <insert id="insertGenerateError" parameterType="GenerateErrorDto">
 
-        insert into T_Genenate_Error
+        insert into T_Generate_Error
         (
             WEBSITE_ORDER_NO ,
             WEBSITE_ID ,
@@ -35,15 +35,15 @@
         )
     </insert>
 
-    <delete id="delGenenateError" parameterType="GenenateErrorDto">
+    <delete id="delGenerateError" parameterType="GenerateErrorDto">
         delete from
-        T_Genenate_Error  WHERE  WEBSITE_ID = #{websiteId,jdbcType=INTEGER}
+        T_Generate_Error  WHERE  WEBSITE_ID = #{websiteId,jdbcType=INTEGER}
         and WEBSITE_ORDER_NO = #{websiteOrderNo,jdbcType=VARCHAR}
     </delete>
 
-    <update id="updDelFlag" parameterType="GenenateErrorDto">
-        update  T_Genenate_Error
+    <update id="updDelFlag" parameterType="GenerateErrorDto">
+        update  T_Generate_Error
           set    del_flag = 1
-          WHERE  Genenate_Error_Id = #{genenateErrorId,jdbcType=INTEGER}
+          WHERE  Generate_Error_Id = #{generateErrorId,jdbcType=INTEGER}
     </update>
 </mapper>

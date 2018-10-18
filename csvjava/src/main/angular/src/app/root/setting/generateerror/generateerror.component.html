@@ -1,0 +1,50 @@
+<div nz-row>
+  <div nz-col  nzSpan="24" style="margin-bottom: 16px">
+    <span class="span_label_title">销售订单号</span>
+    <input class="select_input" nz-input [(ngModel)]="websiteOrderNo">
+  </div>
+</div>
+<div style="margin-bottom: 16px;">
+  <button nz-button
+          [nzType]="'primary'" [nzLoading]="operating" (click)="selectData()">
+    搜索
+  </button>
+</div>
+<nz-table
+  #rowSelectionTable
+  nzBordered
+  [nzData]="displayData"
+  [nzTitle]="'同步失败订单列表'"
+  [nzPageSize]="20"
+  (nzCurrentPageDataChange)="currentPageDataChange($event)">
+  <thead>
+  <tr>
+    <th>订单号</th>
+    <th>错误信息</th>
+    <th>出错时间</th>
+    <th>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of rowSelectionTable.data ;let i = index">
+    <td>{{data.csvtempNm}}</td>
+    <td>{{data.platformNm}}</td>
+    <td>{{data.pfaccountNm}}</td>
+    <td>{{data.ptypeNm}}</td>
+    <td>{{data.sNm}}</td>
+    <td>{{data.joinDate | DatePipe: "yyyy-MM-dd HH:mm" }}</td>
+    <td>
+      <div nz-row style="text-align: center">
+        <div nz-col nzSpan="8">
+          <button nz-button nzType="primary" nz-popconfirm
+                  nzTitle="确认删除" nzOkText="确认" nzCancelText="取消"
+                  (nzOnConfirm)="delete(0,data)"
+          ><i class="anticon anticon-delete"></i>
+          </button>
+        </div>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

@@ -1,9 +1,9 @@
 package com.csv.java.entity;
 
 //同步错误数据记录表dto
-public class GenenateErrorDto extends BaseDto{
+public class GenerateErrorDto extends BaseDto{
     //错误实例ID
-    private int genenateErrorId;
+    private int generateErrorId;
     //网站订单号
     private String websiteOrderNo;
     //网站id
@@ -11,12 +11,12 @@ public class GenenateErrorDto extends BaseDto{
     //错误信息
     private String errorInfo;
 
-    public int getGenenateErrorId() {
-        return genenateErrorId;
+    public int getGenerateErrorId() {
+        return generateErrorId;
     }
 
-    public void setGenenateErrorId(int genenateErrorId) {
-        this.genenateErrorId = genenateErrorId;
+    public void setGenerateErrorId(int generateErrorId) {
+        this.generateErrorId = generateErrorId;
     }
 
     public String getWebsiteOrderNo() {

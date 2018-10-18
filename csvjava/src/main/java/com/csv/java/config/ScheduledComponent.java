@@ -36,8 +36,12 @@ public class ScheduledComponent {
         }
     }
 
+    /*
+    每整点30分进行同步
+    0 10/30 * * * ?  每整点30+10分钟进行同步
+     */
     @Scheduled(cron = "0 0/30 * * * ? ")
     public void GenenateOrderDataFromMagento(){
-        orderDataService.GenenateOrderDataFromMagento();
+        orderDataService.GenerateOrderDataFromMagento();
     }
 }

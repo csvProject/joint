@@ -4,14 +4,14 @@ package com.csv.java.OnlineDataService.impl;
 
 
 
-import com.csv.java.OnlineDataService.GenenateErrorService;
+import com.csv.java.service.GenerateErrorService;
 import com.csv.java.OnlineDataService.OrderDataMakeService;
 import com.csv.java.OnlineDataService.OrderDataService;
 import com.csv.java.common.tool.DateUtil;
-import com.csv.java.dao.GenenateErrorDao;
+import com.csv.java.dao.GenerateErrorDao;
 import com.csv.java.dao.OrderDao;
 import com.csv.java.dao.SysCodeDao;
-import com.csv.java.entity.GenenateErrorDto;
+import com.csv.java.entity.GenerateErrorDto;
 import com.csv.java.entity.OrderCondiInDto;
 import com.csv.java.entity.OrderDto;
 import com.csv.java.entity.SysCodeDto;
@@ -36,7 +36,7 @@ import static com.csv.java.config.ConstantConfig.ORDERDATA_INTERVAL_NDAY;
 public class OrderDataServiceImpl implements OrderDataService {
 
     @Autowired
-    private GenenateErrorService genenateErrorService;
+    private GenerateErrorService generateErrorService;
 
     @Autowired
     private OrderDataMakeService orderDataMakeService;
@@ -45,7 +45,7 @@ public class OrderDataServiceImpl implements OrderDataService {
     private SysCodeDao sysCodeDao;
 
     @Autowired
-    private GenenateErrorDao genenateErrorDao;
+    private GenerateErrorDao generateErrorDao;
 
     @Autowired
     private OrderDao orderDao;
@@ -53,7 +53,7 @@ public class OrderDataServiceImpl implements OrderDataService {
     private OrderRemoteService service;
 
     //获取新的订单及更新已有未付款订单的状态
-    public void GenenateOrderDataFromMagento(){
+    public void GenerateOrderDataFromMagento(){
 
         System.out.println("定时数据同步开始++++++++++++++++++++");
         final RemoteServiceFactory remoteServiceFactory = new RemoteServiceFactory(MagentoSoapClient.getInstance());
@@ -97,7 +97,7 @@ public class OrderDataServiceImpl implements OrderDataService {
                 if (!"".equals(err)){
                     System.out.println("销售订单（"+ newOrder.getOrderNumber() +"）同步失败，登记到同步错误记录表");
                     //同步错误的销售订单记录到同步错误记录表中
-                    genenateErrorService.addGenenateError(newOrder.getOrderNumber(),err);
+                    generateErrorService.addGenerateError(newOrder.getOrderNumber(),err);
                     errOrderList.add(newOrder.getOrderNumber());
                 }
             }
@@ -107,21 +107,21 @@ public class OrderDataServiceImpl implements OrderDataService {
         }
 
         //之前同步失败的同步错误记录表中订单在每次继续检查同步
-        List<GenenateErrorDto> genenateErrorDtoList = genenateErrorDao.findErrOrderNo(3);
-        for (GenenateErrorDto genenateErrorDto : genenateErrorDtoList) {
+        List<GenerateErrorDto> generateErrorDtoList = generateErrorDao.findErrOrderNo(3);
+        for (GenerateErrorDto generateErrorDto : generateErrorDtoList) {
             boolean hav = false;
             //本次同步处理产生失败订单不需要进行再同步
             for (String errOrder : errOrderList){
-                if (errOrder.equals(genenateErrorDto.getWebsiteOrderNo())){
+                if (errOrder.equals(generateErrorDto.getWebsiteOrderNo())){
                     hav = true;
                     break;
                 }
             }
             if (!hav) {
                 try {
-                    orderDataMakeService.makeOrderInfo(service, genenateErrorDto.getWebsiteOrderNo(), 2);
+                    orderDataMakeService.makeOrderInfo(service, generateErrorDto.getWebsiteOrderNo(), 2);
                 } catch (Exception e) {
-                    System.out.println("同步错误记录表的销售订单（"+ genenateErrorDto.getWebsiteOrderNo() +"）再同步失败");
+                    System.out.println("同步错误记录表的销售订单（"+ generateErrorDto.getWebsiteOrderNo() +"）再同步失败");
                     System.out.println(e.toString());
                 }
             }
@@ -184,7 +184,7 @@ public class OrderDataServiceImpl implements OrderDataService {
                 }
                 if (!"".equals(err)){
 
-                    genenateErrorService.adde(i,err);
+                    generateErrorService.adde(i,err);
                 }
 
             }

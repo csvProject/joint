@@ -1,0 +1,13 @@
+.span_label_title{
+  padding: 5px 10px 5px 0;
+  width: 66px;
+  margin-left: 30px;
+  display: inline-block;
+}
+.span_label_title:nth-child(1){
+  margin-left: 0;
+}
+
+.select_input{
+  width: 235px
+}
