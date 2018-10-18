@@ -53,7 +53,7 @@ public class OrderDataServiceImpl implements OrderDataService {
     private OrderRemoteService service;
 
     //获取新的订单及更新已有未付款订单的状态
-    public void GenerateOrderDataFromMagento(){
+    public void generateOrderDataFromMagento(){
 
         System.out.println("定时数据同步开始++++++++++++++++++++");
         final RemoteServiceFactory remoteServiceFactory = new RemoteServiceFactory(MagentoSoapClient.getInstance());

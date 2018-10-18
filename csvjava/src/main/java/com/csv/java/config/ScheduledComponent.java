@@ -42,6 +42,6 @@ public class ScheduledComponent {
      */
     @Scheduled(cron = "0 0/30 * * * ? ")
     public void GenenateOrderDataFromMagento(){
-        orderDataService.GenerateOrderDataFromMagento();
+        orderDataService.generateOrderDataFromMagento();
     }
 }
