@@ -1,5 +1,6 @@
 package com.csv.java.net.magja.soap;
 
+import com.csv.java.config.ConstantConfig;
 import com.csv.java.net.magja.magento.ResourcePath;
 import com.google.common.base.Preconditions;
 import org.apache.axiom.om.OMElement;
@@ -31,7 +32,7 @@ import java.util.*;
  */
 public class MagentoSoapClient implements SoapClient {
 
-  public static final String CONFIG_PROPERTIES_FILE = "magento-api";
+  public static final String CONFIG_PROPERTIES_FILE = "magento-api-" + ConstantConfig.SPRING_PROFILES_ACTIVE;
 
   private static final Logger log = LoggerFactory.getLogger(MagentoSoapClient.class);
   private static final QName LOGIN_RETURN = new QName("loginReturn");
@@ -50,7 +51,7 @@ public class MagentoSoapClient implements SoapClient {
 
   /**
    * Returns the default instance, or a newly created one from the
-   * magento-api.properties file, if there is no default instance. The default
+   * magento-api-dev.properties file, if there is no default instance. The default
    * instance is the first one created.
    *
    * @return the default instance or a newly created one
@@ -73,23 +74,29 @@ public class MagentoSoapClient implements SoapClient {
     synchronized (INSTANCES) {
 
       SoapConfig loadedSoapConfig = null;
+      String name = "";
       if (soapConfig == null) {
-        InputStream configStream = SoapClient.class.getResourceAsStream("/magento-api.properties");
+        if (ConstantConfig.SPRING_PROFILES_ACTIVE == null) {
+          name = "/magento-api-dev.properties";
+        } else{
+          name = "/magento-api-" + ConstantConfig.SPRING_PROFILES_ACTIVE + ".properties";
+        }
+        InputStream configStream = SoapClient.class.getResourceAsStream(name);
         if (configStream != null) {
-          log.info("/magento-api.properties found in classpath, trying to load using java.util.Properties");
+          log.info("/magento-api-dev.properties found in classpath, trying to load using java.util.Properties");
           Properties props = new Properties();
           try {
             props.load(configStream);
             loadedSoapConfig = new SoapConfig(props);
           } catch (IOException e) {
-            log.error("Cannot load /magento-api.properties from classpath", e);
+            log.error("Cannot load /magento-api-dev.properties from classpath", e);
           }
         } else {
-          log.error("/magento-api.properties not found in classpath");
+          log.error("/magento-api-dev.properties not found in classpath");
         }
 
         if (loadedSoapConfig == null) { // still null?
-          throw new RuntimeException("Cannot create soapConfig, make sure /magento-api.properties is in classpath, or provide your own SoapConfig instance");
+          throw new RuntimeException("Cannot create soapConfig, make sure /magento-api-dev.properties is in classpath, or provide your own SoapConfig instance");
         }
       } else {
         loadedSoapConfig = soapConfig;

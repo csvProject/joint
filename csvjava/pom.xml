@@ -209,7 +209,7 @@
                 <includes>
                     <include>application-${profileActive}.properties</include>
                     <include>application.properties</include>
-                    <include>magento-api.properties</include>
+                    <include>magento-api-${profileActive}.properties</include>
                     <!-- myBatis Mapper文件 注:缺少dao层扫描会报错-->
                     <include>mapping/*.xml</include>
 

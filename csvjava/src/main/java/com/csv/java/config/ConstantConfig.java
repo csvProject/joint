@@ -39,6 +39,8 @@ public class ConstantConfig {
     //订单支付状态时所查询订单范围（n天内）
     public static int ORDERDATA_INTERVAL_NDAY;
 
+    public static String SPRING_PROFILES_ACTIVE;
+
     @PostConstruct
     public void initialization() {
         Origins = _environment.getProperty("cors.mappings.origins")==null?"*".split(","):_environment.getProperty("cors.mappings.origins").split(",");
@@ -51,6 +53,7 @@ public class ConstantConfig {
         EXPORT_CSV_PRODUCT_LIMITCOUNT = Integer.parseInt(_environment.getProperty("export.csv.product.limitcount"));
         ORDERDATA_INTERVAL_NDAY = Integer.parseInt(_environment.getProperty("orderdata.interval.nday"));
 
+        SPRING_PROFILES_ACTIVE  = _environment.getProperty("spring.profiles.active");
         initDeleteZipFile();
     }
 
