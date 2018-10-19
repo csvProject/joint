@@ -40,7 +40,7 @@ public class ScheduledComponent {
     每整点15分+10分钟进行同步
     0 10/30 * * * ?  每整点30+10分钟进行同步
      */
-    @Scheduled(cron = "0 10/15 * * * ? ")
+    @Scheduled(cron = "0 10/15 * * * ?")
     public void GenenateOrderDataFromMagento(){
         orderDataService.generateOrderDataFromMagento(10);
     }

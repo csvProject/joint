@@ -131,8 +131,8 @@ public class OrderRemoteServiceITest {
   public void testList() throws ServiceException {
     Filter filter1 = new Filter();
     String [] aa={"510010000","1010010010"};
-    filter1.getItems().add(new FilterItem("increment_id", "in", aa));
-    //filter1.getItems().add(new FilterItem("increment_id", "lteq", "510010010"));
+    //filter1.getItems().add(new FilterItem("increment_id", "in", aa));
+    filter1.getItems().add(new FilterItem("increment_id", "gt", "510010000"));
     //filter1.getItems().add(new FilterItem("status", "eq", "success"));
     List<Order> list = service.list(filter1);
     for (Order order : list)
