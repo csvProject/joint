@@ -53,7 +53,7 @@ public class OrderDataServiceImpl implements OrderDataService {
     private OrderRemoteService service;
 
     //获取新的订单及更新已有未付款订单的状态
-    public void generateOrderDataFromMagento(){
+    public void generateOrderDataFromMagento(int limitcount){
 
         System.out.println("定时数据同步开始++++++++++++++++++++");
         final RemoteServiceFactory remoteServiceFactory = new RemoteServiceFactory(MagentoSoapClient.getInstance());
@@ -68,7 +68,14 @@ public class OrderDataServiceImpl implements OrderDataService {
         sysCodeDto.setSysCd("1");
         SysCodeDto forIncrementId = sysCodeDao.findSysCodeBySysCd(sysCodeDto);
         Filter filter = new Filter();
-        filter.getItems().add(new FilterItem("increment_id", "gt", forIncrementId.getSysNm()+""));
+
+        int startNo = Integer.parseInt(forIncrementId.getSysNm());
+        String[] values = new String[limitcount];
+        for (int i = 1 ; i <= limitcount ;i++){
+            values[i - 1] =  String.valueOf(startNo + i) ;
+        }
+
+        filter.getItems().add(new FilterItem("increment_id", "in", values));
 
         /* 数据同步策略，下记每一点为一个事务
          * 1.把销售订单同步到订单系统，再记下最后同步成功的销售订单号，下一次同步时，同步销售订单条件为 大于 最后同步成功的销售订单号

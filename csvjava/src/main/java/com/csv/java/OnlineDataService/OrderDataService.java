@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface OrderDataService {
 
-    public void generateOrderDataFromMagento();
+    public void generateOrderDataFromMagento(int limitcount);
 
     public void testTransactional();
 

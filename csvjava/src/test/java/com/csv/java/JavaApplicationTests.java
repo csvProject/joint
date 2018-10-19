@@ -36,7 +36,7 @@ public class JavaApplicationTests {
     @Test
     public void testsoap() {
 
-        orderDataService.generateOrderDataFromMagento();
+        orderDataService.generateOrderDataFromMagento(10);
         //orderDataService.testTransactional();
     }
 
