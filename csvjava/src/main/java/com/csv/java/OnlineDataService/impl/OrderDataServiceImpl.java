@@ -55,7 +55,8 @@ public class OrderDataServiceImpl implements OrderDataService {
     //获取新的订单及更新已有未付款订单的状态
     public void generateOrderDataFromMagento(int limitcount){
 
-        System.out.println("定时数据同步开始++++++++++++++++++++");
+        System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                "定时数据同步开始++++++++++++++++++++");
         final RemoteServiceFactory remoteServiceFactory = new RemoteServiceFactory(MagentoSoapClient.getInstance());
         service = remoteServiceFactory.getOrderRemoteService();
 
@@ -88,28 +89,35 @@ public class OrderDataServiceImpl implements OrderDataService {
             try {
                 newOrderList = service.list(filter);
             }catch (ServiceException e){
-                throw new RuntimeException("订单（销售订单号 > "+ forIncrementId.getSysNm() +"）soap order.list接口数据获取失败:" + e.toString());
+                throw new RuntimeException(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                        "订单（销售订单号 > "+ forIncrementId.getSysNm() +"）soap order.list接口数据获取失败:" + e.toString());
             }
 
             for (Order newOrder : newOrderList) {
                 String err ="";
 
                 try {
+                    System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                            "销售订单（"+ newOrder.getOrderNumber() +"）同步开始");
                     //销售订单同步到订单系统
                     orderDataMakeService.makeOrderInfo(service, newOrder.getOrderNumber(), 1);
+                    System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                            "销售订单（"+ newOrder.getOrderNumber() +"）同步完成");
                 }catch (Exception e){
                     System.out.println(e.toString());
                     err =e.toString();
                 }
                 if (!"".equals(err)){
-                    System.out.println("销售订单（"+ newOrder.getOrderNumber() +"）同步失败，登记到同步错误记录表");
+                    System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                            "销售订单（"+ newOrder.getOrderNumber() +"）同步失败，登记到同步错误记录表");
                     //同步错误的销售订单记录到同步错误记录表中
                     generateErrorService.addGenerateError(newOrder.getOrderNumber(),err);
                     errOrderList.add(newOrder.getOrderNumber());
                 }
             }
         }catch (Exception e){
-            System.out.println("同步数据处理异常中断！");
+            System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                    "同步数据处理异常中断！");
             System.out.println(e.toString());
         }
 
@@ -128,16 +136,23 @@ public class OrderDataServiceImpl implements OrderDataService {
             }
             if (!hav) {
                 try {
+                    System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                            "失败销售订单（"+ generateErrorDto.getWebsiteOrderNo() +"）再同步开始");
                     orderDataMakeService.makeOrderInfo(service, generateErrorDto.getWebsiteOrderNo(), 2);
+                    System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                            "失败销售订单（"+ generateErrorDto.getWebsiteOrderNo() +"）再同步完成");
                 } catch (Exception e) {
-                    System.out.println("同步错误记录表的销售订单（"+ generateErrorDto.getWebsiteOrderNo() +"）再同步失败");
+                    System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                            "同步错误记录表的销售订单（"+ generateErrorDto.getWebsiteOrderNo() +"）再同步失败");
                     System.out.println(e.toString());
                 }
             }
         }
-        System.out.println("定时数据同步结束++++++++++++++++++++");
+        System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                "定时数据同步结束++++++++++++++++++++");
 
-        System.out.println("定时订单支付状态更新开始#################");
+        System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                "定时订单支付状态更新开始#################");
         /* 订单状态更新
         1.获取订单系统中所有未付款的订单
         2.查询对应销售订单，更新订单系统订单状态
@@ -170,15 +185,21 @@ public class OrderDataServiceImpl implements OrderDataService {
                 }
                 if (!hav) {
                     try {
+                        System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                                "销售订单（" + orderDto.getWebsiteorderno() + "）更新支付状态开始");
                         orderDataMakeService.updOrderInfo(service, orderDto);
+                        System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                                "销售订单（" + orderDto.getWebsiteorderno() + "）更新支付状态完成");
                     } catch (Exception e) {
-                        System.out.println("销售订单（" + orderDto.getWebsiteorderno() + "）更新支付状态失败");
+                        System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                                "销售订单（" + orderDto.getWebsiteorderno() + "）更新支付状态失败");
                         System.out.println(e.toString());
                     }
                 }
             }
         }
-        System.out.println("定时订单支付状态更新结束#################");
+        System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                "定时订单支付状态更新结束#################");
     }
 
     public void testTransactional(){

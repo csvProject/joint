@@ -6,6 +6,7 @@ package com.csv.java.OnlineDataService.impl;
 
 import com.csv.java.OnlineDataService.DataTranceFormService;
 import com.csv.java.OnlineDataService.OrderDataMakeService;
+import com.csv.java.common.tool.DateUtil;
 import com.csv.java.common.tool.PHPSerializeUtil;
 import com.csv.java.common.tool.StringFormatForSQL;
 import com.csv.java.dao.GenerateErrorDao;
@@ -24,6 +25,8 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 import static com.csv.java.OnlineDataService.ConstantDataService.*;
 
@@ -52,7 +55,8 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         try {
             newOrderDetail = service.getById(orderNumber);
         }catch (ServiceException e){
-            String errS = "销售订单（"+ orderNumber +"）soap order.info接口数据获取失败:" + e.toString();
+            String errS = DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                    "销售订单（"+ orderNumber +"）soap order.info接口数据获取失败:" + e.toString();
             throw new RuntimeException(errS);
         }
         OrderDto orderDto = new OrderDto();
@@ -187,7 +191,8 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         try {
             newOrderDetail = service.getById(orderDto.getWebsiteorderno());
         }catch (ServiceException e){
-            String errS = "销售订单（"+ orderDto.getWebsiteorderno() +"）soap order.info接口数据获取失败:" + e.toString();
+            String errS = DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                    "销售订单（"+ orderDto.getWebsiteorderno() +"）soap order.info接口数据获取失败:" + e.toString();
             throw new RuntimeException(errS);
         }
         //订单状态
