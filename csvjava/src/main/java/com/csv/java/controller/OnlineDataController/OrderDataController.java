@@ -15,7 +15,7 @@ public class OrderDataController {
     //手动执行同步处理
     @RequestMapping(value = "/orderfrommagento", method = RequestMethod.GET)
     public Result orderFromMagento(@RequestParam(value = "limitcount", required = true) int limitcount) {
-        System.out.println("开始同步...");
+
         orderDataService.generateOrderDataFromMagento(limitcount);
         return ResultUtil.success() ;
     }

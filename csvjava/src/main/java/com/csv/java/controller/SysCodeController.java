@@ -16,14 +16,14 @@ public class SysCodeController {
     //根据分类code查询
     @RequestMapping(value = "/findbytypecd", method = RequestMethod.GET)
     public Result findSysCodeByTypeCd(@RequestParam(value = "typecd", required = true) int typeCd) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(sysCodeService.findSysCodeByTypeCd(typeCd)) ;
     }
 
     //根据分类code、代码code查询
     @RequestMapping(value = "/findbysyscd", method = RequestMethod.POST)
     public Result findSysCodeBySysCd(@RequestBody SysCodeDto indto) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(sysCodeService.findSysCodeBySysCd(indto)) ;
     }
 

@@ -16,14 +16,14 @@ public class CsvTemplateInfoController {
     //根据模板ID查询单件
     @RequestMapping(value = "/findbyid", method = RequestMethod.GET)
     public Result findCsvTempInfoById(@RequestParam(value = "csvtempid", required = true) int csvtempId) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(csvTemplateInfoService.findCsvTempInfoById(csvtempId));
     }
 
     //根据条件查询
     @RequestMapping(value = "/findbycondi", method = RequestMethod.POST)
     public Result findCsvTempInfoByCondi(@RequestBody CsvTemplateInfoDto indto) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(csvTemplateInfoService.findCsvTempInfoByCondi(indto)) ;
     }
 
@@ -36,7 +36,7 @@ public class CsvTemplateInfoController {
      */
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public Result insertCsvTempInfo(@RequestBody CsvTemplateInfoDto indto) {
-        System.out.println("开始添加..."+indto.toString());
+
         int ret = csvTemplateInfoService.insertCsvTempInfo(indto);
         if (ret == -1){
             return ResultUtil.success(ret,"该平台、账号、商品类型、供应商下模板已存在",null) ;
@@ -53,7 +53,7 @@ public class CsvTemplateInfoController {
     //根据ID删除
     @RequestMapping(value = "/delbyid", method = RequestMethod.GET)
     public Result delPlatformInfoByPfid(@RequestParam(value = "csvtempid", required = true) int csvtempId) {
-        System.out.println("开始删除...");
+
         csvTemplateInfoService.delCsvTempInfoById(csvtempId); ;
         return ResultUtil.success(null) ;
     }
@@ -61,7 +61,7 @@ public class CsvTemplateInfoController {
     //根据ID更新
     @RequestMapping(value = "/updatebyid", method = RequestMethod.POST)
     public Result updCsvTempInfoById(@RequestBody CsvTemplateInfoDto indto) {
-        System.out.println("开始更新..."+indto.toString());
+
         int ret = csvTemplateInfoService.updCsvTempInfoById(indto);
         if (ret == -2){
             return ResultUtil.success(ret,"模板名称已存在",null) ;
@@ -75,7 +75,7 @@ public class CsvTemplateInfoController {
     //
     @RequestMapping(value = "/copy", method = RequestMethod.POST)
     public Result copyCsvTempInfo(@RequestBody CsvTemplateInfoDto indto) {
-        System.out.println("开始复制..."+indto.toString());
+
         int ret = csvTemplateInfoService.copyCsvTempInfo(indto);
         if (ret == -1){
             return ResultUtil.success(ret,"该平台、账号、商品类型、供应商下模板已存在",null) ;

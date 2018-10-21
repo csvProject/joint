@@ -16,14 +16,14 @@ public class PlatformInfoController {
     //根据平台ID查询
     @RequestMapping(value = "/findbypfid", method = RequestMethod.GET)
     public Result findPlatformInfoByPfid(@RequestParam(value = "pfid", required = true) int pfId) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(platformInforService.findPlatformInfoByPfid(pfId));
     }
 
     //根据平台名称查询
     @RequestMapping(value = "/findbypfnm", method = RequestMethod.GET)
     public Result findPlatformInfoByPfnm(@RequestParam(value = "pfnm", required = true) String pfNm) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(platformInforService.findPlatformInfoByPfnm(pfNm)) ;
     }
 
@@ -36,7 +36,7 @@ public class PlatformInfoController {
      */
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public Result insertPlatformInfo(@RequestBody PlatformInfoDto platformInfoDto) {
-        System.out.println("开始添加..."+platformInfoDto.toString());
+
         int ret = platformInforService.insertPlatformInfo(platformInfoDto);
         if (ret == -1){
             return ResultUtil.success(ret,"平台名称已存在",null) ;
@@ -48,7 +48,7 @@ public class PlatformInfoController {
     //根据平台ID删除平台及账号
     @RequestMapping(value = "/delbypfid", method = RequestMethod.GET)
     public Result delPlatformInfoByPfid(@RequestParam(value = "pfid", required = true) int pfId) {
-        System.out.println("开始删除...");
+
         platformInforService.delPlatformInfoByPfid(pfId); ;
         return ResultUtil.success(null) ;
     }
@@ -56,7 +56,7 @@ public class PlatformInfoController {
     //根据平台ID更新
     @RequestMapping(value = "/updatebypfid", method = RequestMethod.POST)
     public Result updPlatformInfoByPfid(@RequestBody PlatformInfoDto platformInfoDto) {
-        System.out.println("开始更新..."+platformInfoDto.toString());
+
         int ret = platformInforService.updPlatformInfoByPfid(platformInfoDto);
         if (ret == -1){
             return ResultUtil.success(ret,"平台名称已存在",null) ;

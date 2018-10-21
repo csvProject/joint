@@ -18,14 +18,14 @@ public class GenerateErrorController {
     //根据条件查询
     @RequestMapping(value = "/finderrorderno", method = RequestMethod.POST)
     public Result findErrOrderNo(@RequestBody GenerateErrorDto indto) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(generateErrorService.findErrOrderNo(indto)) ;
     }
 
     //根据ID更新del_flag
     @RequestMapping(value = "/upddelflag", method = RequestMethod.GET)
     public Result updDelFlag(@RequestParam(value = "generateerrorid", required = true) int generateErrorId) {
-        System.out.println("开始更新del_flag...");
+
         generateErrorService.updDelFlag(generateErrorId); ;
         return ResultUtil.success(null) ;
     }

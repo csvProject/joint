@@ -22,7 +22,7 @@ public class ProductCsvController {
     //根据条件查询
     @RequestMapping(value = "/findListbycondi", method = RequestMethod.POST)
     public Result findProductByCondi(@RequestBody ProductCondiInDto indto) {
-        System.out.println("开始查询...");
+
         Map<String, Object> map = new HashMap<String, Object>();
         map = productCsvService.findProductByCondi(indto);
         List<ProductDto> list = (List<ProductDto>)map.get("list");
@@ -33,7 +33,7 @@ public class ProductCsvController {
     //根据条件查询(无分页)
     @RequestMapping(value = "/findListbycondinopage", method = RequestMethod.POST)
     public Result findListbycondinopage(@RequestBody ProductCondiInDto indto) {
-        System.out.println("开始查询...");
+
         Map<String, Object> map = new HashMap<String, Object>();
         map = productCsvService.findProductByCondiNoPage(indto);
         List<ProductDto> list = (List<ProductDto>)map.get("list");
@@ -45,14 +45,14 @@ public class ProductCsvController {
     //根据主key条件查询
     @RequestMapping(value = "/findListbyid", method = RequestMethod.GET)
     public Result findProductById(@RequestParam(value = "productid", required = true) int productId) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(productCsvService.findProductById(productId)) ;
     }
 
     //导出csv
     @RequestMapping(value = "/export", method = RequestMethod.POST)
     public Result exportProductCsv(@RequestBody CsvExportInDto indto) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(productCsvService.exportProductCsv(indto)) ;
     }
 }

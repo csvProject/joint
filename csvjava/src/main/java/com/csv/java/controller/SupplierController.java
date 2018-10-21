@@ -16,14 +16,14 @@ public class SupplierController {
     //根据条件查询
     @RequestMapping(value = "/findbycondi", method = RequestMethod.POST)
     public Result findPTypeByCondi(@RequestBody SupplierDto indto) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(supplierService.findSupplierByCondi(indto)) ;
     }
 
     //根据code,name条件查询
     @RequestMapping(value = "/findbycodenm", method = RequestMethod.GET)
     public Result findPTypeByCodenm(@RequestParam(value = "cdnm", required = true) String cdnm) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(supplierService.findSupplierByCodenm(cdnm)) ;
     }
 

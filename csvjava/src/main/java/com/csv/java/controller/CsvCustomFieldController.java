@@ -21,14 +21,14 @@ public class CsvCustomFieldController {
     //根据模板所有自定义公式字段
     @RequestMapping(value = "/findCsvCustomField", method = RequestMethod.GET)
     public Result findCsvCustomField(@RequestParam(value = "csvtempid", required = true) int csvtempId) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(csvCustomFieldService.findCsvCustomField(csvtempId)) ;
     }
 
     //批量更新模板自定义字段
     @RequestMapping(value = "/updcsvctmfieldbat", method = RequestMethod.POST)
     public Result updCsvCustomFieldBat(@RequestBody CsvCustomFieldBatDto indto) {
-        System.out.println("开始更新..."+indto.toString());
+
         csvCustomFieldService.updCsvCustomFieldBat(indto);
         return ResultUtil.success(null) ;
     }
@@ -36,14 +36,14 @@ public class CsvCustomFieldController {
     //验证公式是否正确
     @RequestMapping(value = "/verifyformula", method = RequestMethod.GET)
     public Result verifyFormula(@RequestParam(value = "formula", required = true) String formula) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(csvCustomFieldService.verifyFormula(formula)) ;
     }
 
     //自定义公式是否可以删除
     @RequestMapping(value = "/chkdelcustom", method = RequestMethod.POST)
     public Result chkDelCustomField(@RequestBody CsvCustomFieldDto indto) {
-        System.out.println("开始检查删除是否可以..."+indto.toString());
+
         List<CsvTemplateDetailDto> chk = new ArrayList<>();
         chk = csvCustomFieldService.chkDelCustomField(indto);
         return ResultUtil.success(chk) ;

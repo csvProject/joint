@@ -13,7 +13,7 @@ public class CommonInterceptor implements HandlerInterceptor {
 
     @Override
     public synchronized boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        System.out.println("CommonInterceptor拦截器");
+
         return true;
     }
 

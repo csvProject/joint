@@ -21,21 +21,21 @@ public class CsvTemplateDetailController {
     //根据模板ID查询所有字段
     @RequestMapping(value = "/findbycsvtempid", method = RequestMethod.GET)
     public Result findCsvTempDetailBycsvtempId(@RequestParam(value = "csvtempid", required = true) int csvtempId) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(csvTemplateDetailService.findCsvTempDetailBycsvtempId(csvtempId));
     }
 
     //根据ID查询单件
     @RequestMapping(value = "/findbyid", method = RequestMethod.GET)
     public Result findCsvTempDetailById(@RequestParam(value = "csvfieldid", required = true) int csvFieldId) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(csvTemplateDetailService.findCsvTempDetailById(csvFieldId));
     }
 
     //根据key查询
     @RequestMapping(value = "/findbykey", method = RequestMethod.POST)
     public Result findCsvTempDetailByKey(@RequestBody CsvTemplateDetailDto indto) {
-        System.out.println("开始查询...");
+
         return ResultUtil.success(csvTemplateDetailService.findCsvTempDetailByKey(indto)) ;
     }
 
@@ -48,7 +48,7 @@ public class CsvTemplateDetailController {
      */
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public Result insertCsvTempDetail(@RequestBody CsvTemplateDetailDto indto) {
-        System.out.println("开始添加..."+indto.toString());
+
         csvTemplateDetailService.insertCsvTempDetail(indto);
         return ResultUtil.success(null) ;
     }
@@ -56,7 +56,7 @@ public class CsvTemplateDetailController {
     //根据ID删除
     @RequestMapping(value = "/delbyid", method = RequestMethod.GET)
     public Result delCsvTempDetailById(@RequestParam(value = "csvfieldid", required = true) int csvFieldId) {
-        System.out.println("开始删除...");
+
         csvTemplateDetailService.delCsvTempDetailById(csvFieldId); ;
         return ResultUtil.success(null) ;
     }
@@ -64,7 +64,7 @@ public class CsvTemplateDetailController {
     //根据ID更新
     @RequestMapping(value = "/updatebyid", method = RequestMethod.POST)
     public Result updCsvTempDetailById(@RequestBody CsvTemplateDetailDto indto) {
-        System.out.println("开始更新..."+indto.toString());
+
         csvTemplateDetailService.updCsvTempDetailById(indto);
 
         return ResultUtil.success(null) ;
@@ -73,7 +73,7 @@ public class CsvTemplateDetailController {
     //批量更新模板字段
     @RequestMapping(value = "/updatedetailbat", method = RequestMethod.POST)
     public Result updCsvTempDetail(@RequestBody CsvTempBatDto indto) {
-        System.out.println("开始更新..."+indto.toString());
+
         csvTemplateDetailService.updCsvTempDetailBat(indto);
 
         return ResultUtil.success(null) ;

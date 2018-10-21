@@ -204,6 +204,8 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             orderDto.setOrderstatus(orderStatus);
             orderDao.updOrderstatusById(orderDto);
             orderDetailDao.updOrderstatusByOrderId(orderDto);
+            System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                    "销售订单（" + orderDto.getWebsiteorderno() + "）更新支付状态成功");
         }
     }
 
