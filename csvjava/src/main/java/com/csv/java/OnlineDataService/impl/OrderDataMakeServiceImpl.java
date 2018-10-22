@@ -56,7 +56,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             newOrderDetail = service.getById(orderNumber);
         }catch (ServiceException e){
             String errS = DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
-                    "销售订单（"+ orderNumber +"）soap order.info接口数据获取失败:" + e.toString();
+                    "销售订单【"+ orderNumber +"】soap order.info接口数据获取失败:" + e.toString();
             throw new RuntimeException(errS);
         }
         OrderDto orderDto = new OrderDto();
@@ -192,7 +192,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             newOrderDetail = service.getById(orderDto.getWebsiteorderno());
         }catch (ServiceException e){
             String errS = DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
-                    "销售订单（"+ orderDto.getWebsiteorderno() +"）soap order.info接口数据获取失败:" + e.toString();
+                    "销售订单【"+ orderDto.getWebsiteorderno() +"】soap order.info接口数据获取失败:" + e.toString();
             throw new RuntimeException(errS);
         }
         //订单状态
@@ -205,7 +205,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             orderDao.updOrderstatusById(orderDto);
             orderDetailDao.updOrderstatusByOrderId(orderDto);
             System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
-                    "销售订单（" + orderDto.getWebsiteorderno() + "）更新支付状态成功");
+                    "销售订单【" + orderDto.getWebsiteorderno() + "】更新支付状态成功");
         }
     }
 

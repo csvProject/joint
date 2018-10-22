@@ -71,7 +71,7 @@ public class OrderRemoteServiceITest {
 
   @Test
   public void getById() throws ServiceException {
-    final Order order = service.getById(510002460);
+    final Order order = service.getById(510010517);
     log.info("Order {}: {}", order);
     assertNotNull(order);
 

@@ -90,7 +90,7 @@ public class OrderDataServiceImpl implements OrderDataService {
                 newOrderList = service.list(filter);
             }catch (ServiceException e){
                 throw new RuntimeException(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
-                        "订单（销售订单号 in "+ values.toString() +"）soap order.list接口数据获取失败:" + e.toString());
+                        "订单【销售订单号 in "+ values.toString() +"】soap order.list接口数据获取失败:" + e.toString());
             }
 
             for (Order newOrder : newOrderList) {
@@ -100,14 +100,14 @@ public class OrderDataServiceImpl implements OrderDataService {
                     //销售订单同步到订单系统
                     orderDataMakeService.makeOrderInfo(service, newOrder.getOrderNumber(), 1);
                     System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
-                            "销售订单（"+ newOrder.getOrderNumber() +"）同步成功");
+                            "销售订单【"+ newOrder.getOrderNumber() +"】同步成功");
                 }catch (Exception e){
                     System.out.println(e.toString());
                     err =e.toString();
                 }
                 if (!"".equals(err)){
                     System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
-                            "销售订单（"+ newOrder.getOrderNumber() +"）同步失败，登记到同步错误记录表");
+                            "销售订单【"+ newOrder.getOrderNumber() +"】同步失败，登记到同步错误记录表");
                     //同步错误的销售订单记录到同步错误记录表中
                     generateErrorService.addGenerateError(newOrder.getOrderNumber(),err);
                     errOrderList.add(newOrder.getOrderNumber());
@@ -136,10 +136,10 @@ public class OrderDataServiceImpl implements OrderDataService {
                 try {
                     orderDataMakeService.makeOrderInfo(service, generateErrorDto.getWebsiteOrderNo(), 2);
                     System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
-                            "失败销售订单（"+ generateErrorDto.getWebsiteOrderNo() +"）再同步成功");
+                            "失败销售订单【"+ generateErrorDto.getWebsiteOrderNo() +"】再同步成功");
                 } catch (Exception e) {
                     System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
-                            "同步错误记录表的销售订单（"+ generateErrorDto.getWebsiteOrderNo() +"）再同步失败");
+                            "同步错误记录表的销售订单【"+ generateErrorDto.getWebsiteOrderNo() +"】再同步失败");
                     System.out.println(e.toString());
                 }
             }
@@ -185,7 +185,7 @@ public class OrderDataServiceImpl implements OrderDataService {
 
                     } catch (Exception e) {
                         System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
-                                "销售订单（" + orderDto.getWebsiteorderno() + "）更新支付状态失败");
+                                "销售订单【" + orderDto.getWebsiteorderno() + "】更新支付状态失败");
                         System.out.println(e.toString());
                     }
                 }
