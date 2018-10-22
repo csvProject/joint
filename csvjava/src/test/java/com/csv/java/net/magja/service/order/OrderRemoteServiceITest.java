@@ -76,6 +76,16 @@ public class OrderRemoteServiceITest {
     final Order order = service.getById(510010806);
     log.info("Order {}: {}", order);
     assertNotNull(order);
+    String contents = "";
+    for ( int i =0,len = order.getOrderStatusHistories().size();i < len;i++) {
+      OrderStatusHistory orderStatusHistory = order.getOrderStatusHistories().get(i);
+      String comment = orderStatusHistory.getComment() == null?"":orderStatusHistory.getComment();
+      if (!"".equals(comment)) {
+        contents = orderStatusHistory.getCreatedAt() + " " +
+                comment + ";" + contents;
+      }
+    }
+    System.out.println(contents);
 
     // System.out.println(order.getCustomer().toString());
     // System.out.println(order.getShippingAddress().toString());

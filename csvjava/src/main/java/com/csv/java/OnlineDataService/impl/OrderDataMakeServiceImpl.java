@@ -19,6 +19,7 @@ import com.csv.java.entity.OrderDto;
 import com.csv.java.entity.SysCodeDto;
 import com.csv.java.net.magja.model.order.Order;
 import com.csv.java.net.magja.model.order.OrderItem;
+import com.csv.java.net.magja.model.order.OrderStatusHistory;
 import com.csv.java.net.magja.service.ServiceException;
 import com.csv.java.net.magja.service.order.OrderRemoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +115,18 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         orderDto.setWebsiteid(3);
 
         //备注
-        orderDto.setContents("");
+        String contents = "";
+        for ( int i =0,len = newOrderDetail.getOrderStatusHistories().size();i < len;i++) {
+            OrderStatusHistory orderStatusHistory = newOrderDetail.getOrderStatusHistories().get(i);
+            String comment = orderStatusHistory.getComment() == null?"":orderStatusHistory.getComment();
+            if (!"".equals(comment)) {
+                contents = orderStatusHistory.getCreatedAt() + " " +
+                        comment + ";" + contents;
+            }
+        }
+        contents = DataTranceFormService.transformPHPencode(contents);
+        orderDto.setContents(contents);
+
         //国家ID
         orderDto.setCountryid(2);
 
