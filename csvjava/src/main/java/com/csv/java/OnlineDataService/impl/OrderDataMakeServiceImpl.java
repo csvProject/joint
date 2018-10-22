@@ -7,7 +7,7 @@ package com.csv.java.OnlineDataService.impl;
 import com.csv.java.OnlineDataService.DataTranceFormService;
 import com.csv.java.OnlineDataService.OrderDataMakeService;
 import com.csv.java.common.tool.DateUtil;
-import com.csv.java.common.tool.PHPSerializeUtil;
+import com.csv.java.OnlineDataService.PHPSerializeUtil;
 import com.csv.java.common.tool.StringFormatForSQL;
 import com.csv.java.dao.GenerateErrorDao;
 import com.csv.java.dao.OrderDao;
@@ -150,8 +150,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             }
             //SKU
             orderDetailDto.setSku(newItem.getSku()==null?"":newItem.getSku());
-            //尺寸ID
-            orderDetailDto.setSizeId(99);
+
             //数量
             int qty = newItem.getQtyOrdered()==null?0:(int)Double.parseDouble(newItem.getQtyOrdered().toString());
             orderDetailDto.setQty(qty);
@@ -160,6 +159,9 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             productOptions = productOptions==null?"":PHPSerializeUtil.getProductOptions(productOptions);
             productOptions = DataTranceFormService.transformPHPencode(productOptions);
             orderDetailDto.setCustomerRequest(productOptions);
+            //尺寸ID
+            int sizeId = PHPSerializeUtil.getSizeId(newItem.getProductOptions());
+            orderDetailDto.setSizeId(sizeId);
             //明细订单状态
             orderDetailDto.setdOrderStatus(orderStatus);
             //紧急状态ID

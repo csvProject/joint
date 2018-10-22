@@ -5,16 +5,14 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import com.csv.java.common.tool.PHPSerializeUtil;
+import com.csv.java.OnlineDataService.PHPSerializeUtil;
 import com.csv.java.net.magja.model.address.BasicAddress;
 import com.csv.java.net.magja.model.order.*;
 import com.csv.java.net.magja.service.RemoteServiceFactory;
 import com.csv.java.net.magja.service.ServiceException;
 import com.csv.java.net.magja.soap.MagentoSoapClient;
-import de.ailis.pherialize.Mixed;
 import de.ailis.pherialize.MixedArray;
 import de.ailis.pherialize.Pherialize;
 import org.junit.Before;
@@ -73,7 +71,7 @@ public class OrderRemoteServiceITest {
 
   @Test
   public void getById() throws ServiceException {
-    final Order order = service.getById(510010806);
+    final Order order = service.getById(510010001);
     log.info("Order {}: {}", order);
     assertNotNull(order);
     String contents = "";
@@ -97,22 +95,7 @@ public class OrderRemoteServiceITest {
       String productOptions = item.getProductOptions();
 
       productOptions = productOptions==null?"":productOptions;
-      MixedArray list;
-
-
-      list = Pherialize.unserialize(productOptions).toArray();
-      String tmp = "";
-      if (list !=null){
-        tmp = "";
-      }
-      int aa = list.getArray("options").values().size();
-      for (int i =0 ;i < aa ;i++){
-        MixedArray hash = list.getArray("options").getArray(i);
-
-        String v =hash.get("label").toString();
-      }
-      list.getArray("options").getArray(0).get("label");
-
+      int a = PHPSerializeUtil.getSizeId(productOptions);
 
 
       log.info("Item #{}: {}", item.getId(), item);
