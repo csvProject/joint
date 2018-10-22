@@ -1,5 +1,7 @@
 package com.csv.java.OnlineDataService;
 
+import org.apache.commons.codec.binary.Base64;
+
 import static com.csv.java.OnlineDataService.ConstantDataService.*;
 
 public interface DataTranceFormService {
@@ -43,5 +45,15 @@ public interface DataTranceFormService {
             return Integer.parseInt(PaymentidEnum.CREDIT_CARD.toString());
         }
         return  0 ;
+    }
+
+    public static String transformPHPencode(String trans){
+        if ("".equals(trans)){
+            return "";
+        }
+        String ret = Base64.encodeBase64URLSafeString(trans.getBytes());
+        ret = ret.substring(0,1) + "123456789" +
+                ret.substring(1);
+        return ret;
     }
 }

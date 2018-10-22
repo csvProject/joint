@@ -21,7 +21,6 @@ import com.csv.java.net.magja.model.order.Order;
 import com.csv.java.net.magja.model.order.OrderItem;
 import com.csv.java.net.magja.service.ServiceException;
 import com.csv.java.net.magja.service.order.OrderRemoteService;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,15 +77,15 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         orderDto.setOrderstatus(orderStatus);
 
         //电商地址
-        String addressType = newOrderDetail.getShippingAddress().getAddressType();
-        addressType  = addressType==null?"":addressType;
-
         String street = newOrderDetail.getShippingAddress().getStreet();
-        street = street==null?"":street;
+        street = street==null?"":street.replace("\n","");
         String city = newOrderDetail.getShippingAddress().getCity();
         city = city==null?"":city;
-        String address = addressType + " " + street + " " + city;
-        address = Base64.encodeBase64URLSafeString(address.getBytes());
+        String region = newOrderDetail.getShippingAddress().getRegion();
+        region = region ==null?"":region;
+
+        String address = region + " " + city + " " +street;
+        address = DataTranceFormService.transformPHPencode(address);
         orderDto.setAddress(address);
 
         //收件人客户名
@@ -140,7 +139,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             //SKU
             orderDetailDto.setSku(newItem.getSku()==null?"":newItem.getSku());
             //尺寸ID
-            orderDetailDto.setSizeId(0);
+            orderDetailDto.setSizeId(99);
             //录入日期
             String itemCreateAt = StringFormatForSQL.changeDateFmt(newItem.getCreatedAt(),"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd");
             orderDetailDto.setJoinDate(itemCreateAt);
@@ -150,7 +149,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             //客户要求
             String productOptions = newItem.getProductOptions();
             productOptions = productOptions==null?"":PHPSerializeUtil.getProductOptions(productOptions);
-            productOptions = Base64.encodeBase64URLSafeString(productOptions.getBytes());
+            productOptions = DataTranceFormService.transformPHPencode(productOptions);
             orderDetailDto.setCustomerRequest(productOptions);
             //明细订单状态
             orderDetailDto.setdOrderStatus(orderStatus);
