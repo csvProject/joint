@@ -117,6 +117,18 @@ public class OrderRemoteServiceImpl extends GeneralServiceImpl<Order> implements
       }
     }
 
+    // orderStatusHistory
+    if (attributes.get("status_history") != null) {
+      List<Map<String, Object>> res = (List<Map<String, Object>>) attributes.get("status_history");
+
+      for (Map<String, Object> i : res) {
+        OrderStatusHistory item = new OrderStatusHistory();
+        for (Map.Entry<String, Object> att : i.entrySet())
+          item.set(att.getKey(), att.getValue());
+
+        order.getOrderStatusHistories().add(item);
+      }
+    }
     return order;
   }
 

@@ -79,6 +79,9 @@ public class Order extends BaseMagentoModel {
 	private Double baseGrandTotal;
 
 	private String baseCurrencyCode;
+
+	private List<OrderStatusHistory> orderStatusHistories = new ArrayList<OrderStatusHistory>();
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -557,6 +560,14 @@ public class Order extends BaseMagentoModel {
 		this.baseCurrencyCode = baseCurrencyCode;
 	}
 
+	public List<OrderStatusHistory> getOrderStatusHistories() {
+		return orderStatusHistories;
+	}
+
+	public void setOrderStatusHistories(List<OrderStatusHistory> orderStatusHistories) {
+		this.orderStatusHistories = orderStatusHistories;
+	}
+
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -618,7 +629,7 @@ public class Order extends BaseMagentoModel {
 		if (createdAt != null ? !createdAt.equals(order.createdAt) : order.createdAt != null) return false;
 		if (baseGrandTotal != null ? !baseGrandTotal.equals(order.baseGrandTotal) : order.baseGrandTotal != null) return false;
 		if (baseCurrencyCode != null ? !baseCurrencyCode.equals(order.baseCurrencyCode) : order.baseCurrencyCode != null) return false;
-
+		if (orderStatusHistories != null ? !orderStatusHistories.equals(order.orderStatusHistories) : order.orderStatusHistories != null) return false;
 		return true;
     }public String toString() {
     return "Order{" +
@@ -656,6 +667,7 @@ public class Order extends BaseMagentoModel {
 			", createdAt=" + createdAt +
 			", baseGrandTotal=" + baseGrandTotal +
 			", baseCurrencyCode=" + baseCurrencyCode +
+			", orderStatusHistories=" + orderStatusHistories +
             '}';
 }
 

@@ -30,7 +30,7 @@ public class ConnectionITest {
       System.out.println(map.toString());
     }*/
 
-    Object productList =  client.callSingle(ResourcePath.SalesOrderInfo, "510002207");
+    Object productList =  client.callSingle(ResourcePath.SalesOrderInfo, "510010806");
     System.out.println(productList.toString());
   }
 
