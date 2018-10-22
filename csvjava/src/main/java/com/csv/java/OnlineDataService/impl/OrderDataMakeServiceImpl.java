@@ -140,9 +140,6 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             orderDetailDto.setSku(newItem.getSku()==null?"":newItem.getSku());
             //尺寸ID
             orderDetailDto.setSizeId(99);
-            //录入日期
-            String itemCreateAt = StringFormatForSQL.changeDateFmt(newItem.getCreatedAt(),"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd");
-            orderDetailDto.setJoinDate(itemCreateAt);
             //数量
             int qty = newItem.getQtyOrdered()==null?0:(int)Double.parseDouble(newItem.getQtyOrdered().toString());
             orderDetailDto.setQty(qty);

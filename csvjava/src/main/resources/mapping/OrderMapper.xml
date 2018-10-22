@@ -119,7 +119,7 @@
                 #{tracknumber,jdbcType=VARCHAR},
                 #{countryid,jdbcType=INTEGER},
                 #{trackurl,jdbcType=VARCHAR},
-                str_to_date(#{joindate,jdbcType=VARCHAR},'%Y-%m-%d %H'),
+                sysdate(),
                 #{mgrid,jdbcType=INTEGER},
                 #{detflag,jdbcType=TINYINT},
                 #{modifyflag,jdbcType=TINYINT},

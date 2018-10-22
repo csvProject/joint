@@ -58,7 +58,7 @@
             #{dealMgrId,jdbcType=INTEGER},
             str_to_date(#{dealDate,jdbcType=VARCHAR},'%Y-%m-%d'),
             #{thFlag,jdbcType=TINYINT},
-            str_to_date(#{joinDate,jdbcType=VARCHAR},'%Y-%m-%d %H'),
+            sysdate(),
             #{qty,jdbcType=INTEGER},
             #{customerRequest,jdbcType=VARCHAR},
             #{dOrderStatus,jdbcType=INTEGER},
