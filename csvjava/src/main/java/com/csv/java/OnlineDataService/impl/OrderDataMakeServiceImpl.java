@@ -109,7 +109,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         orderDto.setTotalprice(newOrderDetail.getBaseGrandTotal());
 
         //币种
-        orderDto.setCurrency(newOrderDetail.getBaseCurrencyCode());
+        orderDto.setCurrency("");
 
         //网站ID
         orderDto.setWebsiteid(3);
@@ -131,7 +131,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         orderDto.setCountryid(2);
 
         //管理ID
-        orderDto.setMgrid(2);
+        orderDto.setMgrid(1);
 
         //添加订单
         orderDao.insertOrderInfo(orderDto);
@@ -167,7 +167,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
             //紧急状态ID
             orderDetailDto.setPropertyId(4);
             //管理ID
-            orderDetailDto.setMgrId(2);
+            orderDetailDto.setMgrId(1);
             //仓库出库标识
             orderDetailDto.setWhw(0);
             //订单明细添加
