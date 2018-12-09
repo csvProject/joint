@@ -7,7 +7,7 @@
             CSVTEMP_RULE_ID csvtempRuleId,
             CSVTEMP_ID csvtempId,
             CSV_SQL csvSql
-        FROM T_CSVTEMPLATE_RULE
+        FROM t_csvtemplate_rule
         WHERE  CSVTEMP_RULE_ID = #{csvtempRuleId,jdbcType=INTEGER}
     </select>
 
@@ -16,13 +16,13 @@
             CSVTEMP_RULE_ID csvtempRuleId,
             CSVTEMP_ID csvtempId,
             CSV_SQL csvSql
-        FROM T_CSVTEMPLATE_RULE
+        FROM t_csvtemplate_rule
         WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
     </select>
 
     <insert id="insertCsvTempRule" parameterType="CsvTemplateRuleDto">
 
-        insert into T_CSVTEMPLATE_RULE
+        insert into t_csvtemplate_rule
             (
             CSVTEMP_ID ,
             CSV_SQL )
@@ -34,16 +34,16 @@
 
     <delete id="delCsvTempRuleById" parameterType="java.lang.Integer">
         delete from
-        T_CSVTEMPLATE_RULE  WHERE  CSVTEMP_RULE_ID = #{csvtempRuleId,jdbcType=INTEGER}
+        t_csvtemplate_rule  WHERE  CSVTEMP_RULE_ID = #{csvtempRuleId,jdbcType=INTEGER}
     </delete>
 
     <delete id="delCsvTempRuleBycsvtempId" parameterType="java.lang.Integer">
         delete from
-        T_CSVTEMPLATE_RULE  WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+        t_csvtemplate_rule  WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
     </delete>
 
     <update id="updCsvTempRuleById" parameterType="CsvTemplateRuleDto">
-        update T_CSVTEMPLATE_RULE
+        update t_csvtemplate_rule
         set
             CSV_SQL =#{csvSql,jdbcType=VARCHAR}
         WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
@@ -54,8 +54,8 @@
         t.CSV_SQL csvSql,
         t.CSVTEMP_ID csvtempId,
 	    ci.HEAD_SHOW headShow
-        FROM T_CSVTEMPLATE_RULE t
-        INNER JOIN T_CSVTEMPLATE_INFO ci on t.CSVTEMP_ID = ci.CSVTEMP_ID
+        FROM t_csvtemplate_rule t
+        INNER JOIN t_csvtemplate_info ci on t.CSVTEMP_ID = ci.CSVTEMP_ID
         WHERE  CONCAT(ci.PLATFORM_ID,ci.PFACCOUNT_ID,ci.PTYPEID,ci.SID)  = #{fourKey,jdbcType=VARCHAR}
     </select>
 </mapper>

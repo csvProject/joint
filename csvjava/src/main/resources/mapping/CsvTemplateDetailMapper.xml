@@ -11,7 +11,7 @@
         FIELD_VALUE fieldValue,
         FIELD_TYPE fieldType,
         FIELD_SORT fieldSort
-        FROM T_CSVTEMPLATE_DETAIL
+        FROM t_csvtemplate_detail
         WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
          ORDER  by FIELD_SORT
     </select>
@@ -25,7 +25,7 @@
             FIELD_VALUE fieldValue,
             FIELD_TYPE fieldType,
             FIELD_SORT fieldSort
-        FROM T_CSVTEMPLATE_DETAIL
+        FROM t_csvtemplate_detail
         WHERE  CSVFIELD_ID = #{csvFieldId,jdbcType=INTEGER}
     </select>
 
@@ -38,14 +38,14 @@
             FIELD_VALUE fieldValue,
             FIELD_TYPE fieldType,
             FIELD_SORT fieldSort
-        FROM T_CSVTEMPLATE_DETAIL
+        FROM t_csvtemplate_detail
         WHERE FIELD_KEY like  CONCAT('%', #{fieldKey,jdbcType=VARCHAR}, '%')
         and CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
     </select>
 
     <insert id="insertCsvTempDetail" parameterType="CsvTemplateDetailDto">
 
-        insert into T_CSVTEMPLATE_DETAIL
+        insert into t_csvtemplate_detail
             (
             CSVTEMP_ID ,
             FIELD_KEY ,
@@ -69,16 +69,16 @@
 
     <delete id="delCsvTempDetailById" parameterType="java.lang.Integer">
         delete from
-        T_CSVTEMPLATE_DETAIL  WHERE  CSVFIELD_ID = #{csvFieldId,jdbcType=INTEGER}
+        t_csvtemplate_detail  WHERE  CSVFIELD_ID = #{csvFieldId,jdbcType=INTEGER}
     </delete>
 
     <delete id="delCsvTempDetailBycsvtempId" parameterType="java.lang.Integer">
         delete from
-        T_CSVTEMPLATE_DETAIL  WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+        t_csvtemplate_detail  WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
     </delete>
 
     <update id="updCsvTempDetailById" parameterType="CsvTemplateDetailDto">
-        update T_CSVTEMPLATE_DETAIL
+        update t_csvtemplate_detail
         set
             FIELD_KEY =#{fieldKey,jdbcType=VARCHAR},
             FIELD_NM =#{fieldNm,jdbcType=VARCHAR},

@@ -17,19 +17,19 @@
             Error_Info errorInfo,
             WEBSITE_ID websiteId,
             DATE_FORMAT(UPDT_TS,'%Y-%m-%d %H:%i:%S') updtTs
-        FROM T_Generate_Error
-        WHERE del_flag = 0
+        FROM t_generate_error
+        WHERE DEL_FLAG = 0
         <include refid="queryFrom"></include>
     </select>
 
     <insert id="insertGenerateError" parameterType="GenerateErrorDto">
 
-        insert into T_Generate_Error
+        insert into t_generate_error
         (
             WEBSITE_ORDER_NO ,
             WEBSITE_ID ,
             Error_Info,
-            del_flag,
+            DEL_FLAG,
             UPDT_BY,
             UPDT_TS
         )
@@ -45,13 +45,13 @@
 
     <delete id="delGenerateError" parameterType="GenerateErrorDto">
         delete from
-        T_Generate_Error  WHERE  WEBSITE_ID = #{websiteId,jdbcType=INTEGER}
+        t_generate_error  WHERE  WEBSITE_ID = #{websiteId,jdbcType=INTEGER}
         and WEBSITE_ORDER_NO = #{websiteOrderNo,jdbcType=VARCHAR}
     </delete>
 
     <update id="updDelFlag" parameterType="java.lang.Integer">
-        update  T_Generate_Error
-          set    del_flag = 1
+        update  t_generate_error
+          set    DEL_FLAG = 1
           WHERE  Generate_Error_Id = #{generateErrorId,jdbcType=INTEGER}
     </update>
 </mapper>

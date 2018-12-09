@@ -7,7 +7,7 @@
             PFACCOUNT_NM pfaccountNm,
             PLATFORM_ID platformId,
             MEMO memo
-        FROM T_PF_ACCOUNT
+        FROM t_pf_account
         WHERE  PLATFORM_ID = #{pfId,jdbcType=INTEGER}
     </select>
 
@@ -17,13 +17,13 @@
         PFACCOUNT_NM pfaccountNm,
         PLATFORM_ID platformId,
         MEMO memo
-        FROM T_PF_ACCOUNT
+        FROM t_pf_account
         WHERE  PFACCOUNT_ID = #{pfacId,jdbcType=INTEGER}
     </select>
 
     <insert id="insertPfaccount" parameterType="PfaccountDto">
 
-        insert into T_PF_ACCOUNT
+        insert into t_pf_account
             (
             PFACCOUNT_NM,
             PLATFORM_ID,
@@ -42,11 +42,11 @@
 
     <delete id="delPfaccountByPfacid" parameterType="java.lang.Integer">
         delete from
-        T_PF_ACCOUNT where PFACCOUNT_ID=#{pfacId,jdbcType=INTEGER}
+        t_pf_account where PFACCOUNT_ID=#{pfacId,jdbcType=INTEGER}
     </delete>
 
     <update id="updPfaccountByPfacid" parameterType="PfaccountDto">
-        update T_PF_ACCOUNT
+        update t_pf_account
         set PFACCOUNT_NM =  #{pfaccountNm,jdbcType=VARCHAR},
             MEMO =  #{memo,jdbcType=VARCHAR},
             UPDT_BY = #{logId,jdbcType=INTEGER},
@@ -60,19 +60,19 @@
         PFACCOUNT_NM pfaccountNm,
         PLATFORM_ID platformId,
         MEMO memo
-        FROM T_PF_ACCOUNT
+        FROM t_pf_account
         WHERE  PFACCOUNT_NM like  CONCAT('%', #{pfaccountNm,jdbcType=VARCHAR}, '%')
         and PLATFORM_ID=#{platformId,jdbcType=INTEGER}
     </select>
 
     <delete id="delPfaccountByPfid" parameterType="java.lang.Integer">
         delete from
-        T_PF_ACCOUNT where PLATFORM_ID=#{pfId,jdbcType=INTEGER}
+        t_pf_account where PLATFORM_ID=#{pfId,jdbcType=INTEGER}
     </delete>
 
     <select id="checkPfaccountOnly" parameterType="PfaccountDto"  resultType="java.lang.Integer">
         SELECT count(*)
-        FROM T_PF_ACCOUNT
+        FROM t_pf_account
         WHERE
          PLATFORM_ID=#{platformId,jdbcType=INTEGER}
         AND PFACCOUNT_NM = #{pfaccountNm,jdbcType=VARCHAR}
@@ -81,7 +81,7 @@
 
     <select id="chkAddPfaccountOnly" parameterType="PfaccountDto"  resultType="java.lang.Integer">
         SELECT count(*)
-        FROM T_PF_ACCOUNT
+        FROM t_pf_account
         WHERE
         PLATFORM_ID=#{platformId,jdbcType=INTEGER}
         AND PFACCOUNT_NM = #{pfaccountNm,jdbcType=VARCHAR}

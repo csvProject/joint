@@ -36,7 +36,7 @@
             JOIN_DATE joinDate,
             MEMO memo,
             HEAD_SHOW headShow
-        FROM T_CSVTEMPLATE_INFO
+        FROM t_csvtemplate_info
         WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
     </select>
 
@@ -60,11 +60,11 @@
             pfac.PFACCOUNT_NM pfaccountNm,
             pt.typename ptypeNm,
             s.suppliertitle sNm
-        FROM T_CSVTEMPLATE_INFO t
-        left join T_PLATFORM_INFO pf on t.PLATFORM_ID = pf.PLATFORM_ID
-        left join T_PF_ACCOUNT pfac on t.PFACCOUNT_ID = pfac.PFACCOUNT_ID
-        left join t_supplier s on t.SID= s.ID
-        left join t_ptype pt on t.PTYPEID = pt.ID
+        FROM t_csvtemplate_info t
+        left join t_platform_info pf on t.PLATFORM_ID = pf.PLATFORM_ID
+        left join t_pf_account pfac on t.PFACCOUNT_ID = pfac.PFACCOUNT_ID
+        left join t_supplier s on t.SID= s.id
+        left join t_ptype pt on t.PTYPEID = pt.id
         WHERE 1=1
         <include refid="forcondi"></include>
         order by t.JOIN_DATE desc
@@ -72,7 +72,7 @@
 
     <select id="checkCsvTempInfoOnly" parameterType="CsvTemplateInfoDto"  resultType="java.lang.Integer">
         SELECT count(*)
-        FROM T_CSVTEMPLATE_INFO
+        FROM t_csvtemplate_info
         WHERE
          PLATFORM_ID = #{platformId,jdbcType=INTEGER}
         AND PFACCOUNT_ID = #{pfaccountId,jdbcType=INTEGER}
@@ -82,7 +82,7 @@
 
     <select id="checkCsvTempNmOnly" parameterType="CsvTemplateInfoDto"  resultType="java.lang.Integer">
         SELECT count(*)
-        FROM T_CSVTEMPLATE_INFO
+        FROM t_csvtemplate_info
         WHERE
          CSVTEMP_NM = #{csvtempNm,jdbcType=VARCHAR}
          and CSVTEMP_ID &lt;> #{csvtempId,jdbcType=INTEGER}
@@ -90,14 +90,14 @@
 
     <select id="chkAddCsvTempNmOnly" parameterType="java.lang.String"  resultType="java.lang.Integer">
         SELECT count(*)
-        FROM T_CSVTEMPLATE_INFO
+        FROM t_csvtemplate_info
         WHERE
         CSVTEMP_NM = #{csvtempNm,jdbcType=VARCHAR}
     </select>
 
     <insert id="insertCsvTempInfo" parameterType="CsvTemplateInfoDto" useGeneratedKeys="true" keyProperty="csvtempId">
 
-        insert into T_CSVTEMPLATE_INFO
+        insert into t_csvtemplate_info
             (
             PLATFORM_ID ,
             PFACCOUNT_ID ,
@@ -135,11 +135,11 @@
 
     <delete id="delCsvTempInfoById" parameterType="java.lang.Integer">
         delete from
-        T_CSVTEMPLATE_INFO  WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
+        t_csvtemplate_info  WHERE  CSVTEMP_ID = #{csvtempId,jdbcType=INTEGER}
     </delete>
 
     <update id="updCsvTempInfoById" parameterType="CsvTemplateInfoDto">
-        update T_CSVTEMPLATE_INFO
+        update t_csvtemplate_info
         set
             PLATFORM_ID =#{platformId,jdbcType=INTEGER},
             PFACCOUNT_ID =#{pfaccountId,jdbcType=INTEGER},

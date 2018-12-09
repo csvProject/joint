@@ -78,8 +78,8 @@
             pt.typename ptypeNm,
             s.suppliertitle sNm
         FROM t_product t
-        left join t_supplier s on t.SID= s.ID
-        left join t_ptype pt on t.PTYPEID = pt.ID
+        left join t_supplier s on t.sid= s.id
+        left join t_ptype pt on t.ptypeid = pt.id
         WHERE 1=1
         <include refid="forcondi"></include>
         order by t.sj_datetime desc
@@ -130,8 +130,8 @@
         pt.typename ptypeNm,
         s.suppliertitle sNm
         FROM t_product t
-        left join t_supplier s on t.SID= s.ID
-        left join t_ptype pt on t.PTYPEID = pt.ID
+        left join t_supplier s on t.sid= s.id
+        left join t_ptype pt on t.ptypeid = pt.id
         WHERE t.id = #{productId,jdbcType=INTEGER}
     </select>
 </mapper>

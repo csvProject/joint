@@ -7,13 +7,13 @@
             PLATFORM_NM platformNm,
             PLATFORM_TYPE platformType,
             MEMO memo
-        FROM T_PLATFORM_INFO
+        FROM t_platform_info
         WHERE  PLATFORM_ID = #{pfId,jdbcType=INTEGER}
     </select>
 
     <insert id="insertPlatformInfo" useGeneratedKeys="true" keyProperty="platformId" parameterType="PlatformInfoDto">
 
-        insert into T_PLATFORM_INFO
+        insert into t_platform_info
             (
             PLATFORM_NM,
             PLATFORM_TYPE,
@@ -32,11 +32,11 @@
 
     <delete id="delPlatformInfoByPfid" parameterType="java.lang.Integer">
         delete from
-        T_PLATFORM_INFO where PLATFORM_ID=#{pfId,jdbcType=INTEGER}
+        t_platform_info where PLATFORM_ID=#{pfId,jdbcType=INTEGER}
     </delete>
 
     <update id="updPlatformInfoByPfid" parameterType="PlatformInfoDto">
-        update T_PLATFORM_INFO
+        update t_platform_info
         set PLATFORM_NM =  #{platformNm,jdbcType=VARCHAR},
             PLATFORM_TYPE =  #{platformType,jdbcType=INTEGER},
             MEMO =  #{memo,jdbcType=VARCHAR},
@@ -51,13 +51,13 @@
             PLATFORM_NM platformNm,
             PLATFORM_TYPE platformType,
             MEMO memo
-        FROM T_PLATFORM_INFO
+        FROM t_platform_info
         WHERE  PLATFORM_NM like  CONCAT('%', #{pfNm,jdbcType=VARCHAR}, '%')
     </select>
 
     <select id="checkPlatformOnly" parameterType="PlatformInfoDto"  resultType="java.lang.Integer">
         SELECT count(*)
-        FROM T_PLATFORM_INFO
+        FROM t_platform_info
         WHERE
         PLATFORM_NM = #{platformNm,jdbcType=VARCHAR}
         and PLATFORM_ID &lt;> #{platformId,jdbcType=INTEGER}
@@ -65,7 +65,7 @@
 
     <select id="chkAddPlatformOnly" parameterType="java.lang.String"  resultType="java.lang.Integer">
         SELECT count(*)
-        FROM T_PLATFORM_INFO
+        FROM t_platform_info
         WHERE
         PLATFORM_NM = #{pfNm,jdbcType=VARCHAR}
     </select>
