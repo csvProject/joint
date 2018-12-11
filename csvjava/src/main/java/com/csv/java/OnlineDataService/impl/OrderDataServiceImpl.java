@@ -170,25 +170,18 @@ public class OrderDataServiceImpl implements OrderDataService {
         indto.setDhEndDt(endDate);
         List<OrderDto> orderDtoList = orderDao.findOrderNulPay(indto);
         if (orderDtoList != null){
+            System.out.println("test 11111111:"+orderDtoList.size()+":22222222");
             for (OrderDto orderDto : orderDtoList ){
-                boolean hav = false;
-                //本次同步产生的订单不需要进行状态更新
-                for (String errOrder : errOrderList){
-                    if (errOrder.equals(orderDto.getWebsiteorderno())){
-                        hav = true;
-                        break;
-                    }
-                }
-                if (!hav) {
-                    try {
-                        orderDataMakeService.updOrderInfo(service, orderDto);
 
-                    } catch (Exception e) {
-                        System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
-                                "销售订单【" + orderDto.getWebsiteorderno() + "】更新支付状态失败");
-                        System.out.println(e.toString());
-                    }
+                try {
+                    orderDataMakeService.updOrderInfo(service, orderDto);
+
+                } catch (Exception e) {
+                    System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
+                            "销售订单【" + orderDto.getWebsiteorderno() + "】更新支付状态失败");
+                    System.out.println(e.toString());
                 }
+
             }
         }
         System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
