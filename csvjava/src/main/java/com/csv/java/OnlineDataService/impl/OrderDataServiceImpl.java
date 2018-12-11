@@ -103,7 +103,7 @@ public class OrderDataServiceImpl implements OrderDataService {
                             "销售订单【"+ newOrder.getOrderNumber() +"】同步成功");
                 }catch (Exception e){
                     System.out.println(e.toString());
-                    err =e.toString();
+                    err =e.toString().substring(0,e.toString().length()>1024 ? 1024:e.toString().length());
                 }
                 if (!"".equals(err)){
                     System.out.println(DateUtil.date2String(new Date(),"yyyy-MM-dd HH:mm:ss") +
