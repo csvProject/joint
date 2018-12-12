@@ -131,7 +131,7 @@ public class OrderRemoteServiceITest {
     //filter1.getItems().add(new FilterItem("status", "eq", "success"));
     List<Order> list = service.list(filter1);
     for (Order order : list)
-      System.out.println(order.toString());
+      System.out.println("order.getStatus():"+order.getStatus().toString());
 
     // TODO: is not working tha find with filter
     // make sure to have a order with billing_name = Joao da Silva

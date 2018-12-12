@@ -10,16 +10,17 @@
         </if>
     </sql>
     <select id="findOrderNulPay" parameterType="OrderCondiInDto"  resultType="OrderDto">
-        SELECT
-                id orderId,
-                websiteorderno,
-                paymentid
-        FROM t_order
-        WHERE  websiteid = #{websiteid,jdbcType=INTEGER}
-        /*由于信用卡状态为caceled在销售系统有可能是未付状态，所以信用卡支付方式的包含未付与canceled数据*/
-        and ((paymentid = 6 and orderstatus = 6) or (paymentid = 2 and orderstatus in (6,-1)))
-        and systype = 1
-        <include refid="queryFrom"></include>
+        SELECT t.id orderId, t.websiteorderno websiteorderno, t.paymentid paymentid
+          FROM t_order t
+         inner join (select orderid
+                       from t_order_detail
+                       where deleflag = 0
+                       group by orderid
+                      ) dtl on t.id = dtl.orderid
+         WHERE t.websiteid = #{websiteid,jdbcType = INTEGER}
+           and ((t.paymentid = 6 and t.orderstatus = 6) or
+               (t.paymentid = 2 and t.orderstatus in (6, -1)))
+           and t.systype = 1
     </select>
 
     <insert id="insertOrderInfo" useGeneratedKeys="true" keyProperty="orderId" parameterType="OrderDto">

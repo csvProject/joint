@@ -156,21 +156,21 @@ public class OrderDataServiceImpl implements OrderDataService {
         OrderCondiInDto indto = new OrderCondiInDto();
 
 
-        int ndate = ORDERDATA_INTERVAL_NDAY;
+        /*int ndate = ORDERDATA_INTERVAL_NDAY;
 
         Calendar cal = Calendar.getInstance();
         Date edate = new Date();
         cal.setTime(edate);
         cal.add(Calendar.DATE,-1 * ndate);
         String endDate = DateUtil.date2String(edate,"yyyy-MM-dd");
-        String startDate = DateUtil.date2String(cal.getTime(),"yyyy-MM-dd");
+        String startDate = DateUtil.date2String(cal.getTime(),"yyyy-MM-dd");*/
 
         indto.setWebsiteid(3);
-        indto.setDhStartDt(startDate);
-        indto.setDhEndDt(endDate);
+        /*indto.setDhStartDt(startDate);
+        indto.setDhEndDt(endDate);*/
         List<OrderDto> orderDtoList = orderDao.findOrderNulPay(indto);
         if (orderDtoList != null){
-            System.out.println("test 11111111:"+orderDtoList.size()+":22222222");
+
             for (OrderDto orderDto : orderDtoList ){
 
                 try {

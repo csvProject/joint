@@ -7,7 +7,9 @@ public interface ConstantDataService {
     enum StatusEnum {
         CANCELED("canceled", 1),
         PENDING("pending", 2),
-        PROCESSING("processing", 3);
+        PROCESSING("processing", 3),
+        PENDING_PAYMENT("pending_payment", 4),
+        PAYMENT_REVIEW("payment_review", 5);
         // 成员变量
         private String name;
         private int index;

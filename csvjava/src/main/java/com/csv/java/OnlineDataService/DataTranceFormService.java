@@ -1,6 +1,8 @@
 package com.csv.java.OnlineDataService;
 
+
 import org.apache.commons.codec.binary.Base64;
+
 
 import static com.csv.java.OnlineDataService.ConstantDataService.*;
 
@@ -20,8 +22,13 @@ public interface DataTranceFormService {
                 //信用卡或paypal的时候，如果是processing订单库对应1 其他都是6
                 if (status.equals(StatusEnum.PROCESSING.toString())) {
                     orderStatus = OrderStatusEnum.PAID.toString();
-                } else {
+                } else if(status.equals(StatusEnum.PAYMENT_REVIEW.toString()) ||
+                        status.equals(StatusEnum.PENDING.toString()) ||
+                        status.equals(StatusEnum.PENDING_PAYMENT.toString())){
                     orderStatus = OrderStatusEnum.UNPAID.toString();
+                } else{
+                    System.out.println(
+                            "status为"+status+"未进行处理状态");
                 }
             }
         }
