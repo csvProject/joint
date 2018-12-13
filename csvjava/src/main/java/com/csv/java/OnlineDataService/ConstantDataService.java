@@ -9,7 +9,8 @@ public interface ConstantDataService {
         PENDING("pending", 2),
         PROCESSING("processing", 3),
         PENDING_PAYMENT("pending_payment", 4),
-        PAYMENT_REVIEW("payment_review", 5);
+        PAYMENT_REVIEW("payment_review", 5),
+        SUCCESS("success", 6);
         // 成员变量
         private String name;
         private int index;

@@ -74,7 +74,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
 
         //订单状态
         String status = newOrderDetail.getStatus()==null?"":newOrderDetail.getStatus();
-        int orderStatus = DataTranceFormService.transformStatus(orderDto.getPaymentid(),status);
+        int orderStatus = DataTranceFormService.transformStatus(orderDto,status);
         orderDto.setOrderstatus(orderStatus);
 
         //电商地址
@@ -207,7 +207,7 @@ public class OrderDataMakeServiceImpl implements OrderDataMakeService {
         }
         //订单状态
         String status = newOrderDetail.getStatus()==null?"":newOrderDetail.getStatus();
-        int orderStatus = DataTranceFormService.transformStatus(orderDto.getPaymentid(),status);
+        int orderStatus = DataTranceFormService.transformStatus(orderDto,status);
 
         //付费状态为已付费才更新
         if (orderStatus == Integer.parseInt(OrderStatusEnum.PAID.toString())) {

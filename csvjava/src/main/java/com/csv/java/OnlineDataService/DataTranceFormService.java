@@ -1,6 +1,7 @@
 package com.csv.java.OnlineDataService;
 
 
+import com.csv.java.entity.OrderDto;
 import org.apache.commons.codec.binary.Base64;
 
 
@@ -9,8 +10,9 @@ import static com.csv.java.OnlineDataService.ConstantDataService.*;
 public interface DataTranceFormService {
 
     //销售订单到订单系统的订单状态转换
-    public static int transformStatus(int payMethod, String status){
+    public static int transformStatus(OrderDto orderDto, String status){
         String orderStatus = "";
+        int payMethod = orderDto.getPaymentid();
         if (status.equals(ConstantDataService.StatusEnum.CANCELED.toString()) ) {
             //是canceled状态，无论哪种付费方式，都为-1
             orderStatus = OrderStatusEnum.CANCELED.toString();
@@ -19,16 +21,19 @@ public interface DataTranceFormService {
                 //银行入金付费完成由订单系统去更新，从销售库过来直接对应6
                 orderStatus = OrderStatusEnum.UNPAID.toString();
             } else {
-                //信用卡或paypal的时候，如果是processing订单库对应1 其他都是6
-                if (status.equals(StatusEnum.PROCESSING.toString())) {
+                //信用卡或paypal的时候，如果是processing或success订单库对应1 其他都是6
+                if (status.equals(StatusEnum.PROCESSING.toString()) ||
+                        status.equals(StatusEnum.SUCCESS.toString())  ) {
                     orderStatus = OrderStatusEnum.PAID.toString();
+
                 } else if(status.equals(StatusEnum.PAYMENT_REVIEW.toString()) ||
                         status.equals(StatusEnum.PENDING.toString()) ||
                         status.equals(StatusEnum.PENDING_PAYMENT.toString())){
                     orderStatus = OrderStatusEnum.UNPAID.toString();
                 } else{
-                    System.out.println(
-                            "status为"+status+"未进行处理状态");
+                    orderStatus = "-1";
+                    System.out.println("订单号（"+ orderDto.getOrderId() +"）的销售库状态异常，"+
+                            "status为"+status+"未进行处理");
                 }
             }
         }
