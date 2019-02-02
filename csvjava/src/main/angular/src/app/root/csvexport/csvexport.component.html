@@ -75,10 +75,10 @@
       <tr *ngFor="let data of rowSelectionTable.data">
         <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus($event)"></td>
         <td>
-          <a [href]="'http://www.ewidertest.com/img_upload/'+data.picUrl"
-             [rel]="'http://www.ewidertest.com/img_upload/'+data.picUrl"
+          <a [href]="'http://www.ewiderbuy.net/img_upload/'+data.picUrl"
+             [rel]="'http://www.ewiderbuy.net/img_upload/'+data.picUrl"
              class="preview" target="_blank" title="">
-            <img style="max-width: 100px;    max-height: 100px;" [src]="'http://www.ewidertest.com/img_upload/'+data.picUrl"
+            <img style="max-width: 100px;    max-height: 100px;" [src]="'http://www.ewiderbuy.net/img_upload/'+data.picUrl"
                  border="0">
           </a>
           <!--{{data.picUrl}}-->
