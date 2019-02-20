@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 import static com.csv.java.config.ConstantConfig.ORDERDATA_INTERVAL_NDAY;
 
@@ -42,5 +43,10 @@ public class tollTests {
         String endDate = DateUtil.date2String(edate,"yyyy-MM-dd");
         String startDate = DateUtil.date2String(cal.getTime(),"yyyy-MM-dd");
     }
+    @Test
+    public void getUUID(){
+        String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
 
+        System.out.println(uuid);
+    }
 }
