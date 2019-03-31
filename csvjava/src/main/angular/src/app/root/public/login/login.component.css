@@ -1,0 +1,136 @@
+
+@media (min-width: 768px) {
+  .f-sign_in {
+    margin-top: 2px;
+    font-size: 12px;
+  }
+}
+@media (min-width: 992px) {
+  .f-sign_in {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+}
+@media (min-width: 1200px) {
+  .f-sign_in {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+  .f-sign_in .btn {
+    margin-top: 90px;
+  }
+}
+@media (min-width: 1400px) {
+  .f-sign_in {
+    margin-top: 50px;
+    font-size: 12px;
+  }
+  .f-sign_in .btn {
+    margin-top: 120px;
+  }
+}
+
+.f-sign_in label {
+  margin-bottom: 15px;
+  color: #307DF6;
+  font-weight: 400;
+  width: 40px;
+}
+.f-sign_in .btn {
+  height: 45px;
+  width: 100%;
+  letter-spacing: 10px;
+  background-image: linear-gradient(190deg, #57FEED 0%, #307DF6 100%);
+  border-radius: 4px;
+  color: #FFFFFF;
+  border: 1px solid transparent;
+}
+.f-sign_in .from-group-input{
+  margin-bottom: 55px;
+}
+.f-sign_in .form-group> input{
+  border: 0;
+  background-color:transparent;
+  font-size: 14px;
+  color: #f3f3f3;
+  letter-spacing: 0.3px;
+}
+.f-sign_in .form-group> hr{
+  margin-top: 10px;
+  border-top: 1px solid #2A6CFF;
+}
+
+.login-error-message{
+  height: 30px;
+  line-height: 30px;
+  margin-top: -15px;
+  min-height: 30px;
+  margin-bottom: 20px;
+  color: #fc297d;
+  letter-spacing: 0.26px;
+}
+
+.f-sign_in .form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+
+
+
+
+/* wkm 20180224 */
+/* 密码文字显示*/
+.login-save-del-paw{
+  color: #fff;
+  letter-spacing: 0;
+  line-height: 18px;
+  cursor: pointer;
+}
+.login-save-del-paw input{
+  margin-right: 10px;
+}
+
+/* 密码显隐控制 */
+.from-paw{
+  position: relative;
+}
+.from-paw .img-eye-div .img-eye-file{
+  width: 24px;
+  height: 24px;
+  border: 0;
+}
+
+.from-paw .img-eye-div{
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  bottom: 10px;
+  right: 4px;
+}
+
+
+.img-eye-div .img-eye-click{
+  position: absolute;
+  width: 24px;
+  height: 10px;
+  cursor: pointer;
+}
+
+.a-icon {
+  font-size: 64px;
+  color: #8FCE65;
+}
+.login-form {
+  max-width: 300px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}

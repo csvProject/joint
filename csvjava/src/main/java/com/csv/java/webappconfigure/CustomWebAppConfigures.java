@@ -21,14 +21,15 @@ public class CustomWebAppConfigures implements WebMvcConfigurer {
         // 多个拦截器组成拦截链
         // addPathPatterns 添加拦截规则
         registry.addInterceptor(new CommonInterceptor()).addPathPatterns("/**");
-        registry.addInterceptor(new UserInterceptor()).addPathPatterns("/user/**");
+        //registry.addInterceptor(new UserInterceptor()).addPathPatterns("/user/**");
     }
 
-    @Override
+ /*   @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins(Origins)
+                .allowedHeaders("*")
                 .allowedMethods("*")
                 .allowCredentials(false).maxAge(3600);
-    }
+    }*/
 }

@@ -1,8 +1,11 @@
 package com.csv.java.common.tool;
 
+import com.csv.java.config.ConstantConfig;
+import sun.misc.BASE64Decoder;
+
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -29,5 +32,39 @@ public class ServiceUtil {
             }
         }
         return hList;
+    }
+
+    /**
+     * 获取Token
+     * @param userId
+     * @return
+     */
+    public static String getToken(String userId) {
+        Date date = new Date();
+        Map<String, Object> payload = new HashMap<String, Object>();
+        payload.put("userId", userId);// 用户名
+        payload.put("iat", date.getTime());// 生成时间
+        Long tokenExt = ConstantConfig.CSCS_CONFIG_TOKENEXT !=null ?
+                Long.parseLong(ConstantConfig.CSCS_CONFIG_TOKENEXT):180;
+        payload.put("ext", date.getTime() + tokenExt * 1000 * 60 );// 过期时间2小时 2000 * 60 * 60
+        String token = Jwt.createToken(payload);
+        return token;
+    }
+
+    /**
+     * Token 解析Token
+     *
+     * @param token
+     * @return
+     */
+    public static String getEnCodeToken(String token) {
+        String resToken = "";
+        try {
+            byte[] tt = new BASE64Decoder().decodeBuffer(token);
+            resToken = new String(tt, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resToken;
     }
 }

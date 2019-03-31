@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service(value = "generateServiceImpl")
+@Service(value = "generateErrorService")
 public class GenerateErrorServiceImpl implements GenerateErrorService {
 
     @Autowired

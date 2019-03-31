@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {debounceTime, map, switchMap} from "rxjs/internal/operators";
 import {BehaviorSubject, Observable} from "rxjs/index";
-import {PublicService} from "../../../http/public.service";
-import {GenerateerrorService} from "../../../http/generateerror.service";
+import {PublicService} from "../../../service/public.service";
+import {GenerateerrorService} from "../../../service/generateerror.service";
 
 @Component({
   selector: 'app-generateerror',

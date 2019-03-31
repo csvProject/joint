@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BaseApiResponseModel, url} from "./index";
+import {BaseApiResponseModel, url} from "../http/index";
 import {Observable} from "rxjs/index";
 import {CsvTemplateInfo} from "../entity/tempData";
 

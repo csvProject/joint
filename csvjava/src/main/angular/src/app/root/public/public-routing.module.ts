@@ -1,13 +1,31 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {PublicComponent} from "./public.component";
+import {HomeComponent} from "./home/home.component";
+import {LoginComponent} from "./login/login.component";
+import {MenuComponent} from "./menu/menu.component";
+import {AuthGuard} from "../../auth.guard";
 
 const routes: Routes = [
   {
-    path: '',
-    component: PublicComponent,
+    path: 'home',
+    component: HomeComponent,
+    children: [
+      {
+        path: '',
+        component: LoginComponent
+      },
+      {
+        path: 'login',
+        component: LoginComponent
+      }
+    ]
+  },
+  {
+    path: 'lfs',
+    /*canActivate: [AuthGuard],*/
+    component: MenuComponent,
     children:[
-      { path: '', redirectTo: 'csvexport', pathMatch: 'full' },
+      /*{ path: '', redirectTo: 'csvexport', pathMatch: 'full' },*/
       {
         path:'csvexport',
         loadChildren: '../csvexport/csvexport.module#CsvexportModule'

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csv.java.dao.LfsUserInfoDao" >
+
+    <select id="loginForGetUserInfo" parameterType="LfsUserInfoDto"  resultType="LfsUserInfoDto">
+        SELECT
+            id,
+            username,
+            password,
+            realname,
+            gid,
+            email,
+            tel
+        FROM t_manager
+        WHERE isuse = 1
+        and  username = #{username,jdbcType=VARCHAR}
+        and  password = #{password,jdbcType=VARCHAR}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,120 @@
+.u-date_title {
+  font-size: 12px;
+  color: #A8B8D0;
+  letter-spacing: 0;
+}
+.u-focus-add {
+  color: #6770E0 !important;
+  border: 1px solid #6770E0 !important;
+}
+.u-focus {
+  padding: 0 4px;
+  text-align: center;
+  color: #999;
+  cursor: pointer;
+  border: 1px solid #cfd8dc;
+  display: block;
+  width: 80px;
+}
+.u-add {
+  width: 72px;
+  margin-left: 15px;
+  padding: 2px 0;
+  text-align: center;
+  color: #6770E0;
+  border: 1px solid #6770E0;
+  border-radius: 4px;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.u-focus-lable-mgn-l-0{
+  text-align: center;
+  color: #999;
+  padding: 0;
+  border: 1px solid #cfd8dc;
+}
+.u-focus-lable {
+  width: 100px;
+  margin-left: 20px;
+  text-align: center;
+  color: #999;
+  padding: 0;
+  border: 1px solid #cfd8dc;
+}
+.u-circular {
+  display: inline-block;
+  margin-right: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #666;
+}
+.u-more {
+  margin-top: 9px;
+  text-align: right;
+  color: #54698D;
+  /*cursor: pointer;*/
+  text-decoration: underline;
+}
+.u-more span {
+  cursor: pointer;
+}
+.u-company {
+  width: calc(100% - 70px);
+  padding: 2.4px 15px;
+  text-align: center;
+  color: #54698D;
+  border: 1px solid #9EA7DA;
+  font-size: 12px;
+}
+.u-leaveOut {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.u-risk-early {
+  text-align: center;
+  color: #999;
+  border: 1px solid #cfd8dc;
+}
+/* 居中 */
+.u-rel-center {
+  position: relative;
+}
+.u-abs-center {
+  position: absolute;
+}
+
+/* a标签状态 */
+.u-a-color999-under{
+  line-height: 27px;
+  color: #54698D;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* span 高*/
+.u-span-height{
+  font-weight: 700;
+  border-radius: 12%;
+  padding: 5px 9px;
+  line-height: 27px;
+}
+
+.m-cursor_pointer{
+  cursor: pointer;
+}
+
+
+
+/* 模态框隐式出现问题*/
+.fade {
+   opacity: 1;
+  -webkit-transition: opacity .15s linear;
+  transition: opacity .15s linear;
+}
+
+.modal {
+  display: inline-table !important;
+}

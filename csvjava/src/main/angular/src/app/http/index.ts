@@ -54,6 +54,8 @@ export const url = {
   findErrOrderNo:'generateerror/finderrorderno',//查询
 
   updDelFlag:'generateerror/upddelflag',//更新del_flag
+
+  user_login:'ifcUser/login',
 };
 
 

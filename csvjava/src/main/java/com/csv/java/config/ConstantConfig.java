@@ -41,6 +41,8 @@ public class ConstantConfig {
 
     public static String SPRING_PROFILES_ACTIVE;
 
+    public static String CSCS_CONFIG_TOKENEXT;
+
     @PostConstruct
     public void initialization() {
         Origins = _environment.getProperty("cors.mappings.origins")==null?"*".split(","):_environment.getProperty("cors.mappings.origins").split(",");
@@ -54,6 +56,8 @@ public class ConstantConfig {
         ORDERDATA_INTERVAL_NDAY = Integer.parseInt(_environment.getProperty("orderdata.interval.nday"));
 
         SPRING_PROFILES_ACTIVE  = _environment.getProperty("spring.profiles.active");
+
+        CSCS_CONFIG_TOKENEXT = _environment.getProperty("cscs.config.tokenExt");
         initDeleteZipFile();
     }
 

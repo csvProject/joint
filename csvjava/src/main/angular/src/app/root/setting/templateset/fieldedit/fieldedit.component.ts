@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CsvCustomField, CsvTemplateDetail} from "../../../../entity/tempData";
 import {CurrencyUtil} from "../../../../util/currencyUtil";
-import {TemplatesetService} from "../../../../http/templateset.service";
+import {TemplatesetService} from "../../../../service/templateset.service";
 import {Subject} from "rxjs/index";
 import {UploadFile} from "ng-zorro-antd";
 

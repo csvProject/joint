@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PlatformacctService } from '../../../http/platformacct.service';
+import { PlatformacctService } from '../../../service/platformacct.service';
 import {AccountInfo, PlatInfo} from "../../../entity/setData";
 import {CurrencyUtil} from "../../../util/currencyUtil";
 

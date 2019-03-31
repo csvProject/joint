@@ -1,16 +1,46 @@
-<ul nz-menu [nzMode]="'inline'" style="height:100%" [nzTheme]="'dark'">
-  <li nz-menu-item [routerLink]="['csvexport']" [nzSelected]="selected == 0">
-    <span title>
-      <i class="anticon anticon-mail"></i>
-      <span>商品一览</span>
-    </span>
-  </li>
-  <li nz-submenu [nzOpen]="selected == 1 || selected == 2 || selected == 3">
-    <span title><i class="anticon anticon-laptop"></i>设置</span>
-    <ul>
-      <li nz-menu-item [routerLink]="['setting/templateset']" [nzSelected]="selected == 1">模板设置</li>
-      <li nz-menu-item [routerLink]="['setting/platformacctset']" [nzSelected]="selected == 2">平台设置</li>
-      <li nz-menu-item [routerLink]="['setting/generateerror']" [nzSelected]="selected == 3">同步错误日志</li>
-    </ul>
-  </li>
-</ul>
+<nz-layout class="layout">
+  <app-header></app-header>
+  <nz-layout>
+    <nz-sider [nzWidth]="200" style="background:#fff">
+      <ul nz-menu [nzMode]="'inline'" style="height:100%" [nzTheme]="'dark'">
+        <li nz-menu-item [routerLink]="['csvexport']" [nzSelected]="selected == 0">
+        <span title>
+          <i class="anticon anticon-mail"></i>
+          <span>商品一览</span>
+        </span>
+            </li>
+            <li nz-submenu [nzOpen]="selected == 1 || selected == 2 || selected == 3">
+              <span title><i class="anticon anticon-laptop"></i>设置</span>
+              <ul>
+                <li nz-menu-item [routerLink]="['setting/templateset']" [nzSelected]="selected == 1">模板设置</li>
+                <li nz-menu-item [routerLink]="['setting/platformacctset']" [nzSelected]="selected == 2">平台设置</li>
+                <li nz-menu-item [routerLink]="['setting/generateerror']" [nzSelected]="selected == 3">同步错误日志</li>
+              </ul>
+            </li>
+          </ul>
+    </nz-sider>
+    <nz-layout style="padding:24px">
+      <!--<nz-breadcrumb style="margin:16px 0;">-->
+      <!--<nz-breadcrumb-item>Home</nz-breadcrumb-item>-->
+      <!--<nz-breadcrumb-item>List</nz-breadcrumb-item>-->
+      <!--<nz-breadcrumb-item>App</nz-breadcrumb-item>-->
+      <!--</nz-breadcrumb>-->
+      <nz-content style="background:#fff; padding: 24px; min-height: calc(100vh - 112px);">
+        <router-outlet>
+
+        </router-outlet>
+        <div *ngIf="loading" id="loading" class="init-loading" >
+          <!--<img src="./assets/img/loading.gif"/>-->
+
+          <div id="loading-center">
+
+          </div>
+          <div id="loading-center-absolute">
+            <nz-spin [nzSpinning]="loading" [nzSize]="'large'"></nz-spin >
+          </div>
+        </div>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>
+

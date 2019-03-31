@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CsvTemplateInfo } from "../../../../entity/tempData";
-import {TemplatesetService} from "../../../../http/templateset.service";
+import {TemplatesetService} from "../../../../service/templateset.service";
 
 @Component({
   selector: 'app-tempedit',

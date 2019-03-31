@@ -7,15 +7,15 @@ import { PlatformacctsetComponent } from './platformacctset/platformacctset.comp
 import { TemplatesetComponent } from './templateset/templateset.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
-import { TemplatesetService } from '../../http/templateset.service';
-import { PlatformacctService } from '../../http/platformacct.service';
+import { TemplatesetService } from '../../service/templateset.service';
+import { PlatformacctService } from '../../service/platformacct.service';
 import { DatePipe } from '../../pipe/date.pipe';
 import { TempeditComponent } from './templateset/tempedit/tempedit.component';
 import { FieldEditComponent } from './templateset/fieldedit/fieldedit.component';
 import { SortableModule } from 'ngx-bootstrap';
 import { FormulasComponent } from './templateset/formulas/formulas.component';
 import { GenerateerrorComponent } from './generateerror/generateerror.component';
-import {GenerateerrorService} from "../../http/generateerror.service";
+import {GenerateerrorService} from "../../service/generateerror.service";
 
 @NgModule({
   imports: [
