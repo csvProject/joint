@@ -38,8 +38,8 @@ export class PublicInterceptor implements HttpInterceptor {
           if (event.url.indexOf("/ifcUser/login")<0
             && event.url.indexOf("assets/")<0) {
             let new_token = event.headers.get('new_token');
-            console.log("next token********" ,  this.lg.get('token'));
-            console.log("next new_token********" ,  new_token);
+            //console.log("next token********" ,  this.lg.get('token'));
+            //console.log("next new_token********" ,  new_token);
             if(this.lg.get('token')!=null && new_token!=null){
               this.lg.set('token',new_token);
             }
