@@ -39,20 +39,23 @@ export class LoginComponent implements OnInit{
   // 登录
   login(info?: UserInfo) {
 
-    for (const i in this.validateForm.controls) {
+    /*for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
-    }
+    }*/
 
 
-    if(undefined == this.userInfo.username || null == this.userInfo.username){
+    if(undefined == this.userInfo.username || null == this.userInfo.username ||
+      this.userInfo.username == ""){
+      this.message = "请输入用户名";
       return;
     }
-    if(undefined == this.userInfo.password || null == this.userInfo.password){
+    if(undefined == this.userInfo.password || null == this.userInfo.password ||
+      this.userInfo.password ==""){
+      this.message = "请输入密码";
       return;
     }
 
-    //this.router.navigate(['lfs/csvexport']);
     //用户密码加密
     this.loginService.login(this.userInfo).subscribe(data=>{
       this.lg.set("userInfo", null);

@@ -1,4 +1,8 @@
-
+.span_errmsg{
+  padding: 5px 14px 5px 12px;
+  width: 45px;
+  color: red;
+}
 @media (min-width: 768px) {
   .f-sign_in {
     margin-top: 2px;
