@@ -44,7 +44,7 @@ public class CommonInterceptor implements HandlerInterceptor {
                     return true;
                 case -1:
 
-                    if (restType == "1"){
+                    if (restType == "app"){
                         //app访问
                         httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
                         logger.info("token验证成功*************");
