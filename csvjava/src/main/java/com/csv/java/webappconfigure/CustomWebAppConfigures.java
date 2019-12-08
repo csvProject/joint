@@ -1,6 +1,7 @@
 package com.csv.java.webappconfigure;
 
 import com.csv.java.webappconfigure.interceptor.CommonInterceptor;
+import com.csv.java.webappconfigure.interceptor.EwiderappInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -27,7 +28,9 @@ public class CustomWebAppConfigures implements WebMvcConfigurer {
         registry.addInterceptor(new CommonInterceptor()).addPathPatterns("/**")
                 .excludePathPatterns("/*.js","/*.css","/*.ico","/*.jpg",
                         "/*.txt","/index.html", "/assets/**");
-        //registry.addInterceptor(new UserInterceptor()).addPathPatterns("/user/**");
+        /*registry.addInterceptor(new EwiderappInterceptor()).addPathPatterns("/ewiderapp/**")
+                .excludePathPatterns("/*.js","/*.css","/*.ico","/*.jpg",
+                        "/*.txt","/index.html", "/assets/**");*/
     }
 
     @Override
